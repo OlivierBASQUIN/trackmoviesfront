@@ -1,0 +1,50 @@
+.blockSelectButton {
+display: flex;
+justify-content: center;
+}
+
+div.card {
+    box-shadow: 1px 1px 15px white;
+    background: #000000;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 5px; 
+    margin-bottom: 25px;
+    
+}
+div.card:hover {
+  transform: scale(1.03);
+  transition-duration: 0.5s;
+  box-shadow: 1px 1px 12px rgb(255, 208, 1);
+}
+
+.blockImg{
+height: 250px;
+overflow: hidden;
+}
+
+.blockImg img{
+    width: 100%;
+    }
+
+div.card-body ul{
+    list-style-type: none;
+    padding: 0;
+    font-size: 0.8rem;
+}
+
+div.card h2 {
+    font-size: 17px;
+    color: rgb(255, 208, 1);
+}
+div.next-movies {
+    width: 100%;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.button:hover {
+    background-color:rgb(255, 208, 1);
+
+}
