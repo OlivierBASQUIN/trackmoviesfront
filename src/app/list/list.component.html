@@ -1,296 +1,40 @@
-
-<div class="blockSelectButton m-3">
-  <button type="button" class="btn btn-warning btn-lg m-2">Films</button>
-  <button type="button" class="btn btn-light btn-lg m-2">Séries</button>
+<div classe="bandeau-titre">
+  <h2>Ma Bibliothèque</h2>
 </div>
-<!-- <app-searchbar> -->
-<!-- <app-filterbar> -->
-<app-searchbar></app-searchbar>
-<app-filterbar></app-filterbar>
+
+<div class="block-ajout-recherche">
+  <button>Ajouter une oeuvre</button>
+  <app-searchbar></app-searchbar>
+</div>
 
 <div class="row pb-5">
-    
+  <div *ngFor="let oeuvre of oeuvreService.oeuvres$ | async" class="col-6 col-lg-3 col-xl-2">
+    <!-- CARD-->
+    <!-- Lien navigation vers la page détail -->
+    <div [routerLink]="['details']" class="card">
 
-    <div class="col-6 col-lg-3 col-xl-2">
-        <!-- CARD-->
-        <div [routerLink]="['details']" class="card">
-
+          <div class="card">
             <div class="blockImg">
-               <img src="assets\lesbeauxjours.jpg" alt="">
+               <img [src]="oeuvre.video" alt="">
             </div>
 
             <div class="card-body">
-                <h2>Les Beaux Jours</h2>  
+                <h2>{{oeuvre.titre}}</h2>
 
                 <ul>
-                    <li><strong>Statut</strong> : non vu</li>
-                    <li><strong>Genre</strong> : Science-Fiction</li>
-                    <li><strong>Année</strong> : 2007</li>
+                    <li><strong>Type   : </strong>{{oeuvre.type}}</li>
+                    <li><strong>Genre  : </strong>{{oeuvre.genre}}</li>
+                    <li><strong>Statut : </strong>{{oeuvre.statut}}</li>
+                    <li><strong>Note   : </strong>{{oeuvre.note}}</li>
                 </ul>
             </div>
-
-            
         </div>
         <!-- FIN CARD-->
     </div>
-
-    <div class="col-6 col-lg-3 col-xl-2">
-        <!-- CARD-->
-        <div [routerLink]="['details']" class="card">
-
-            <div class="blockImg">
-               <img src="assets\lesbeauxjours.jpg" alt="">
-            </div>
-
-            <div class="card-body">
-                <h2>Les Beaux Jours</h2>  
-
-                <ul>
-                    <li><strong>Statut</strong> : non vu</li>
-                    <li><strong>Genre</strong> : Science-Fiction</li>
-                    <li><strong>Année</strong> : 2007</li>
-                </ul>
-            </div>
-
-            
-        </div>
-        <!-- FIN CARD-->
-    </div>
-
-    <div class="col-6 col-lg-3 col-xl-2">
-        <!-- CARD-->
-        <div [routerLink]="['details']" class="card">
-
-            <div class="blockImg">
-               <img src="assets\lesbeauxjours.jpg" alt="">
-            </div>
-
-            <div class="card-body">
-                <h2>Les Beaux Jours</h2>  
-
-                <ul>
-                    <li><strong>Statut</strong> : non vu</li>
-                    <li><strong>Genre</strong> : Science-Fiction</li>
-                    <li><strong>Année</strong> : 2007</li>
-                </ul>
-            </div>
-
-            
-        </div>
-        <!-- FIN CARD-->
-    </div>
-
-    <div class="col-6 col-lg-3 col-xl-2">
-        <!-- CARD-->
-        <div [routerLink]="['details']" class="card">
-
-            <div class="blockImg">
-               <img src="assets\lesbeauxjours.jpg" alt="">
-            </div>
-
-            <div class="card-body">
-                <h2>Les Beaux Jours</h2>  
-
-                <ul>
-                    <li><strong>Statut</strong> : non vu</li>
-                    <li><strong>Genre</strong> : Science-Fiction</li>
-                    <li><strong>Année</strong> : 2007</li>
-                </ul>
-            </div>
-
-            
-        </div>
-        <!-- FIN CARD-->
-    </div>
-
-    <div class="col-6 col-lg-3 col-xl-2">
-        <!-- CARD-->
-        <div [routerLink]="['details']" class="card">
-
-            <div class="blockImg">
-               <img src="assets\lesbeauxjours.jpg" alt="">
-            </div>
-
-            <div class="card-body">
-                <h2>Les Beaux Jours</h2>  
-
-                <ul>
-                    <li><strong>Statut</strong> : non vu</li>
-                    <li><strong>Genre</strong> : Science-Fiction</li>
-                    <li><strong>Année</strong> : 2007</li>
-                </ul>
-            </div>
-
-            
-        </div>
-        <!-- FIN CARD-->
-    </div>
-
-    <div class="col-6 col-lg-3 col-xl-2">
-        <!-- CARD-->
-        <div [routerLink]="['details']" class="card">
-
-            <div class="blockImg">
-               <img src="assets\lesbeauxjours.jpg" alt="">
-            </div>
-
-            <div class="card-body">
-                <h2>Les Beaux Jours</h2>  
-
-                <ul>
-                    <li><strong>Statut</strong> : non vu</li>
-                    <li><strong>Genre</strong> : Science-Fiction</li>
-                    <li><strong>Année</strong> : 2007</li>
-                </ul>
-            </div>
-
-            
-        </div>
-        <!-- FIN CARD-->
-    </div>
-
-    <div class="col-6 col-lg-3 col-xl-2">
-        <!-- CARD-->
-        <div [routerLink]="['details']" class="card">
-
-            <div class="blockImg">
-               <img src="assets\lesbeauxjours.jpg" alt="">
-            </div>
-
-            <div class="card-body">
-                <h2>Les Beaux Jours</h2>  
-
-                <ul>
-                    <li><strong>Statut</strong> : non vu</li>
-                    <li><strong>Genre</strong> : Science-Fiction</li>
-                    <li><strong>Année</strong> : 2007</li>
-                </ul>
-            </div>
-
-            
-        </div>
-        <!-- FIN CARD-->
-    </div>
-
-    <div class="col-6 col-lg-3 col-xl-2">
-        <!-- CARD-->
-        <div [routerLink]="['details']" class="card">
-
-            <div class="blockImg">
-               <img src="assets\lesbeauxjours.jpg" alt="">
-            </div>
-
-            <div class="card-body">
-                <h2>Les Beaux Jours</h2>  
-
-                <ul>
-                    <li><strong>Statut</strong> : non vu</li>
-                    <li><strong>Genre</strong> : Science-Fiction</li>
-                    <li><strong>Année</strong> : 2007</li>
-                </ul>
-            </div>
-
-            
-        </div>
-        <!-- FIN CARD-->
-    </div>
-
-    <div class="col-6 col-lg-3 col-xl-2">
-        <!-- CARD-->
-        <div [routerLink]="['details']" class="card">
-
-            <div class="blockImg">
-               <img src="assets\lesbeauxjours.jpg" alt="">
-            </div>
-
-            <div class="card-body">
-                <h2>Les Beaux Jours</h2>  
-
-                <ul>
-                    <li><strong>Statut</strong> : non vu</li>
-                    <li><strong>Genre</strong> : Science-Fiction</li>
-                    <li><strong>Année</strong> : 2007</li>
-                </ul>
-            </div>
-
-            
-        </div>
-        <!-- FIN CARD-->
-    </div>
-
-    <div class="col-6 col-lg-3 col-xl-2">
-        <!-- CARD-->
-        <div [routerLink]="['details']" class="card">
-
-            <div class="blockImg">
-               <img src="assets\lesbeauxjours.jpg" alt="">
-            </div>
-
-            <div class="card-body">
-                <h2>Les Beaux Jours</h2>  
-
-                <ul>
-                    <li><strong>Statut</strong> : non vu</li>
-                    <li><strong>Genre</strong> : Science-Fiction</li>
-                    <li><strong>Année</strong> : 2007</li>
-                </ul>
-            </div>
-            
-        </div>
-        <!-- FIN CARD-->
-        
-    </div>
-
-    <div class="col-6 col-lg-3 col-xl-2">
-        <!-- CARD-->
-        <div [routerLink]="['details']" class="card">
-
-            <div class="blockImg">
-               <img src="assets\lesbeauxjours.jpg" alt="">
-            </div>
-
-            <div class="card-body">
-                <h2>Les Beaux Jours</h2>  
-
-                <ul>
-                    <li><strong>Statut</strong> : non vu</li>
-                    <li><strong>Genre</strong> : Science-Fiction</li>
-                    <li><strong>Année</strong> : 2007</li>
-                </ul>
-            </div>
-
-            
-        </div>
-        <!-- FIN CARD-->
-    </div>
-
-    <div class="col-6 col-lg-3 col-xl-2">
-        <!-- CARD-->
-        <div [routerLink]="['details']" class="card">
-
-            <div class="blockImg">
-               <img src="assets\lesbeauxjours.jpg" alt="">
-            </div>
-
-            <div class="card-body">
-                <h2>Les Beaux Jours</h2>  
-
-                <ul>
-                    <li><strong>Statut</strong> : non vu</li>
-                    <li><strong>Genre</strong> : Science-Fiction</li>
-                    <li><strong>Année</strong> : 2007</li>
-                </ul>
-            </div>
-
-            
-        </div>
-        <!-- FIN CARD-->
-    </div>
-
+  </div>
 </div>
 
 <!-- BAR BUTTON "Films suivants" -->
 <div class="next-movies">
-    <button class="button btn btn-light">Films suivants</button>
-
+    <button (click)="oeuvresSuivantesActionBouton()" class="button btn btn-light">Oeuvres suivantes</button>
 </div>
