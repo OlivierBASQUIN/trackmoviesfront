@@ -1,4 +1,43 @@
 <!-- CHAMP DE SAISIE RECHERCHE FILMS-->
 <div class="blockSearch">
-  <input  placeholder="Rechercher des films..." class="form-control" type="text">   
+  <input #userInput (keyup)="searchOeuvresInput(userInput.value)" placeholder="Rechercher ..." class="form-control" type="text">
+  <ul>
+    <li *ngFor="let oeuvre of oeuvreService.oeuvresTrouvees$ | async">{{oeuvre.titre}}</li>
+  </ul>
+</div>
+
+<div class="filterBar m-3">
+
+  <div class="btn-group m-3">
+    <mat-form-field appearance="fill">
+      <mat-label>Type</mat-label>
+      <mat-select [(value)]="valeurParDefaut">
+        <mat-option *ngFor="let type of types" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="btn-group m-3">
+    <mat-form-field appearance="fill">
+      <mat-label>Statut</mat-label>
+      <mat-select [(value)]="valeurParDefaut">
+        <mat-option *ngFor="let statut of statutService.statuts$ | async" [value]="statut">
+          {{statut.libelle}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+    <div class="btn-group m-3">
+      <mat-form-field appearance="fill">
+        <mat-label>Genre</mat-label>
+        <mat-select [(value)]="valeurParDefaut">
+          <mat-option *ngFor="let genre of genreService.genres$ | async" [value]="genre">
+            {{genre.libelle}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 </div>

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { OeuvreModel } from '../shared/models/oeuvre.model';
+import { OeuvreService } from '../shared/services/oeuvre.service';
 
 @Component({
   selector: 'app-list',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
-  constructor() { }
+  oeuvres:Array<OeuvreModel> = [];
+  //subscriptionOeuvre:Subscription = new Subscription();
 
-  ngOnInit(): void {
+  constructor(public oeuvreService:OeuvreService) {
+    console.log(this);
   }
 
+  ngOnInit(): void {
+    //this.subscriptionOeuvre = this.oeuvreService.oeuvres$.subscribe( (data:Array<OeuvreModel>) => this.oeuvreService.getOeuvresInitiales() );
+  }
+
+  //ngOnDestroy() {
+  //  this.subscriptionOeuvre.unsubscribe();
+  //}
+
+  oeuvresSuivantesActionBouton(){
+    this.oeuvreService.getOeuvresSuivantes();
+  }
 }
