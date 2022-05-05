@@ -11,14 +11,22 @@ import { OeuvreService } from '../shared/services/oeuvre.service';
 export class ListComponent implements OnInit {
 
   oeuvres:Array<OeuvreModel> = [];
-  //subscriptionOeuvre:Subscription = new Subscription();
 
   constructor(public oeuvreService:OeuvreService) {
     console.log(this);
   }
 
   ngOnInit(): void {
-    //this.subscriptionOeuvre = this.oeuvreService.oeuvres$.subscribe( (data:Array<OeuvreModel>) => this.oeuvreService.getOeuvresInitiales() );
+    this.oeuvreService.oeuvres$.subscribe( (data:Array<OeuvreModel>) => {
+      if(data.length==0) {
+        this.oeuvreService.getOeuvresInitiales()
+        console.log("first init");
+      }
+      else {
+        this.oeuvres = data;
+        console.log("data inchangé");
+      }
+    });
   }
 
   //ngOnDestroy() {

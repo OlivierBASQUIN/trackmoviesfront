@@ -12,29 +12,29 @@
     <!-- CARD-->
     <!-- Lien navigation vers la page détail -->
     <div [routerLink]="['details']" class="card">
+      <div class="blockImg">
+        <img [src]="oeuvre.video" alt="" />
+      </div>
 
-          <div class="card">
-            <div class="blockImg">
-               <img [src]="oeuvre.video" alt="">
-            </div>
+      <div class="card-body">
+        <h2>{{ oeuvre.titre }}</h2>
 
-            <div class="card-body">
-                <h2>{{oeuvre.titre}}</h2>
+        <ul>
+          <li><strong>Type : </strong>{{ oeuvre.type }}</li>
+          <li><strong>Genre : </strong>{{ oeuvre.genre }}</li>
+          <li><strong>Statut : </strong>{{ oeuvre.statut }}</li>
+          <li><strong>Note : </strong>{{ oeuvre.note }}</li>
+        </ul>
+      </div>
 
-                <ul>
-                    <li><strong>Type   : </strong>{{oeuvre.type}}</li>
-                    <li><strong>Genre  : </strong>{{oeuvre.genre}}</li>
-                    <li><strong>Statut : </strong>{{oeuvre.statut}}</li>
-                    <li><strong>Note   : </strong>{{oeuvre.note}}</li>
-                </ul>
-            </div>
-        </div>
-        <!-- FIN CARD-->
+      <!-- FIN CARD-->
     </div>
   </div>
 </div>
 
 <!-- BAR BUTTON "Films suivants" -->
 <div class="next-movies">
-    <button (click)="oeuvresSuivantesActionBouton()" class="button btn btn-light">Oeuvres suivantes</button>
+  <button (click)="oeuvresSuivantesActionBouton()" class="button btn btn-light">
+    Oeuvres suivantes
+  </button>
 </div>
