@@ -13,7 +13,7 @@
     <!-- Lien navigation vers la page détail -->
     <div [routerLink]="['details']" class="card">
       <div class="blockImg">
-        <img [src]="oeuvre.video" alt="" />
+        <img [src]="getUrlAffiche(oeuvre.urlAffiche)" alt="" />
       </div>
 
       <div class="card-body">

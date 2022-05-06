@@ -8,7 +8,8 @@ export class OeuvreModel {
   genres: GenreModel[];
   statut: StatutModel;
   note: number;
-  video: string;
+  urlAffiche: string;
+  urlBandeAnnonce: string;
   duree: number;
 
   constructor(oeuvre: OeuvreModel) {
@@ -18,7 +19,8 @@ export class OeuvreModel {
     this.statut = oeuvre.statut;
     this.genres = oeuvre.genres;
     this.note = oeuvre.note;
-    this.video = oeuvre.video;
+    this.urlAffiche = oeuvre.urlAffiche;
+    this.urlBandeAnnonce = oeuvre.urlBandeAnnonce;
     this.duree = oeuvre.duree;
   }
 }
