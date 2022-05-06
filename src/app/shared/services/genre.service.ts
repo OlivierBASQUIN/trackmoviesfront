@@ -8,7 +8,7 @@ import { GenreModel } from '../models/genre.model';
 })
 export class GenreService {
 
-  private _API_URL = "http://localhost:8080";
+  private _API_URL = "http://localhost:8080/trackmovies/v1";
 
   private _genres$ = new BehaviorSubject<GenreModel[]>([]);
 
@@ -23,7 +23,8 @@ export class GenreService {
             (apiResponse:any) => apiResponse.genres.map( (genre:any) => new GenreModel(genre) )
           ) // fin map
         ) // fin pipe
-       .subscribe(
+       // souscrition à la réponse HTTP (observable) et push dans le subject _genre$
+        .subscribe(
          (response:Array<GenreModel>) => this._genres$.next(response)
        )
      }
@@ -32,7 +33,7 @@ export class GenreService {
     return this._genres$.asObservable();
   }
 
-  set genres$(genres:any) {
-    this._genres$.next(genres)
-  }
+  //set genres$(genres:any) {
+  //  this._genres$.next(genres)
+  //}
 }

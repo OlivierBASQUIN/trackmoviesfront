@@ -20,10 +20,10 @@
         <h2>{{ oeuvre.titre }}</h2>
 
         <ul>
-          <li><strong>Type : </strong>{{ oeuvre.type }}</li>
-          <li><strong>Genre : </strong>{{ oeuvre.genre }}</li>
-          <li><strong>Statut : </strong>{{ oeuvre.statut }}</li>
-          <li><strong>Note : </strong>{{ oeuvre.note }}</li>
+          <li><strong>Type   : </strong>{{ oeuvre.type }}</li>
+          <li><strong>Genre  : </strong><span *ngFor="let genre of oeuvre.genres">{{genre.libelle}} </span></li>
+          <li><strong>Statut : </strong>{{ oeuvre.statut.libelle }}</li>
+          <li><strong>Note   : </strong>{{ oeuvre.note }}</li>
         </ul>
       </div>
 

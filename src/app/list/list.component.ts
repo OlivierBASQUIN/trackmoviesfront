@@ -21,17 +21,15 @@ export class ListComponent implements OnInit {
       if(data.length==0) {
         this.oeuvreService.getOeuvresInitiales()
         console.log("first init");
+        console.log(data);
       }
       else {
         this.oeuvres = data;
         console.log("data inchangé");
+        console.log(data);
       }
     });
   }
-
-  //ngOnDestroy() {
-  //  this.subscriptionOeuvre.unsubscribe();
-  //}
 
   oeuvresSuivantesActionBouton(){
     this.oeuvreService.getOeuvresSuivantes();

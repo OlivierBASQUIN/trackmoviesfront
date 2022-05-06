@@ -8,7 +8,7 @@ import { StatutModel } from '../models/statut.model';
 })
 export class StatutService {
 
-  private _API_URL = "http://localhost:8080";
+  private _API_URL = "http://localhost:8080/trackmovies/v1";
 
   private _statuts$ = new BehaviorSubject<StatutModel[]>([]);
 
@@ -16,7 +16,7 @@ export class StatutService {
 
   getStatuts():void {
     // récupération des statuts via le endpoint /mes_oeuvres de l'API backend
-    this.httpClient.get(this._API_URL+'/statuts')
+    this.httpClient.get(this._API_URL+'/statuts_visionnage')
         .pipe (
           // mapping de la réponse en tableau d'objets de type OeuvreModel
           map(
