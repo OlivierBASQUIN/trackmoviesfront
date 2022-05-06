@@ -3,8 +3,8 @@ export class GenreModel {
   id: number;
   libelle: string;
 
-  constructor(statut:any){
-    this.id = statut.id;
-    this.libelle = statut.libelle;
+  constructor(id:number,libelle:string){
+    this.id = id;
+    this.libelle = libelle;
   }
 }

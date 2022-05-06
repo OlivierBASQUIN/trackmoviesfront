@@ -11,7 +11,7 @@
   <div class="btn-group m-3">
     <mat-form-field appearance="fill">
       <mat-label>Type</mat-label>
-      <mat-select [(value)]="valeurParDefaut">
+      <mat-select>
         <mat-option *ngFor="let type of types" [value]="type">
           {{type}}
         </mat-option>

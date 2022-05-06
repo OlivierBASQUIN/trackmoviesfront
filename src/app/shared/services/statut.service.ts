@@ -6,11 +6,13 @@ import { StatutModel } from '../models/statut.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class StatutService {
 
-  private _API_URL = "http://localhost:8080/trackmovies/v1";
+  private _API_URL = 'http://localhost:8080/trackmovies/v1';
 
   private _statuts$ = new BehaviorSubject<StatutModel[]>([]);
+  private _statutParDefaut:Array<StatutModel>= [new StatutModel(-1,'Tous')];
 
   constructor(private httpClient:HttpClient) { }
 
@@ -20,19 +22,18 @@ export class StatutService {
         .pipe (
           // mapping de la réponse en tableau d'objets de type OeuvreModel
           map(
-            (apiResponse:any) => apiResponse.statuts.map( (statut:any) => new StatutModel(statut) )
+            (apiResponse:any) => apiResponse.statuts.map( (statut:StatutModel) => new StatutModel(statut.id,statut.libelle) )
           ) // fin map
         ) // fin pipe
        .subscribe(
-         (response:Array<StatutModel>) => this._statuts$.next(response)
+          (response:Array<StatutModel>) => {
+            let statuts = [...this._statutParDefaut, ...response];
+            this._statuts$.next(statuts);
+          }
        )
      }
 
   get statuts$():Observable<StatutModel[]> {
     return this._statuts$.asObservable();
-  }
-
-  set statuts$(statuts:any) {
-    this._statuts$.next(statuts)
   }
 }

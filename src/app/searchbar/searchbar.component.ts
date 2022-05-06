@@ -13,17 +13,7 @@ import { StatutService } from '../shared/services/statut.service';
 })
 export class SearchbarComponent implements OnInit {
 
-  subscriptionGenre:Subscription = new Subscription();
-  subscriptionStatut:Subscription = new Subscription();
-
   types: string[] = ['Tous', 'Série', 'Film'];
-  genres:Array<GenreModel> = [];
-  statuts:Array<StatutModel> = [];
-
-
-
-  genresParDefaut: string[] = ['Tous'];
-  valeurParDefaut: string = 'Tous';
 
   constructor(public statutService:StatutService, public genreService:GenreService,public oeuvreService:OeuvreService) {
     console.log(this);
@@ -31,36 +21,31 @@ export class SearchbarComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // Souscription observable return par la méthode genres§ (get)
+    // Souscription observable return par la méthode genres§
+
     this.genreService.genres$.subscribe( (genreData:Array<GenreModel>) => {
 
       //--> Réponse vide : appel à la méthode getGenres()
       //-->  1. init requête HTTP Get
       //-->  2. subscribe() à la réponse HTTP (observable)
-      //-->  3. next() dans _genre$ (subject) return en observable part la méthode genre$
+      //-->  3. next() dans _genre$ (subject) return en observable part la méthode genres$
+
       if(genreData.length==0) {
         this.genreService.getGenres()
-        console.log("first init genre");
-        console.log(genreData);
-      }
-      //--> Réponse non vide : utilisation directe réponse dans l'observable return par la méthode genre
-      else {
-        this.genres = genreData;
-        console.log("data inchangé genre");
-        console.log(genreData);
       }
     });
 
+    // Souscription observable return par la méthode statuts§
+
     this.statutService.statuts$.subscribe( (statutData:Array<StatutModel>) => {
+
+      //--> Réponse return par observable vide : appel à la méthode getStatuts()
+      //-->  1. init requête HTTP (get)
+      //-->  2. subscribe() à la réponse HTTP (observable)
+      //-->  3. next() dans _statuts$ (subject) return en observable part la méthode statuts$
+
       if(statutData.length==0) {
         this.statutService.getStatuts()
-        console.log("first init statut");
-        console.log(statutData);
-      }
-      else {
-        this.statuts = statutData;
-        console.log("data inchangé statut");
-        console.log(statutData);
       }
     });
   }

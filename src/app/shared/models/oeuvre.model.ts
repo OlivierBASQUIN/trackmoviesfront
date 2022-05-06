@@ -11,14 +11,14 @@ export class OeuvreModel {
   video: string;
   duree: number;
 
-  constructor(oeuvreApiBack: any) {
-    this.id = oeuvreApiBack.id;
-    this.type = oeuvreApiBack.type;
-    this.titre = oeuvreApiBack.titre;
-    this.statut = oeuvreApiBack.statut;
-    this.genres = oeuvreApiBack.genres;
-    this.note = oeuvreApiBack.note;
-    this.video = oeuvreApiBack.video;
-    this.duree = oeuvreApiBack.duree;
+  constructor(oeuvre: OeuvreModel) {
+    this.id = oeuvre.id;
+    this.type = oeuvre.type;
+    this.titre = oeuvre.titre;
+    this.statut = oeuvre.statut;
+    this.genres = oeuvre.genres;
+    this.note = oeuvre.note;
+    this.video = oeuvre.video;
+    this.duree = oeuvre.duree;
   }
 }

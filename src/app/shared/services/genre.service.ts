@@ -11,6 +11,7 @@ export class GenreService {
   private _API_URL = "http://localhost:8080/trackmovies/v1";
 
   private _genres$ = new BehaviorSubject<GenreModel[]>([]);
+  private _genreParDefaut:Array<GenreModel>= [new GenreModel(-1,'Tous')];
 
   constructor(private httpClient:HttpClient) { }
 
@@ -20,20 +21,19 @@ export class GenreService {
         .pipe (
           // mapping de la réponse en tableau d'objets de type OeuvreModel
           map(
-            (apiResponse:any) => apiResponse.genres.map( (genre:any) => new GenreModel(genre) )
+            (apiResponse:any) => apiResponse.genres.map( (genre:GenreModel) => new GenreModel(genre.id, genre.libelle) )
           ) // fin map
         ) // fin pipe
        // souscrition à la réponse HTTP (observable) et push dans le subject _genre$
         .subscribe(
-         (response:Array<GenreModel>) => this._genres$.next(response)
+         (reponse:Array<GenreModel>) => {
+          let genres =  [...this._genreParDefaut, ...reponse];
+          this._genres$.next(genres);
+         }
        )
      }
 
   get genres$():Observable<GenreModel[]> {
     return this._genres$.asObservable();
   }
-
-  //set genres$(genres:any) {
-  //  this._genres$.next(genres)
-  //}
 }
