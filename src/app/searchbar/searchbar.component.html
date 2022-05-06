@@ -22,7 +22,7 @@
   <div class="btn-group m-3">
     <mat-form-field appearance="fill">
       <mat-label>Statut</mat-label>
-      <mat-select [(value)]="valeurParDefaut">
+      <mat-select>
         <mat-option *ngFor="let statut of statutService.statuts$ | async" [value]="statut">
           {{statut.libelle}}
         </mat-option>
@@ -33,11 +33,11 @@
     <div class="btn-group m-3">
       <mat-form-field appearance="fill">
         <mat-label>Genre</mat-label>
-        <mat-select [(value)]="valeurParDefaut">
+        <mat-select>
           <mat-option *ngFor="let genre of genreService.genres$ | async" [value]="genre">
             {{genre.libelle}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
+  </div>
 </div>
