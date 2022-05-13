@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { OeuvreModel } from '../models/oeuvre.model';
@@ -49,8 +49,19 @@ export class OeuvreService {
        )
      }
 
-     searchOeuvres(texte:string):void {
-      this.httpClient.get(this._API_URL+'/recherche/oeuvre')
+     searchOeuvres(texteRecherche:string, selectionType:string, selectionStatut: string, selectionGenre: string):void {
+
+      let endPoint = '/mes_oeuvres';
+      let parametres = new HttpParams();
+
+      if ((selectionType !== '')  && (selectionType !== 'tous'))  { parametres = parametres.append('type', selectionType); }
+      if ((selectionStatut !== '') && (+selectionStatut !== -1)) { parametres = parametres.append('statut', selectionStatut); }
+      if ((selectionGenre !== '') && (+selectionGenre !== -1))   { parametres = parametres.append('genre', selectionGenre);  }
+      if  (texteRecherche.trim().length > 0)                      { parametres = parametres.append('titre', texteRecherche); }
+
+      //console.log(parametres);
+
+      this.httpClient.get( this._API_URL + endPoint, {params:parametres} )
       .pipe (
         // mapping de la réponse en tableau d'objets de type OeuvreModel
         map(
@@ -58,10 +69,10 @@ export class OeuvreService {
         ) // fin map
       ) // fin pipe
      .subscribe(
-       (reponse:Array<OeuvreModel>) => this._oeuvresTrouvees$.next(reponse));
-     }
+       (reponse:Array<OeuvreModel>) => this._oeuvres$.next(reponse))
+      }
 
-  /*
+      /*
     Role        : Getter _oeuvres$
     Return      : Observable
     Consommable : this.movieService.oeuvres$.subscribe()
@@ -80,8 +91,4 @@ export class OeuvreService {
     get oeuvresTrouvees$():Observable<OeuvreModel[]> {
       return this._oeuvresTrouvees$.asObservable();
     }
-
-  //set oeuvres$(oeuvres:any) {
-  //  this._oeuvres$.next(oeuvres)
-  //}
 }

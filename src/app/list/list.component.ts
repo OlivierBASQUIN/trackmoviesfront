@@ -19,13 +19,13 @@ export class ListComponent implements OnInit {
     this.oeuvreService.oeuvres$.subscribe( (data:Array<OeuvreModel>) => {
       if(data.length==0) {
         this.oeuvreService.getOeuvresInitiales()
-        console.log("first init");
+        //console.log("first init");
         //console.log(data);
       }
       else {
       //  this.oeuvres = data;
       //  console.log("data inchangé");
-        console.log(data);
+       // console.log(data);
       }
     });
   }

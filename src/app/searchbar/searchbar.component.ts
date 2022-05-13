@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { GenreModel } from '../shared/models/genre.model';
 import { StatutModel } from '../shared/models/statut.model';
+import { TypeModel } from '../shared/models/type.model';
 import { GenreService } from '../shared/services/genre.service';
 import { OeuvreService } from '../shared/services/oeuvre.service';
 import { StatutService } from '../shared/services/statut.service';
+import { TypeService } from '../shared/services/type.service';
 
 @Component({
   selector: 'app-searchbar',
@@ -13,14 +15,19 @@ import { StatutService } from '../shared/services/statut.service';
 })
 export class SearchbarComponent implements OnInit {
 
-  types: string[] = ['Tous', 'Série', 'Film'];
+  types!: TypeModel[];
+  selectionType: string = '';
+  selectionStatut: string = '';
+  selectionGenre: string = '';
+  userInputValue: string = '';
 
-  constructor(public statutService:StatutService, public genreService:GenreService,public oeuvreService:OeuvreService) {
-    console.log(this);
+  constructor(public statutService:StatutService, public genreService:GenreService,public oeuvreService:OeuvreService, public typeService: TypeService) {
+    //console.log(this);
   }
 
   ngOnInit(): void {
 
+    this.types = this.typeService.getTypes();
     // Souscription observable return par la méthode genres§
 
     this.genreService.genres$.subscribe( (genreData:Array<GenreModel>) => {
@@ -49,9 +56,28 @@ export class SearchbarComponent implements OnInit {
       }
     });
   }
-
+  /*
   searchOeuvresInput(texte:string){
-    console.log(texte);
-    this.oeuvreService.searchOeuvres(texte);
+    //console.log(texte);
+    this.oeuvreService.searchOeuvres(texte, this.selectionType,this.selectionStatut,this.selectionGenre);
+    this.userInputValue = texte;
+  }
+  /*
+  /*
+  searchOeuvresFilter(){
+    console.log('searchOeuvresFilter()');
+    this.oeuvreService.searchOeuvres(this.userInputValue, this.selectionType,this.selectionStatut,this.selectionGenre);
+  }
+  */
+  searchOeuvresEvent(texte?:string){
+    //console.log('searchOeuvresEvent()');
+    //console.log('userInputValue : ' + this.userInputValue)
+    if (texte) {
+      this.oeuvreService.searchOeuvres(texte, this.selectionType,this.selectionStatut,this.selectionGenre);
+      this.userInputValue = texte;
+    }
+    else {
+      this.oeuvreService.searchOeuvres(this.userInputValue, this.selectionType,this.selectionStatut,this.selectionGenre);
+    }
   }
 }

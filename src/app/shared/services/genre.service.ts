@@ -6,12 +6,14 @@ import { GenreModel } from '../models/genre.model';
 @Injectable({
   providedIn: 'root'
 })
+
 export class GenreService {
 
   private _API_URL = "http://localhost:8080/trackmovies/v1";
 
   private _genres$ = new BehaviorSubject<GenreModel[]>([]);
   private _genreParDefaut:Array<GenreModel>= [new GenreModel(-1,'Tous')];
+
 
   constructor(private httpClient:HttpClient) { }
 
