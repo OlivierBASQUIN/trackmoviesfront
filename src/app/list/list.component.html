@@ -22,7 +22,7 @@
         <ul>
           <li><strong>Type   : </strong>{{ oeuvre.type | titlecase }} </li>
           <li><strong>Genre  : </strong><span *ngFor="let genre of oeuvre.genres">{{ genre.libelle | titlecase }} </span></li>
-          <li><strong>Statut : </strong>{{ oeuvre.statut.libelle }}</li>
+          <li><strong>Statut : </strong>{{ oeuvre.statutVisionnage.libelle }}</li>
           <li><strong>Note   : </strong>{{ oeuvre.note }}</li>
         </ul>
       </div>
