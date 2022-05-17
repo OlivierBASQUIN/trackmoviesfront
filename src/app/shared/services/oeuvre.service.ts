@@ -11,6 +11,7 @@ export class OeuvreService {
   private _API_URL = "http://localhost:8080/trackmovies/v1";
   private _oeuvres$ = new BehaviorSubject<OeuvreModel[]>([]);
   private _oeuvresTrouvees$ = new BehaviorSubject<OeuvreModel[]>([]);
+  private _parametreRechercheExiste = false;
 
   constructor(private httpClient:HttpClient) { }
 
@@ -21,6 +22,7 @@ export class OeuvreService {
     */
 
      getOeuvresInitiales():void {
+      console.log('getOeuvresInitiales()');
       // récupération des oeuvres via le endpoint /mes_oeuvres de l'API backend
       this.httpClient.get(this._API_URL+'/mes_oeuvres')
         .pipe (
@@ -51,16 +53,17 @@ export class OeuvreService {
 
      searchOeuvres(texteRecherche:string, selectionType:string, selectionStatut: string, selectionGenre: string):void {
 
+      this._parametreRechercheExiste = false;
       let endPoint = '/mes_oeuvres';
       let parametres = new HttpParams();
 
-      if ((selectionType !== '')  && (selectionType !== 'tous'))  { parametres = parametres.append('type', selectionType); }
-      if ((selectionStatut !== '') && (+selectionStatut !== -1)) { parametres = parametres.append('statut', selectionStatut); }
-      if ((selectionGenre !== '') && (+selectionGenre !== -1))   { parametres = parametres.append('genre', selectionGenre);  }
-      if  (texteRecherche.trim().length > 0)                      { parametres = parametres.append('titre', texteRecherche); }
+      if ((selectionType !== '')  && (selectionType !== 'tous'))  { parametres = parametres.append('type', selectionType); this._parametreRechercheExiste = true;  }
+      if ((selectionStatut !== '') && (+selectionStatut !== -1)) { parametres = parametres.append('statut', selectionStatut); this._parametreRechercheExiste = true;}
+      if ((selectionGenre !== '') && (+selectionGenre !== -1))   { parametres = parametres.append('genre', selectionGenre); this._parametreRechercheExiste = true; }
+      if  (texteRecherche.trim().length > 0)                      { parametres = parametres.append('titre', texteRecherche); this._parametreRechercheExiste = true;}
 
       //console.log(parametres);
-
+      console.log('httpClient.get');
       this.httpClient.get( this._API_URL + endPoint, {params:parametres} )
       .pipe (
         // mapping de la réponse en tableau d'objets de type OeuvreModel
@@ -72,6 +75,9 @@ export class OeuvreService {
        (reponse:Array<OeuvreModel>) => this._oeuvres$.next(reponse))
       }
 
+      getParametreRechercheExiste(): boolean {
+        return this._parametreRechercheExiste;
+      }
       /*
     Role        : Getter _oeuvres$
     Return      : Observable

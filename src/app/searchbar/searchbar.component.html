@@ -1,6 +1,7 @@
 <!-- Champs de saisie recherche films -->
 <div class="blockSearch">
-  <input #userInput (keyup)="searchOeuvresEvent(userInput.value)" placeholder="Rechercher ..." class="form-control" type="text">
+  <input #userInput (change)="searchOeuvresInput(userInput.value)" (blur)="searchOeuvresInput(userInput.value)"  placeholder="Rechercher ..." class="form-control" type="text">
+  <!--<input #texteOeuvreRecherche placeholder="Rechercher une oeuvre ..." class="form-control" type="text"> -->
 </div>
 <!-- Barre de filtres -->
 <div class="filterBar m-3">
@@ -9,7 +10,7 @@
   <div class="btn-group m-3">
     <mat-form-field appearance="fill">
       <mat-label>Type</mat-label>
-      <mat-select [(value)]="selectionType" (selectionChange)="searchOeuvresEvent()">
+      <mat-select [(value)]="selectionType" (selectionChange)="searchOeuvresFilter()">
         <mat-option *ngFor="let type of types" [value]="type.libelle">
           {{type.libelle | titlecase }}
         </mat-option>
@@ -22,7 +23,7 @@
   <div class="btn-group m-3">
     <mat-form-field appearance="fill">
       <mat-label>Statut</mat-label>
-      <mat-select [(value)]="selectionStatut" (selectionChange)="searchOeuvresEvent()">
+      <mat-select [(value)]="selectionStatut" (selectionChange)="searchOeuvresFilter()">
         <mat-option *ngFor="let statut of statutService.statuts$ | async" [value]="statut.id">
           {{statut.libelle | titlecase }}
         </mat-option>
@@ -34,7 +35,7 @@
     <div class="btn-group m-3">
       <mat-form-field appearance="fill">
         <mat-label>Genre</mat-label>
-        <mat-select [(value)]="selectionGenre" (selectionChange)="searchOeuvresEvent()">
+        <mat-select [(value)]="selectionGenre" (selectionChange)="searchOeuvresFilter()">
           <mat-option *ngFor="let genre of genreService.genres$ | async" [value]="genre.id">
             {{genre.libelle | titlecase }}
           </mat-option>
