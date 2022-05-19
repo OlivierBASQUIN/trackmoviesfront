@@ -12,7 +12,7 @@ export class OeuvreService {
   private _API_URL = "http://localhost:8080/trackmovies/v1/";
   private _oeuvres$ = new BehaviorSubject<OeuvreModel[]>([]);
   private _oeuvresTrouvees$ = new BehaviorSubject<OeuvreModel[]>([]);
-  private _oeuvre$ = new BehaviorSubject<OeuvreDetailModel>(null!);
+  private _oeuvreDetail$ = new BehaviorSubject<OeuvreDetailModel>(null!);
   private _parametreRechercheExiste = false;
 
   constructor(private httpClient:HttpClient) { }
@@ -99,7 +99,7 @@ export class OeuvreService {
         .subscribe(
           (response:OeuvreDetailModel) => {
             console.log(response)
-            this._oeuvre$.next(response)
+            this._oeuvreDetail$.next(response)
            }
         )
       }
@@ -120,9 +120,18 @@ export class OeuvreService {
     Consommable : this.movieService.oeuvre$.subscribe()
   */
 
-    get oeuvre$():Observable<OeuvreDetailModel> {
-      return this._oeuvre$.asObservable();
+    get oeuvreDetail$():Observable<OeuvreDetailModel> {
+      return this._oeuvreDetail$.asObservable();
     }
+
+        /*
+    Role        : Setter _oeuvre$
+    Return      : OeuvreDetailModel
+  */
+
+     setOeuvreDetail(oeuvreDetail:OeuvreDetailModel){
+       return this._oeuvreDetail$.next(oeuvreDetail);
+     }
 
   /*
     Role        : Getter _oeuvresTrouvees$
