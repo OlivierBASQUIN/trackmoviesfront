@@ -5,7 +5,7 @@ import { ListComponent } from './list/list.component';
 
 /* définir les routes de l'applications */
 const routes: Routes = [
-  { path: 'mes-oeuvres', component: ListComponent },
+  { path: '', component: ListComponent },
   { path: 'mes-oeuvres/:id', component: DetailOeuvreComponent },
   
 ];

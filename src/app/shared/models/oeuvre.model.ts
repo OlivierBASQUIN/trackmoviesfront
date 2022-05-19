@@ -3,7 +3,7 @@ import { StatutModel } from '../models/statut.model';
 
 export class OeuvreModel {
   id: number;
-  type: string;
+  typeOeuvre: string;
   titre: string;
   genres: GenreModel[];
   statutVisionnage: StatutModel;
@@ -13,7 +13,7 @@ export class OeuvreModel {
 
   constructor(oeuvre: OeuvreModel) {
     this.id = oeuvre.id;
-    this.type = oeuvre.type;
+    this.typeOeuvre = oeuvre.typeOeuvre;
     this.titre = oeuvre.titre;
     this.statutVisionnage = oeuvre.statutVisionnage;
     this.genres = oeuvre.genres;

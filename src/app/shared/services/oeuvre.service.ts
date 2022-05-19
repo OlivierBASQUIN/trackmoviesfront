@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { OeuvreDetail } from '../models/oeuvre-detail.model';
+import { OeuvreDetailModel } from '../models/oeuvre-detail.model';
 import { OeuvreModel } from '../models/oeuvre.model';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { OeuvreModel } from '../models/oeuvre.model';
 })
 export class OeuvreService {
 
-  private _API_URL = "http://localhost:8080/trackmovies/v1";
+  private _API_URL = "http://localhost:8080/trackmovies/v1/";
   private _oeuvres$ = new BehaviorSubject<OeuvreModel[]>([]);
   private _oeuvresTrouvees$ = new BehaviorSubject<OeuvreModel[]>([]);
   private _oeuvre$ = new BehaviorSubject<OeuvreDetailModel>(null!);
@@ -93,11 +93,11 @@ export class OeuvreService {
            // mapping de la réponse en objet Oeuvre de type OeuvreDetailModel
            map( 
              (reponseApi:any) => 
-             new OeuvreDetail(reponseApi)
+             new OeuvreDetailModel(reponseApi)
            ) // fin map
          ) // fin pipe() retourne un Observable
         .subscribe(
-          (response:OeuvreDetail) => {
+          (response:OeuvreDetailModel) => {
             console.log(response)
             this._oeuvre$.next(response)
            }
