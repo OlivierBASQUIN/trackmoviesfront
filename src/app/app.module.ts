@@ -10,6 +10,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
+import { FormulaireEditionOeuvreComponent } from './formulaire-edition-oeuvre/formulaire-edition-oeuvre.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -19,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
     DetailComponent,
     ListComponent,
     SearchbarComponent,
+    FormulaireEditionOeuvreComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
     NoopAnimationsModule,
     MatSliderModule,
     MatSelectModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

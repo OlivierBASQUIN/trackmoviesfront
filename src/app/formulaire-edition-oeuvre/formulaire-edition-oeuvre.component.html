@@ -1,0 +1,31 @@
+<p>formulaire-edition-oeuvre works!</p>
+
+<div>
+  <button routerLink="/liste" class="btn btn-dark me-3">
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+</div>
+
+
+
+<form (submit)="onSubmitForm($event)" [formGroup]="oeuvreForm" class="card-form">
+  <!-- Select Type -->
+  <div class="btn-group m-3">
+    <mat-form-field appearance="fill">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="typeOeuvre" [(value)]="selectionType" >
+        <mat-option *ngFor="let type of types" [value]="type.libelle">
+          {{type.libelle | titlecase }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <label>Titre</label>
+    <input formControlName="titre" type="text">
+  </div>
+
+  <button type="submit">Sauver</button>
+
+</form>
