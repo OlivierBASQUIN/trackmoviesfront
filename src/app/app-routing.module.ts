@@ -7,10 +7,9 @@ import { ListComponent } from './list/list.component';
 /* définir les routes de l'applications */
 const routes: Routes = [
   { path: '', component: ListComponent },
-  { path: 'liste', component: ListComponent },
   { path: 'mes-oeuvres/:id', component: DetailOeuvreComponent },
   { path: 'edition-oeuvre', component: FormulaireEditionOeuvreComponent },
-  
+
 ];
 
 @NgModule({
