@@ -8,7 +8,7 @@
 
   <!-- Select Type -->
   <div class="btn-group m-3">
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="outline">
       <mat-label>Type</mat-label>
       <mat-select [(value)]="selectionType" (selectionChange)="searchOeuvresFilter()">
         <mat-option *ngFor="let type of types" [value]="type.libelle">

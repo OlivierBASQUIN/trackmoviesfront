@@ -39,16 +39,28 @@ export class DetailOeuvreComponent implements OnInit {
 
 } // Fin ngOnInit
 
-  getUrlAffiche(movieImageString:string | null ):string {
-    return (movieImageString!=null &&movieImageString!='')
-            ? 'https://image.tmdb.org/t/p/w500'+ movieImageString
-            : 'https://via.placeholder.com/500x281.png?text=no+images'
+  getUrlAffiche(urlAffiche:string | null ):string {
+    return (urlAffiche!=null && urlAffiche!='')
+            ?  urlAffiche
+            : 'https://via.placeholder.com/500x600.png?text=no+images'
   }
 
-  getVideoUrl(videoKey:string) {
-    let url =  'https://www.youtube.com/embed/'+ videoKey;
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url)
+  getUrlBandeAnnonce(urlBandeAnnonce:string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(urlBandeAnnonce)
   }
+
+   /* 
+    ngOnDestroy() fait partie de méthodes du cycle de vie du component
+    Elle est exécutée par Angular "juste avant" la destruction du Component
+
+    C'est ici qu'il faut unsubscribe nos subcriptions
+
+  */ 
+    ngOnDestroy() {
+      for(let sub of this.subscriptions) {
+        sub.unsubscribe()
+      }
+    }
 }
 
 
