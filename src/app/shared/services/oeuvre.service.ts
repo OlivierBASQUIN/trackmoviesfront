@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable } from 'rxjs';
+import { OeuvreDetailModel } from '../models/oeuvre-detail.model';
 import { OeuvreModel } from '../models/oeuvre.model';
 
 @Injectable({
@@ -8,9 +9,10 @@ import { OeuvreModel } from '../models/oeuvre.model';
 })
 export class OeuvreService {
 
-  private _API_URL = "http://localhost:8080/trackmovies/v1";
+  private _API_URL = "http://localhost:8080/trackmovies/v1/";
   private _oeuvres$ = new BehaviorSubject<OeuvreModel[]>([]);
   private _oeuvresTrouvees$ = new BehaviorSubject<OeuvreModel[]>([]);
+  private _oeuvreDetail$ = new BehaviorSubject<OeuvreDetailModel>(null!);
   private _parametreRechercheExiste = false;
 
   constructor(private httpClient:HttpClient) { }
@@ -78,6 +80,30 @@ export class OeuvreService {
       getParametreRechercheExiste(): boolean {
         return this._parametreRechercheExiste;
       }
+
+  
+      /*
+      Role         : request api trackMoviesBack pour rechercher une oeuvre par son id
+      Endpoint     : /mes_oeuvres/{id}
+    */
+      public getOeuvreById(movieId:number) {
+        // récupération d'une oeuvre via le endpoint /mes_oeuvres/{id} de l'API backend
+        this.httpClient.get(this._API_URL+'/mes_oeuvres/'+movieId)
+        .pipe( 
+           // mapping de la réponse en objet Oeuvre de type OeuvreDetailModel
+           map( 
+             (reponseApi:any) => 
+             new OeuvreDetailModel(reponseApi)
+           ) // fin map
+         ) // fin pipe() retourne un Observable
+        .subscribe(
+          (response:OeuvreDetailModel) => {
+            console.log(response)
+            this._oeuvreDetail$.next(response)
+           }
+        )
+      }
+
       /*
     Role        : Getter _oeuvres$
     Return      : Observable
@@ -87,6 +113,25 @@ export class OeuvreService {
     get oeuvres$():Observable<OeuvreModel[]> {
     return this._oeuvres$.asObservable();
   }
+
+        /*
+    Role        : Getter _oeuvre$
+    Return      : Observable
+    Consommable : this.movieService.oeuvre$.subscribe()
+  */
+
+    get oeuvreDetail$():Observable<OeuvreDetailModel> {
+      return this._oeuvreDetail$.asObservable();
+    }
+
+        /*
+    Role        : Setter _oeuvre$
+    Return      : OeuvreDetailModel
+  */
+
+     setOeuvreDetail(oeuvreDetail:OeuvreDetailModel){
+       return this._oeuvreDetail$.next(oeuvreDetail);
+     }
 
   /*
     Role        : Getter _oeuvresTrouvees$

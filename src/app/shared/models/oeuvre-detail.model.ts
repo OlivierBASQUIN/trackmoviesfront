@@ -11,6 +11,5 @@ export class OeuvreDetailModel extends OeuvreModel {
     this.duree = oeuvreDetail.duree;
     this.saisons=oeuvreDetail.saisons;
   }
-
 }
 

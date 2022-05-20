@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DetailComponent } from './detail/detail.component';
+import { DetailOeuvreComponent } from './detail-oeuvre/detail-oeuvre.component';
 import { ListComponent } from './list/list.component';
 import { SearchbarComponent } from './searchbar/searchbar.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,11 +21,11 @@ import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    DetailComponent,
+    AppComponent,    
     ListComponent,
     SearchbarComponent,
-    FormulaireEditionOeuvreComponent,
+	DetailOeuvreComponent,
+	FormulaireEditionOeuvreComponent,
   ],
   imports: [
     BrowserModule,

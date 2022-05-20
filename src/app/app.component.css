@@ -1,3 +1,10 @@
+.sousBody {
+    display: flex;
+    flex-direction: column;
+   justify-content: space-between;
+   height: 100vh;
+}
+
 header  {
    display: flex;
    flex-wrap: wrap;
@@ -10,7 +17,6 @@ header div {
     align-items: center;
     
 }
-
 
 footer {
     background-color: grey;

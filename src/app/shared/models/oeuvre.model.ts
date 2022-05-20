@@ -8,6 +8,8 @@ export class OeuvreModel {
   genres: GenreModel[];
   statutVisionnage: StatutModel;
   note: number;
+  createurs: string;
+  acteurs: string;
   urlAffiche: string;
   urlBandeAnnonce: string;
 
@@ -18,6 +20,8 @@ export class OeuvreModel {
     this.statutVisionnage = oeuvre.statutVisionnage;
     this.genres = oeuvre.genres;
     this.note = oeuvre.note;
+    this.createurs = oeuvre.createurs
+    this.acteurs = oeuvre.acteurs
     this.urlAffiche = oeuvre.urlAffiche;
     this.urlBandeAnnonce = oeuvre.urlBandeAnnonce;
   }

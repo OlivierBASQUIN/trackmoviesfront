@@ -11,7 +11,7 @@
   <div *ngFor="let oeuvre of oeuvreService.oeuvres$ | async" class="col-6 col-lg-3 col-xl-2">
     <!-- CARD-->
     <!-- Lien navigation vers la page détail -->
-    <div [routerLink]="['details']" class="card">
+    <div [routerLink]="['mes-oeuvres', oeuvre.id]" class="card">
       <div class="blockImg">
         <img [src]="getUrlAffiche(oeuvre.urlAffiche)" alt="" />
       </div>
