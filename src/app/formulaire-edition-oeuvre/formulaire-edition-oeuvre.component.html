@@ -46,11 +46,13 @@
     </mat-form-field>
   </div>
 
+  <!--
   <div class="mb-3">
     <label class="form-label">Titre</label>
     <input class="form-control" formControlName="titre" type="text">
   </div>
 
+  -->
 <!--genres-->
 <!--statut visionnage-->
 
@@ -90,16 +92,23 @@
   </div>
 -->
 
-  <div class="mb-3">
-    <mat-form-field >
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Titre</mat-label>
+      <input formControlName="titre" matInput>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field appearance="outline">
       <mat-label>Url de l'affiche</mat-label>
       <input formControlName="urlAffiche" matInput>
     </mat-form-field>
   </div>
 
 
-  <div class="mb-3">
-    <mat-form-field >
+  <div>
+    <mat-form-field appearance="outline" class="champ-video-youtube">
       <mat-label>Clé video youtube</mat-label>
       <input formControlName="urlBandeAnnonce" matInput placeholder="Clé Youtube remplacant ????">
       <mat-hint>https://www.youtube.com/watch?v=????</mat-hint>
@@ -123,7 +132,8 @@
   </div>
   -->
 
-
-  <button type="submit">Sauver</button>
+  <div>
+    <button type="submit" class="btn btn-success">Sauver</button>
+  </div>
 
 </form>
