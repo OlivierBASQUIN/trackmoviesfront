@@ -93,8 +93,16 @@ export class OeuvreService {
     Return      : Observable
     Consommable : this.movieService.oeuvresTrouvees$.subscribe()
   */
-
     get oeuvresTrouvees$():Observable<OeuvreModel[]> {
       return this._oeuvresTrouvees$.asObservable();
     }
+
+  /*
+    Poster une nouvelle oeuvre
+    method : POST
+    endpoint : '/oeuvre'
+  */
+  saveOeuvre(oeuvreASauver:any):Observable<any> {
+    return this.httpClient.post(this._API_URL+'/oeuvre', oeuvreASauver);
+  }
 }

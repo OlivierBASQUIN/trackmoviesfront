@@ -20,9 +20,9 @@
         <h2>{{ oeuvre.titre | titlecase }}</h2>
 
         <ul>
-          <li><strong>Type   : </strong>{{ oeuvre.type | titlecase }} </li>
+          <li><strong>Type   : </strong>{{ oeuvre.typeOeuvre | titlecase }} </li>
           <li><strong>Genre  : </strong><span *ngFor="let genre of oeuvre.genres">{{ genre.libelle | titlecase }} </span></li>
-          <li><strong>Statut : </strong>{{ oeuvre.statutVisionnage.libelle }}</li>
+          <li><strong>Statut : </strong><span *ngIf="oeuvre.statutVisionnage">{{ oeuvre.statutVisionnage.libelle }}</span></li>
           <li><strong>Note   : </strong>{{ oeuvre.note }}</li>
         </ul>
       </div>
