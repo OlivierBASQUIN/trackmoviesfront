@@ -9,10 +9,8 @@ import { OeuvreService } from '../shared/services/oeuvre.service';
 })
 export class ListComponent implements OnInit {
 
-  //oeuvres:Array<OeuvreModel> = [];
-
   constructor(public oeuvreService:OeuvreService) {
-    console.log(this);
+    //console.log(this);
   }
 
   ngOnInit(): void {
@@ -20,14 +18,7 @@ export class ListComponent implements OnInit {
     this.oeuvreService.oeuvres$.subscribe( (data:Array<OeuvreModel>) => {
       if((data.length==0) && (!this.oeuvreService.getParametreRechercheExiste())) {
         this.oeuvreService.getOeuvresInitiales()
-        //console.log("first init");
-        //console.log(data);
       }
-      //else {
-      //  this.oeuvres = data;
-      //  console.log("data inchangé");
-       // console.log(data);
-      //}
     });
   }
 

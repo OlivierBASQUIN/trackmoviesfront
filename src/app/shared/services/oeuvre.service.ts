@@ -22,7 +22,6 @@ export class OeuvreService {
     */
 
      getOeuvresInitiales():void {
-      console.log('getOeuvresInitiales()');
       // récupération des oeuvres via le endpoint /mes_oeuvres de l'API backend
       this.httpClient.get(this._API_URL+'/mes_oeuvres')
         .pipe (
@@ -62,8 +61,6 @@ export class OeuvreService {
       if ((selectionGenre !== '') && (+selectionGenre !== -1))   { parametres = parametres.append('genre', selectionGenre); this._parametreRechercheExiste = true; }
       if  (texteRecherche.trim().length > 0)                      { parametres = parametres.append('titre', texteRecherche); this._parametreRechercheExiste = true;}
 
-      //console.log(parametres);
-      console.log('httpClient.get');
       this.httpClient.get( this._API_URL + endPoint, {params:parametres} )
       .pipe (
         // mapping de la réponse en tableau d'objets de type OeuvreModel
