@@ -145,6 +145,7 @@ export class OeuvreService {
     endpoint : '/oeuvre'
   */
   saveOeuvre(oeuvreASauver:any):Observable<any> {
+    console.log("oeuvreASauver=",oeuvreASauver);
     return this.httpClient.post(this._API_URL+'/oeuvre', oeuvreASauver);
   }
 }

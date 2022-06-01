@@ -3,10 +3,16 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  FormGroupDirective,
   Validators,
 } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { GenreModel } from '../shared/models/genre.model';
+import { StatutModel } from '../shared/models/statut.model';
 import { TypeModel } from '../shared/models/type.model';
+import { GenreService } from '../shared/services/genre.service';
 import { OeuvreService } from '../shared/services/oeuvre.service';
+import { StatutService } from '../shared/services/statut.service';
 import { TypeService } from '../shared/services/type.service';
 
 @Component({
@@ -17,21 +23,37 @@ import { TypeService } from '../shared/services/type.service';
 export class FormulaireEditionOeuvreComponent implements OnInit {
   private _URL_YOUTUBE="https://www.youtube.com/embed/";
 
+  //a supprimer: sert  pour debug en json
+  oeuvreASauverJson : any;
+
+  subscriptions:Subscription[] =[];
 
   oeuvreForm: FormGroup;
-  msgOeuvreSauvee :boolean = false ;
+  isOeuvreSauvee :boolean = false ;
 
   types!: TypeModel[];
   selectionType: string = '';
 
-  constructor(private fb: FormBuilder, public typeService: TypeService, public oeuvreService: OeuvreService) {
+  genres!: GenreModel[];
+  selectedGenres:GenreModel[]=[];
+
+  statutVisionnages!: StatutModel[];
+
+  notePossibles : Number[] = [0,1,2,3,4,5];
+
+  //gestion des messages d'erreur
+  isSauvegardeOk:boolean = true;
+  msgErreur:String='';
+
+  constructor(private fb: FormBuilder, public typeService: TypeService, public oeuvreService: OeuvreService, public genreService : GenreService, public statutService : StatutService) {
     this.oeuvreForm = this.fb.group({
       typeOeuvre: ['', [Validators.required, Validators.minLength(1)]],
       titre: ['', [Validators.required, Validators.minLength(1)]],
-      //genres: [''],
-      //statutVisionnage: [''],
-      //note: [''],
-      //duree: ['', [Validators.pattern("^[0-9]*$")]],
+      genreIds: [''],
+      statutVisionnageId: [''],
+      note: [''],
+      duree: ['', [Validators.pattern("^[0-9]*$")]],
+      description: [''],
       urlAffiche: [''],
       urlBandeAnnonce: ['']
     });
@@ -39,9 +61,18 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
 
   ngOnInit(): void {
     this.types = this.typeService.getTypesPourEditionOeuvre();
+
+    this.subscriptions.push(
+      this.genreService.genres$.subscribe(data => this.genres=data)
+    );
+
+    this.subscriptions.push(
+      this.statutService.statuts$.subscribe(data => this.statutVisionnages=data)
+    );
+
   }
 
-  onSubmitForm(event:Event) {
+  onSubmitForm(event:Event, formDirective: FormGroupDirective) {
     //évite de recharger la parge au moment de la soumission
     //sinon, l'event normal de soumission est de faire l'action et recharger la page
     event.preventDefault();
@@ -49,25 +80,31 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
     if (this.oeuvreForm.valid) {
       console.log('formulaire valide')
       console.log(this.oeuvreForm.value);
+      this.oeuvreASauverJson=this.oeuvreForm.value;
 
       //on sauvegarde une url youtube
-      this.oeuvreForm.controls["urlBandeAnnonce"].setValue(this._URL_YOUTUBE+this.oeuvreForm.controls["urlBandeAnnonce"].value);
+      let key:String  = this.oeuvreForm.controls["urlBandeAnnonce"].value;
+      if (key.trim()!='') {
+        this.oeuvreForm.controls["urlBandeAnnonce"].setValue(this._URL_YOUTUBE+key);
+      } else {
+        this.oeuvreForm.controls["urlBandeAnnonce"].setValue('');
+      }
 
       this.oeuvreService.saveOeuvre(this.oeuvreForm.value).subscribe(
         {
           next  : response => {
             console.log(response)//si tout s'est bien passé
-            this.msgOeuvreSauvee=true;
-            //this.alerteSvc.showMessage('vous avez bien ajouté un nouvel apprenant','Fermer');
-            //this.router.navigate(['/students']);
+            this.isOeuvreSauvee=true;
+            formDirective.resetForm() //to reset controls
+            this.oeuvreForm.reset();//to reset values of the form
+          },
+          error : response =>  {
+            console.log("response=",response);
+            this.isSauvegardeOk=false;
+            this.msgErreur=response.error;
           }
         }
       )
-
-
-      //check s'il est valide
-      //console.log(this.oeuvreForm.valid);
-      //console.log(this.oeuvreForm);
     } else {
       console.log('formulaire invalide')
     }
@@ -76,10 +113,22 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
   }
 
   removeMessage() {
-    this.msgOeuvreSauvee=false;
+    this.isOeuvreSauvee=false;
+    this.msgErreur='';
+    this.isSauvegardeOk=true;
   }
 
   resetForm() {
     this.oeuvreForm.reset();
+  }
+
+  convertOeuvreFormToModel(formValues:any) {
+
+  }
+
+
+  ngOnDestroy() {
+    //on detruit les subscriptions en place
+    this.subscriptions.forEach(sub => sub.unsubscribe())
   }
 }

@@ -24,6 +24,9 @@
     <mat-form-field appearance="fill">
       <mat-label>Statut</mat-label>
       <mat-select [(value)]="selectionStatut" (selectionChange)="searchOeuvresFilter()">
+        <mat-option [value]="-1">
+          {{"Tous" | titlecase }}
+        </mat-option>
         <mat-option *ngFor="let statut of statutService.statuts$ | async" [value]="statut.id">
           {{statut.libelle | titlecase }}
         </mat-option>
@@ -36,6 +39,9 @@
       <mat-form-field appearance="fill">
         <mat-label>Genre</mat-label>
         <mat-select [(value)]="selectionGenre" (selectionChange)="searchOeuvresFilter()">
+          <mat-option [value]="-1">
+            {{"Tous" | titlecase }}
+          </mat-option>
           <mat-option *ngFor="let genre of genreService.genres$ | async" [value]="genre.id">
             {{genre.libelle | titlecase }}
           </mat-option>
