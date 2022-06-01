@@ -14,6 +14,7 @@ describe('DetailOeuvreComponent', () => {
   let component: DetailOeuvreComponent;
   let fixture: ComponentFixture<DetailOeuvreComponent>;
   let oeuvreServiceSpy: any;
+  let oeuvreDetail:OeuvreDetailModel;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -32,6 +33,20 @@ describe('DetailOeuvreComponent', () => {
     oeuvreServiceSpy = jasmine.createSpyObj('OeuvreService', ['getOeuvreById'])
     // activer la détection de changement dans l'environnement de test, obligatoire pour accéder aux interpolations et avoir le textContent
     fixture.detectChanges();
+    oeuvreDetail = 
+      { id: 1,
+      typeOeuvre: 'film',
+      titre: 'filmTest',
+      genres: [{id: 1, libelle: 'Action'}], 
+      statutVisionnage: {id: 1, libelle: 'Vu'}, 
+      note: 3, 
+      createurs: 'Steven Spielberg', 
+      acteurs: 'Tom Hanks', 
+      urlAffiche: 'urlAfficheTest', 
+      urlBandeAnnonce: 'cleBandeAnnonceTest',
+      duree: 100,
+      saisons : [{id: 1, numero: 'S1', statutVisionnage: {id: 1, libelle: 'Vu'}, nbEpisodes : 6}]}
+        ;
    
   });
 
@@ -40,60 +55,21 @@ describe('DetailOeuvreComponent', () => {
        });
 
   it('getUrlAffiche doit retourner une url par défaut si la clé est inexistante ou la racine url + la clé', () => {
-    
-    let oeuvreDetail:OeuvreDetailModel = 
-      { id: 1,
-      typeOeuvre: 'film',
-      titre: 'filmTest',
-      genres: [{id: 1, libelle: 'Action'}], 
-      statutVisionnage: {id: 1, libelle: 'Vu'}, 
-      note: 3, 
-      createurs: 'Steven Spielberg', 
-      acteurs: 'Tom Hanks', 
-      urlAffiche: 'cleAfficheTest', 
-      urlBandeAnnonce: 'cleBandeAnnonceTest',
-      duree: 100,
-      saisons : [{id: 1, numero: 'S1', statutVisionnage: {id: 1, libelle: 'Vu'}, nbEpisodes : 6}]}
-        ;
-
     expect(component.getUrlAffiche(null)).toBe('https://via.placeholder.com/500x600.png?text=no+images');
     expect(component.getUrlAffiche('')).toBe('https://via.placeholder.com/500x600.png?text=no+images');
-    expect(component.getUrlAffiche(oeuvreDetail.urlAffiche)).toBe('cleAfficheTest'); // a faire évoluer quand la méthode sera revue
+    expect(component.getUrlAffiche(oeuvreDetail.urlAffiche)).toBe('urlAfficheTest'); // a faire évoluer quand la méthode sera revue
   });
 
   
   it('getUrlBandeAnnonce doit retourner la racine url + la clé', () => {
-    
-    let oeuvreDetail:OeuvreDetailModel = 
-      { id: 1,
-      typeOeuvre: 'film',
-      titre: 'filmTest',
-      genres: [{id: 1, libelle: 'Action'}], 
-      statutVisionnage: {id: 1, libelle: 'Vu'}, 
-      note: 3, 
-      createurs: 'Steven Spielberg', 
-      acteurs: 'Tom Hanks', 
-      urlAffiche: 'cleAfficheTest', 
-      urlBandeAnnonce: 'cleBandeAnnonceTest',
-      duree: 100,
-      saisons : [{id: 1, numero: 'S1', statutVisionnage: {id: 1, libelle: 'Vu'}, nbEpisodes : 6}]}
-        ;
-
     expect(component.getUrlBandeAnnonce(oeuvreDetail.urlBandeAnnonce)).toMatch('cleBandeAnnonceTest'); // a faire évoluer quand la méthode sera revue
   });
 
 
-
   it('getOeuvreById doit être appelé au lancement', () => {
     component.ngOnInit();
-    //let oeuvreObj = oeuvreServiceSpy.getOeuvreById();
     console.log(oeuvreServiceSpy.getOeuvreById(), "getOeuvreById");
-
-    // let elt = fixture.nativeElement;
-    // let texteTypeOeuvreElmt = elt.querySelector("texteTypeOeuvre");
-    // console.log('affichage dans la vue HTML', texteTypeOeuvreElmt?.textContent);
-   expect(oeuvreServiceSpy.getOeuvreById).toHaveBeenCalled();
-
+    expect(oeuvreServiceSpy.getOeuvreById).toHaveBeenCalled();
    });
 
   // class MockOeuvreService {
