@@ -1,14 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { RouterTestingModule } from "@angular/router/testing";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { OeuvreDetailModel } from '../shared/models/oeuvre-detail.model';
+import { OeuvreService } from '../shared/services/oeuvre.service';
 import { DetailOeuvreComponent } from './detail-oeuvre.component';
+import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 
+
+//contient une suite de tests unitaires
 describe('DetailOeuvreComponent', () => {
+  //Déclarer l'environnement de la suite de tests unitaires
+  //Compiler les components
   let component: DetailOeuvreComponent;
   let fixture: ComponentFixture<DetailOeuvreComponent>;
+  let oeuvreServiceSpy: any;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DetailOeuvreComponent ]
+      declarations: [ DetailOeuvreComponent ],
+      providers: [{provide:ActivatedRoute, useValue: {snapshot:{params:[{id:1}]}}}],
+      imports: [RouterTestingModule, HttpClientTestingModule],
     })
     .compileComponents();
   });
@@ -16,10 +27,101 @@ describe('DetailOeuvreComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DetailOeuvreComponent);
     component = fixture.componentInstance;
+    let elt = fixture.nativeElement;
+    // SPY permet de tester les components sans attendre une valeur de retour asynchrone
+    oeuvreServiceSpy = jasmine.createSpyObj('OeuvreService', ['getOeuvreById'])
+    // activer la détection de changement dans l'environnement de test, obligatoire pour accéder aux interpolations et avoir le textContent
     fixture.detectChanges();
+   
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+         expect(component).toBeTruthy();
+       });
+
+  it('getUrlAffiche doit retourner une url par défaut si la clé est inexistante ou la racine url + la clé', () => {
+    
+    let oeuvreDetail:OeuvreDetailModel = 
+      { id: 1,
+      typeOeuvre: 'film',
+      titre: 'filmTest',
+      genres: [{id: 1, libelle: 'Action'}], 
+      statutVisionnage: {id: 1, libelle: 'Vu'}, 
+      note: 3, 
+      createurs: 'Steven Spielberg', 
+      acteurs: 'Tom Hanks', 
+      urlAffiche: 'cleAfficheTest', 
+      urlBandeAnnonce: 'cleBandeAnnonceTest',
+      duree: 100,
+      saisons : [{id: 1, numero: 'S1', statutVisionnage: {id: 1, libelle: 'Vu'}, nbEpisodes : 6}]}
+        ;
+
+    expect(component.getUrlAffiche(null)).toBe('https://via.placeholder.com/500x600.png?text=no+images');
+    expect(component.getUrlAffiche('')).toBe('https://via.placeholder.com/500x600.png?text=no+images');
+    expect(component.getUrlAffiche(oeuvreDetail.urlAffiche)).toBe('cleAfficheTest'); // a faire évoluer quand la méthode sera revue
   });
+
+  
+  it('getUrlBandeAnnonce doit retourner la racine url + la clé', () => {
+    
+    let oeuvreDetail:OeuvreDetailModel = 
+      { id: 1,
+      typeOeuvre: 'film',
+      titre: 'filmTest',
+      genres: [{id: 1, libelle: 'Action'}], 
+      statutVisionnage: {id: 1, libelle: 'Vu'}, 
+      note: 3, 
+      createurs: 'Steven Spielberg', 
+      acteurs: 'Tom Hanks', 
+      urlAffiche: 'cleAfficheTest', 
+      urlBandeAnnonce: 'cleBandeAnnonceTest',
+      duree: 100,
+      saisons : [{id: 1, numero: 'S1', statutVisionnage: {id: 1, libelle: 'Vu'}, nbEpisodes : 6}]}
+        ;
+
+    expect(component.getUrlBandeAnnonce(oeuvreDetail.urlBandeAnnonce)).toMatch('cleBandeAnnonceTest'); // a faire évoluer quand la méthode sera revue
+  });
+
+
+
+  it('getOeuvreById doit être appelé au lancement', () => {
+    component.ngOnInit();
+    //let oeuvreObj = oeuvreServiceSpy.getOeuvreById();
+    console.log(oeuvreServiceSpy.getOeuvreById(), "getOeuvreById");
+
+    // let elt = fixture.nativeElement;
+    // let texteTypeOeuvreElmt = elt.querySelector("texteTypeOeuvre");
+    // console.log('affichage dans la vue HTML', texteTypeOeuvreElmt?.textContent);
+   expect(oeuvreServiceSpy.getOeuvreById).toHaveBeenCalled();
+
+   });
+
+  // class MockOeuvreService {
+  //   oeuvreDetail:OeuvreDetailModel[] = [
+  // { id: 123,
+  // typeOeuvre: 'film',
+  // titre: 'filmTest',
+  // genres: [{id: 1, libelle: 'Action'}], 
+  // statutVisionnage: {id: 1, libelle: 'Vu'}, 
+  // note: 3, 
+  // createurs: 'Steven Spielberg', 
+  // acteurs: 'Tom Hanks', 
+  // urlAffiche: 'urlAfficheTest', 
+  // urlBandeAnnonce: 'urlBandeAnnonceTest',
+  // duree: 100,
+  // saisons : [{id: 1, numero: 'S1', statutVisionnage: {id: 1, libelle: 'Vu'}, nbEpisodes : 6}]},
+  //   ]};
+    
 });
+
+
+
+   
+   
+
+    //pour les différents tests : voir la liste des matchers de jasmine (toBe...) + EXEMPLE DES STARS dans le projet exemple stars et tests Angular
+  
+    
+
+
+

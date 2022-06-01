@@ -86,9 +86,9 @@ export class OeuvreService {
       Role         : request api trackMoviesBack pour rechercher une oeuvre par son id
       Endpoint     : /mes_oeuvres/{id}
     */
-      public getOeuvreById(movieId:number) {
+      public getOeuvreById(oeuvreId:number) {
         // récupération d'une oeuvre via le endpoint /mes_oeuvres/{id} de l'API backend
-        this.httpClient.get(this._API_URL+'/mes_oeuvres/'+movieId)
+        this.httpClient.get(this._API_URL+'/mes_oeuvres/'+oeuvreId)
         .pipe( 
            // mapping de la réponse en objet Oeuvre de type OeuvreDetailModel
            map( 
