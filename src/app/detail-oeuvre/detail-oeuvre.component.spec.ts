@@ -32,6 +32,7 @@ describe('DetailOeuvreComponent', () => {
     oeuvreServiceSpy = jasmine.createSpyObj('OeuvreService', ['getOeuvreById'])
     // activer la détection de changement dans l'environnement de test, obligatoire pour accéder aux interpolations et avoir le textContent
     fixture.detectChanges();
+    //création d'une oeuvreDetail pour les Tests
     oeuvreDetail = 
       { id: 1,
       typeOeuvre: 'film',
@@ -49,7 +50,7 @@ describe('DetailOeuvreComponent', () => {
    
   });
 
-  it('should create', () => {
+  it('creation d une instance', () => {
          expect(component).toBeTruthy();
        });
 

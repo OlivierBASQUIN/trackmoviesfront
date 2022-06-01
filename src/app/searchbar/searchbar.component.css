@@ -12,3 +12,7 @@ input {
   flex-wrap: wrap;
   justify-content: center;
   }
+
+  .colorElt {
+      color: rgb(255, 208, 1);
+  }
