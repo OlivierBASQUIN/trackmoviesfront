@@ -25,7 +25,7 @@ export class ListComponent implements OnInit {
   getUrlAffiche(urlAffiche:string | null ):string {
     return (urlAffiche!=null && urlAffiche!='')
             ?  urlAffiche
-            : 'https://via.placeholder.com/500x281.png?text=no+images'
+            : 'https://via.placeholder.com/300x450.png?text=no+images'
   }
 
   oeuvresSuivantesActionBouton(){

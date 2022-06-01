@@ -1,3 +1,10 @@
+.list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .blockSelectButton {
 display: flex;
 justify-content: center;
@@ -10,6 +17,10 @@ align-items: center;
   justify-content:space-between;
 }
 
+.card-container {
+    width: 100%;
+}
+
 div.card {
     box-shadow: 1px 1px 15px white;
     background: #000000;
@@ -17,6 +28,7 @@ div.card {
     overflow: hidden;
     border: 5px;
     margin-bottom: 25px;
+    
 
 }
 div.card:hover {
@@ -26,29 +38,28 @@ div.card:hover {
 }
 
 .blockImg{
-height: 250px;
+height: auto;
 overflow: hidden;
 }
 
 .blockImg img{
     width: 100%;
-    }
+}
+
+div.card-body {      
+    height: 170px;
+}
 
 div.card-body ul{
     list-style-type: none;
     padding: 0;
     font-size: 0.8rem;
+    height: 100px;
 }
 
 div.card h2 {
     font-size: 17px;
     color: rgb(255, 208, 1);
-}
-div.next-movies {
-    width: 100%;
-    text-align: center;
-    padding-top: 5px;
-    padding-bottom: 5px;
 }
 
 .button:hover {

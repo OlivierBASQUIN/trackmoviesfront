@@ -1,13 +1,15 @@
+<div class="list-container">
 <div classe="bandeau-titre">
-  <h2>Ma Bibliothèque</h2>
+  <h2 class="my-4">Ma Bibliothèque</h2>
 </div>
 
 <div class="block-ajout-recherche">
-  <button routerLink="/edition-oeuvre">Ajouter une oeuvre</button>
   <app-searchbar></app-searchbar>
 </div>
 
-<div class="row pb-5">
+<button class="btn btn-warning mb-5" routerLink="/edition-oeuvre">Ajouter une oeuvre</button>
+
+<div class="row pb-5 card-container">
   <div *ngFor="let oeuvre of oeuvreService.oeuvres$ | async" class="col-6 col-lg-3 col-xl-2">
     <!-- CARD-->
     <!-- Lien navigation vers la page détail -->
@@ -33,8 +35,9 @@
 </div>
 
 <!-- BAR BUTTON "Films suivants" -->
-<div class="next-movies">
+
   <button (click)="oeuvresSuivantesActionBouton()" class="button btn btn-light">
     Oeuvres suivantes
   </button>
+
 </div>
