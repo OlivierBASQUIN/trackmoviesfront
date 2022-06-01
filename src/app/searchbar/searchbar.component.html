@@ -9,9 +9,9 @@
   <!-- Select Type -->
   <div class="btn-group m-3">
     <mat-form-field appearance="fill">
-      <mat-label class = "colorElt" >Type</mat-label>
-      <mat-select [ngStyle]="color:orange" [(value)]="selectionType" (selectionChange)="searchOeuvresFilter()">
-        <mat-option *ngFor="let type of types" [value]="type.libelle" [ngStyle]="color:orange">
+      <mat-label [ngStyle]="{color:'rgb(255, 208, 1)'}" >Type</mat-label>
+      <mat-select [(value)]="selectionType" (selectionChange)="searchOeuvresFilter()">
+        <mat-option *ngFor="let type of types" [value]="type.libelle" [ngStyle]="{color:'white'}">
           {{type.libelle | titlecase }}
         </mat-option>
 
@@ -22,9 +22,9 @@
   <!-- Select Statut -->
   <div class="btn-group m-3">
     <mat-form-field appearance="fill">
-      <mat-label class = "colorElt">Statut</mat-label>
+      <mat-label [ngStyle]="{color:'rgb(255, 208, 1)'}">Statut</mat-label>
       <mat-select [(value)]="selectionStatut" (selectionChange)="searchOeuvresFilter()">
-        <mat-option *ngFor="let statut of statutService.statuts$ | async" [value]="statut.id">
+        <mat-option *ngFor="let statut of statutService.statuts$ | async" [value]="statut.id" [ngStyle]="{color:'white'}">
           {{statut.libelle | titlecase }}
         </mat-option>
       </mat-select>
@@ -34,9 +34,9 @@
   <!-- Select Genre -->
     <div class="btn-group m-3">
       <mat-form-field appearance="fill">
-        <mat-label class = "colorElt">Genre</mat-label>
+        <mat-label [ngStyle]="{color:'rgb(255, 208, 1)'}">Genre</mat-label>
         <mat-select [(value)]="selectionGenre" (selectionChange)="searchOeuvresFilter()">
-          <mat-option *ngFor="let genre of genreService.genres$ | async" [value]="genre.id">
+          <mat-option *ngFor="let genre of genreService.genres$ | async" [value]="genre.id" [ngStyle]="{color:'white'}">
             {{genre.libelle | titlecase }}
           </mat-option>
         </mat-select>
