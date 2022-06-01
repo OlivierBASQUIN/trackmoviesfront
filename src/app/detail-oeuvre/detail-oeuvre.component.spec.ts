@@ -2,9 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from "@angular/router/testing";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { OeuvreDetailModel } from '../shared/models/oeuvre-detail.model';
-import { OeuvreService } from '../shared/services/oeuvre.service';
 import { DetailOeuvreComponent } from './detail-oeuvre.component';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 
 
 //contient une suite de tests unitaires
@@ -43,7 +42,7 @@ describe('DetailOeuvreComponent', () => {
       createurs: 'Steven Spielberg', 
       acteurs: 'Tom Hanks', 
       urlAffiche: 'urlAfficheTest', 
-      urlBandeAnnonce: 'cleBandeAnnonceTest',
+      urlBandeAnnonce : 'cleBandeAnnonceTest',
       duree: 100,
       saisons : [{id: 1, numero: 'S1', statutVisionnage: {id: 1, libelle: 'Vu'}, nbEpisodes : 6}]}
         ;
@@ -54,15 +53,16 @@ describe('DetailOeuvreComponent', () => {
          expect(component).toBeTruthy();
        });
 
-  it('getUrlAffiche doit retourner une url par défaut si la clé est inexistante ou la racine url + la clé', () => {
+  it('getUrlAffiche doit retourner une url ou une url par défaut si inexistante', () => {
     expect(component.getUrlAffiche(null)).toBe('https://via.placeholder.com/500x600.png?text=no+images');
     expect(component.getUrlAffiche('')).toBe('https://via.placeholder.com/500x600.png?text=no+images');
-    expect(component.getUrlAffiche(oeuvreDetail.urlAffiche)).toBe('urlAfficheTest'); // a faire évoluer quand la méthode sera revue
+    expect(component.getUrlAffiche(oeuvreDetail.urlAffiche)).toBe('urlAfficheTest');
   });
 
   
   it('getUrlBandeAnnonce doit retourner la racine url + la clé', () => {
-    expect(component.getUrlBandeAnnonce(oeuvreDetail.urlBandeAnnonce)).toMatch('cleBandeAnnonceTest'); // a faire évoluer quand la méthode sera revue
+    console.log(component.getUrlBandeAnnonce(oeuvreDetail.urlBandeAnnonce), "oeuvreDetail.urlBandeAnnonce")
+    expect(component.getUrlBandeAnnonce(oeuvreDetail.urlBandeAnnonce)).toMatch('https://www.youtube.com/embed/cleBandeAnnonceTest');
   });
 
 
@@ -72,30 +72,7 @@ describe('DetailOeuvreComponent', () => {
     expect(oeuvreServiceSpy.getOeuvreById).toHaveBeenCalled();
    });
 
-  // class MockOeuvreService {
-  //   oeuvreDetail:OeuvreDetailModel[] = [
-  // { id: 123,
-  // typeOeuvre: 'film',
-  // titre: 'filmTest',
-  // genres: [{id: 1, libelle: 'Action'}], 
-  // statutVisionnage: {id: 1, libelle: 'Vu'}, 
-  // note: 3, 
-  // createurs: 'Steven Spielberg', 
-  // acteurs: 'Tom Hanks', 
-  // urlAffiche: 'urlAfficheTest', 
-  // urlBandeAnnonce: 'urlBandeAnnonceTest',
-  // duree: 100,
-  // saisons : [{id: 1, numero: 'S1', statutVisionnage: {id: 1, libelle: 'Vu'}, nbEpisodes : 6}]},
-  //   ]};
-    
 });
-
-
-
-   
-   
-
-    //pour les différents tests : voir la liste des matchers de jasmine (toBe...) + EXEMPLE DES STARS dans le projet exemple stars et tests Angular
   
     
 

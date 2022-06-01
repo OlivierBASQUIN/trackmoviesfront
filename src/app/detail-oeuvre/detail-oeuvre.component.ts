@@ -13,8 +13,8 @@ import { OeuvreService } from '../shared/services/oeuvre.service';
 export class DetailOeuvreComponent implements OnInit {
 
   oeuvreDetailId:number = 0
-
   subscriptions:Subscription[] = [] ;
+  
   constructor( private activatedRoute:ActivatedRoute, 
                public oeuvreService:OeuvreService,
                private sanitizer: DomSanitizer
@@ -45,7 +45,8 @@ export class DetailOeuvreComponent implements OnInit {
             : 'https://via.placeholder.com/500x600.png?text=no+images'
   }
 
-  getUrlBandeAnnonce(urlBandeAnnonce:string) {
+  getUrlBandeAnnonce(videoKey:string) {
+    let urlBandeAnnonce =  'https://www.youtube.com/embed/'+ videoKey;
     return this.sanitizer.bypassSecurityTrustResourceUrl(urlBandeAnnonce)
   }
 
