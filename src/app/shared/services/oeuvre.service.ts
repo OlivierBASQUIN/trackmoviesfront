@@ -85,13 +85,8 @@ export class OeuvreService {
     */
       public getOeuvreById(oeuvreId:number) {
         // récupération d'une oeuvre via le endpoint /mes_oeuvres/{id} de l'API backend
-<<<<<<< HEAD
         this.httpClient.get(this._API_URL+'/mes_oeuvres/'+oeuvreId)
         .pipe( 
-=======
-        this.httpClient.get(this._API_URL+'/mes_oeuvres/'+movieId)
-        .pipe(
->>>>>>> develop
            // mapping de la réponse en objet Oeuvre de type OeuvreDetailModel
            map(
              (reponseApi:any) =>
