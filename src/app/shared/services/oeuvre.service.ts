@@ -9,7 +9,7 @@ import { OeuvreModel } from '../models/oeuvre.model';
 })
 export class OeuvreService {
 
-  private _API_URL = "http://localhost:8080/trackmovies/v1/";
+  private _API_URL = "http://localhost:8080/trackmovies/v1";
   private _oeuvres$ = new BehaviorSubject<OeuvreModel[]>([]);
   private _oeuvresTrouvees$ = new BehaviorSubject<OeuvreModel[]>([]);
   private _oeuvreDetail$ = new BehaviorSubject<OeuvreDetailModel>(null!);
@@ -24,7 +24,6 @@ export class OeuvreService {
     */
 
      getOeuvresInitiales():void {
-      console.log('getOeuvresInitiales()');
       // récupération des oeuvres via le endpoint /mes_oeuvres de l'API backend
       this.httpClient.get(this._API_URL+'/mes_oeuvres')
         .pipe (
@@ -64,8 +63,6 @@ export class OeuvreService {
       if ((selectionGenre !== '') && (+selectionGenre !== -1))   { parametres = parametres.append('genre', selectionGenre); this._parametreRechercheExiste = true; }
       if  (texteRecherche.trim().length > 0)                      { parametres = parametres.append('titre', texteRecherche); this._parametreRechercheExiste = true;}
 
-      //console.log(parametres);
-      console.log('httpClient.get');
       this.httpClient.get( this._API_URL + endPoint, {params:parametres} )
       .pipe (
         // mapping de la réponse en tableau d'objets de type OeuvreModel
@@ -81,18 +78,23 @@ export class OeuvreService {
         return this._parametreRechercheExiste;
       }
 
-  
+
       /*
       Role         : request api trackMoviesBack pour rechercher une oeuvre par son id
       Endpoint     : /mes_oeuvres/{id}
     */
       public getOeuvreById(oeuvreId:number) {
         // récupération d'une oeuvre via le endpoint /mes_oeuvres/{id} de l'API backend
+<<<<<<< HEAD
         this.httpClient.get(this._API_URL+'/mes_oeuvres/'+oeuvreId)
         .pipe( 
+=======
+        this.httpClient.get(this._API_URL+'/mes_oeuvres/'+movieId)
+        .pipe(
+>>>>>>> develop
            // mapping de la réponse en objet Oeuvre de type OeuvreDetailModel
-           map( 
-             (reponseApi:any) => 
+           map(
+             (reponseApi:any) =>
              new OeuvreDetailModel(reponseApi)
            ) // fin map
          ) // fin pipe() retourne un Observable
@@ -138,8 +140,16 @@ export class OeuvreService {
     Return      : Observable
     Consommable : this.movieService.oeuvresTrouvees$.subscribe()
   */
-
     get oeuvresTrouvees$():Observable<OeuvreModel[]> {
       return this._oeuvresTrouvees$.asObservable();
     }
+
+  /*
+    Poster une nouvelle oeuvre
+    method : POST
+    endpoint : '/oeuvre'
+  */
+  saveOeuvre(oeuvreASauver:any):Observable<any> {
+    return this.httpClient.post(this._API_URL+'/oeuvre', oeuvreASauver);
+  }
 }

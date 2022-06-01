@@ -27,4 +27,10 @@ export class TypeService {
   getTypes(): TypeModel[] {
     return this.types;
   }
+
+  getTypesPourEditionOeuvre(): TypeModel[] {
+    let typePourEdition:TypeModel[]= [this.types[1],this.types[2]];
+
+    return typePourEdition;
+  }
 }

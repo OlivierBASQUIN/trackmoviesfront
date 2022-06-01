@@ -113,8 +113,7 @@ export class SearchbarComponent implements OnInit {
   * @param texte
   */
   searchOeuvresInput(texte:string){
-    console.log('searchOeuvresInput');
-    console.log(texte);
+
     this.oeuvreService.searchOeuvres(texte, this.selectionType,this.selectionStatut,this.selectionGenre);
     this.userInputValue = texte;
   }
@@ -122,7 +121,7 @@ export class SearchbarComponent implements OnInit {
    * Gestion des évènements liés aux changements de filtre de recherche
    */
   searchOeuvresFilter(){
-    console.log('searchOeuvresFilter()');
+
     this.oeuvreService.searchOeuvres(this.userInputValue, this.selectionType,this.selectionStatut,this.selectionGenre);
   }
 }
