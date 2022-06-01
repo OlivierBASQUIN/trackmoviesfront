@@ -17,14 +17,9 @@ export class AuthService {
   login(loginInput: LoginModel): Observable<any> {
 
     let endPoint = '/login';
-
-    console.log('AuthService::login - URL : ' + this._API_URL + endPoint, loginInput);
-
-    //let reponse: Observable<any> = this.httpClient.post(this._API_URL + endPoint, loginInput);
-    //console.log('AuthService::login - reponse : ');
-    //reponse.forEach(reponse => console.log(reponse));
+   
     return this.httpClient.post(this._API_URL + endPoint, loginInput)
-    //return reponse;
+   
   }
 
   /*

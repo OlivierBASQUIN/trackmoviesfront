@@ -1,0 +1,140 @@
+<h1>Edition d'une oeuvre</h1>
+
+<mat-toolbar >
+  <mat-toolbar-row class="boite-outil">
+    <button routerLink="/"  type="button" class="btn btn-warning">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+    <button (click)="resetForm()" type="button" class="btn btn-warning">
+      réinitialiser
+    </button>
+    <span></span><!--pour que bouton reinitialiser apparaisse au milieu-->
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<!-- bandeau message statut sauvegarde-->
+<div *ngIf="msgOeuvreSauvee" class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>Success!</strong> Oeuvre sauvegardée
+  <button (click)="removeMessage()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+
+</div>
+
+
+
+<form (submit)="onSubmitForm($event)" [formGroup]="oeuvreForm" class="card-form my-2">
+
+  <!-- Select Type -->
+<!--
+  <div class="mb-3">
+    <select class="form-select form-select-lg" aria-label=".form-select-lg example">
+      <option selected>Open this select menu</option>
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+  </div>-->
+
+  <div >
+    <mat-form-field   appearance="outline">
+      <mat-label>Select Type d'oeuvre</mat-label>
+      <mat-select formControlName="typeOeuvre" [(value)]="selectionType">
+        <mat-option *ngFor="let type of types" [value]="type.libelle">
+          {{type.libelle | titlecase }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!--
+  <div class="mb-3">
+    <label class="form-label">Titre</label>
+    <input class="form-control" formControlName="titre" type="text">
+  </div>
+
+  -->
+<!--genres-->
+<!--statut visionnage-->
+
+  <!-- note de l'oeuvre-->
+  <!--
+  <div class="mb-3">
+    <label class="form-label">Note</label>
+    <select class="form-select form-select-lg" formControlName="note" aria-label=".form-select-lg">
+      <option selected>Open this select menu</option>
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+  </div>
+
+-->
+
+  <!--
+  <div class="mb-3">
+    <label class="form-label">Duree</label>
+    <input class="form-control" formControlName="duree" type="number">
+    <mat-error *ngIf="oeuvreForm.controls['duree'].hasError('pattern')">ce champs doit etre un nombre</mat-error>
+
+  </div>
+  -->
+
+  <!--
+  <div class="mb-3">
+    <mat-form-field >
+      <mat-label>Durée</mat-label>
+      <input formControlName="duree" matInput>
+      <mat-error *ngIf="oeuvreForm.controls['duree'].hasError('pattern')">ce champs doit etre un nombre</mat-error>
+    </mat-form-field>
+  </div>
+-->
+
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Titre</mat-label>
+      <input formControlName="titre" matInput>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <mat-form-field appearance="outline">
+      <mat-label>Url de l'affiche</mat-label>
+      <input formControlName="urlAffiche" matInput>
+    </mat-form-field>
+  </div>
+
+
+  <div>
+    <mat-form-field appearance="outline" class="champ-video-youtube">
+      <mat-label>Clé video youtube</mat-label>
+      <input formControlName="urlBandeAnnonce" matInput placeholder="Clé Youtube remplacant ????">
+      <mat-hint>https://www.youtube.com/watch?v=????</mat-hint>
+    </mat-form-field>
+  </div>
+
+  <!--
+  <div class="mb-3">
+    <mat-form-field appearance="outline">
+      <mat-label>Durée</mat-label>
+      <input formControlName="duree" matInput>
+      <mat-error *ngIf="oeuvreForm.controls['duree'].hasError('pattern')">ce champs doit etre un nombre</mat-error>
+    </mat-form-field>
+
+
+    <label class="form-label">Durée</label>
+    <input class="form-control" formControlName="titre" type="number">
+    <div *ngIf="f.number.touched && f.number.invalid" class="alert alert-danger">
+      <div *ngIf="f.number.errors.required">Number is required.</div>
+      <div *ngIf="f.number.errors.pattern">Enter only number.</div>
+  </div>
+  -->
+
+  <div>
+    <button type="submit" class="btn btn-warning">Sauver</button>
+  </div>
+
+</form>

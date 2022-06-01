@@ -40,3 +40,9 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+src/app/shared/models/oeuvre-detail.model.ts.bak
+src/app/app-routing.module.ts.bak
+src/app/app-routing.module.ts.orig
+src/app/app.module.ts.bak
+src/app/app.module.ts.orig
+src/app/shared/models/oeuvre-detail.model.ts.orig

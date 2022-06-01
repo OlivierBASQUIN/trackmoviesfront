@@ -1,0 +1,60 @@
+
+
+.blockImg {
+    box-shadow: 1px 1px 25px rgb(255, 208, 1);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.blockImg img{
+    width: 100%;
+}
+
+div.card {
+    box-shadow: 1px 1px 15px white;
+    background: rgb(48, 44, 44);
+    width: 90%;
+    max-width: 500px;
+    margin: auto;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 5px;
+    margin-bottom: 25px;
+  
+}
+h1 {
+    margin: 0 1rem ;
+}
+
+h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.titlebar {
+    
+    justify-content: space-between;
+}
+
+.saisonList {
+justify-content:space-between;
+flex-wrap: wrap;
+}
+
+.video-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.texteSaison, .texteTypeOeuvre, .notation{
+    color: orange;
+}
+
+.espaceSaison {
+    color: rgb(48, 44, 44);
+}
+
+
+

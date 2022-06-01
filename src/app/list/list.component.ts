@@ -22,9 +22,9 @@ export class ListComponent implements OnInit {
     });
   }
 
-  getUrlAffiche(movieImageString:string | null ):string {
-    return (movieImageString!=null &&movieImageString!='')
-            ? 'https://image.tmdb.org/t/p/w500'+movieImageString
+  getUrlAffiche(urlAffiche:string | null ):string {
+    return (urlAffiche!=null && urlAffiche!='')
+            ?  urlAffiche
             : 'https://via.placeholder.com/500x281.png?text=no+images'
   }
 
