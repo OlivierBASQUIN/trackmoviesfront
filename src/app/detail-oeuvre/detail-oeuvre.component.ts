@@ -45,8 +45,7 @@ export class DetailOeuvreComponent implements OnInit {
             : 'https://via.placeholder.com/300x450.png?text=no+images'
   }
 
-  getUrlBandeAnnonce(videoKey:string) {
-    let urlBandeAnnonce =  'https://www.youtube.com/embed/'+ videoKey;
+  getUrlBandeAnnonce(urlBandeAnnonce:string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(urlBandeAnnonce)
   }
 
