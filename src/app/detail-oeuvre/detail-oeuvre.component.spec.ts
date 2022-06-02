@@ -55,23 +55,10 @@ describe('DetailOeuvreComponent', () => {
        });
 
   it('getUrlAffiche doit retourner une url ou une url par défaut si inexistante', () => {
-    expect(component.getUrlAffiche(null)).toBe('https://via.placeholder.com/500x600.png?text=no+images');
-    expect(component.getUrlAffiche('')).toBe('https://via.placeholder.com/500x600.png?text=no+images');
+    expect(component.getUrlAffiche(null)).toBe('https://via.placeholder.com/300x450.png?text=no+images');
+    expect(component.getUrlAffiche('')).toBe('https://via.placeholder.com/300x450.png?text=no+images');
     expect(component.getUrlAffiche(oeuvreDetail.urlAffiche)).toBe('urlAfficheTest');
   });
-
-  
-  it('getUrlBandeAnnonce doit retourner la racine url + la clé', () => {
-    console.log(component.getUrlBandeAnnonce(oeuvreDetail.urlBandeAnnonce), "oeuvreDetail.urlBandeAnnonce")
-    expect(component.getUrlBandeAnnonce(oeuvreDetail.urlBandeAnnonce)).toMatch('https://www.youtube.com/embed/cleBandeAnnonceTest');
-  });
-
-
-  it('getOeuvreById doit être appelé au lancement', () => {
-    component.ngOnInit();
-    console.log(oeuvreServiceSpy.getOeuvreById(), "getOeuvreById");
-    expect(oeuvreServiceSpy.getOeuvreById).toHaveBeenCalled();
-   });
 
 });
   
