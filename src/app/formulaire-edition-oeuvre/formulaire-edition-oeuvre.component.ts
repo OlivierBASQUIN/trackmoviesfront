@@ -52,6 +52,8 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
       genreIds: [''],
       statutVisionnageId: [''],
       note: [''],
+      createurs: [''],
+      acteurs: [''],
       duree: ['', [Validators.pattern("^[0-9]*$")]],
       description: [''],
       urlAffiche: [''],
