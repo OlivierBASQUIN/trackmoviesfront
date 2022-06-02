@@ -4,6 +4,10 @@
 </div>
 
 <div class="block-ajout-recherche">
+<<<<<<< HEAD
+  <button routerLink="/edition-oeuvre" type="button" class="btn btn-warning">Ajouter une oeuvre</button>
+=======
+>>>>>>> develop
   <app-searchbar></app-searchbar>
 </div>
 
@@ -35,8 +39,13 @@
 </div>
 
 <!-- BAR BUTTON "Films suivants" -->
+<<<<<<< HEAD
+<div class="next-movies">
+  <button type="button"  (click)="oeuvresSuivantesActionBouton()" class="btn btn-warning">
+=======
 
-  <button (click)="oeuvresSuivantesActionBouton()" class="button btn btn-warning">
+  <button (click)="oeuvresSuivantesActionBouton()" class="button btn btn-light">
+>>>>>>> develop
     Oeuvres suivantes
   </button>
 

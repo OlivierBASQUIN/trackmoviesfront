@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -45,8 +45,10 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
   isSauvegardeOk:boolean = true;
   msgErreur:String='';
 
-  constructor(private fb: FormBuilder, public typeService: TypeService, public oeuvreService: OeuvreService, public genreService : GenreService, public statutService : StatutService) {
-    this.oeuvreForm = this.fb.group({
+  constructor(private fb: FormBuilder, public typeService: TypeService, public oeuvreService: OeuvreService,
+            public genreService : GenreService, public statutService : StatutService,private el: ElementRef)
+  {
+      this.oeuvreForm = this.fb.group({
       typeOeuvre: ['', [Validators.required, Validators.minLength(1)]],
       titre: ['', [Validators.required, Validators.minLength(1)]],
       genreIds: [''],
@@ -97,8 +99,8 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
           next  : response => {
             console.log(response)//si tout s'est bien passé
             this.isOeuvreSauvee=true;
-            formDirective.resetForm() //to reset controls
-            this.oeuvreForm.reset();//to reset values of the form
+            formDirective.resetForm() //to reset les controles de validité
+            this.oeuvreForm.reset();//to reset les valeurs du formulaire
           },
           error : response =>  {
             console.log("response=",response);
@@ -109,6 +111,14 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
       )
     } else {
       console.log('formulaire invalide')
+      //on met le focus sur le 1er control invalide
+      for (const key of Object.keys(this.oeuvreForm.controls)) {
+        if (this.oeuvreForm.controls[key].invalid) {
+          const invalidControl = this.el.nativeElement.querySelector('[formcontrolname="' + key + '"]');
+          invalidControl.focus();
+          break;
+       }
+  }
     }
 
 

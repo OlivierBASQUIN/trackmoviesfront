@@ -31,16 +31,16 @@
 </div>
 
 
-
+<!-- debut formulaire-->
 <form [formGroup]="oeuvreForm" #formDirective="ngForm" (submit)="onSubmitForm($event,formDirective)" class="my-2">
   <div class="row border border-warning m-3 p-3">
     <div class="col-12 col-md-6"><!--debut 1ere colonne-->
       <!-- Type Oeuvre-->
       <div>
         <mat-form-field   appearance="outline">
-          <mat-label>Select Type d'oeuvre</mat-label>
+          <mat-label class = "eltOrange">Type d'oeuvre</mat-label>
           <mat-select formControlName="typeOeuvre" [(value)]="selectionType">
-            <mat-option *ngFor="let type of types" [value]="type.libelle">
+            <mat-option class = "eltBlanc" *ngFor="let type of types" [value]="type.libelle">
               {{type.libelle | titlecase }}
             </mat-option>
           </mat-select>
@@ -50,7 +50,7 @@
       <!-- Titre -->
       <div>
         <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Titre</mat-label>
+          <mat-label class = "eltOrange">Titre</mat-label>
           <input formControlName="titre" matInput>
         </mat-form-field>
       </div>
@@ -58,8 +58,9 @@
       <!--genres-->
       <div>
         <mat-form-field>
-          <mat-select formControlName="genreIds" placeholder="Genres" name="values" multiple>
-            <mat-option *ngFor="let g of genres" [value]="g.id">
+          <mat-label class = "eltOrange">Genres</mat-label>
+          <mat-select formControlName="genreIds" name="values" multiple>
+            <mat-option class = "eltBlanc" *ngFor="let g of genres" [value]="g.id">
               {{g.libelle}}
             </mat-option>
           </mat-select>
@@ -69,8 +70,9 @@
       <!--statut visionnage-->
       <div>
         <mat-form-field>
-          <mat-select formControlName="statutVisionnageId" placeholder="Statut visionnage">
-            <mat-option *ngFor="let s of statutVisionnages" [value]="s.id">
+          <mat-label class = "eltOrange">Statut visionnage</mat-label>
+          <mat-select formControlName="statutVisionnageId" >
+            <mat-option class = "eltBlanc" *ngFor="let s of statutVisionnages" [value]="s.id">
               {{s.libelle}}
             </mat-option>
           </mat-select>
@@ -83,7 +85,7 @@
       <!-- on affiche que s'il s'agit d'un film -->
       <div *ngIf="oeuvreForm.value.typeOeuvre =='film'" >
         <mat-form-field appearance="outline">
-          <mat-label>Durée (en minutes)</mat-label>
+          <mat-label class = "eltOrange">Durée (en minutes)</mat-label>
           <input matInput formControlName="duree" type="number">
         </mat-form-field>
       </div>
@@ -91,8 +93,8 @@
       <!-- description -->
       <div>
         <mat-form-field appearance="fill" class="w-100">
-          <mat-label>Description</mat-label>
-          <textarea matInput formControlName="description" cdkTextareaAutosize ></textarea>
+          <mat-label class = "eltOrange">Description</mat-label>
+          <textarea class = "eltBlanc" matInput formControlName="description" cdkTextareaAutosize ></textarea>
         </mat-form-field>
       </div>
     </div> <!--fin 1ere colonne-->
@@ -102,22 +104,23 @@
       <!-- Créateur -->
       <div>
         <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Créateur</mat-label>
+          <mat-label class = "eltOrange">Créateur</mat-label>
           <input formControlName="createurs" matInput>
         </mat-form-field>
       </div>
       <!-- Acteurs -->
       <div>
         <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Acteurs</mat-label>
-          <input formControlName="acteurs" matInput>
+          <mat-label class = "eltOrange">Acteurs</mat-label>
+          <input class = "eltBlanc" formControlName="acteurs" matInput>
         </mat-form-field>
       </div>
       <!-- note de l'oeuvre-->
       <div>
         <mat-form-field>
-          <mat-select formControlName="note" placeholder="Note">
-            <mat-option *ngFor="let note of notePossibles" [value]="note">
+          <mat-label class = "eltOrange">Note</mat-label>
+          <mat-select formControlName="note">
+            <mat-option class = "eltBlanc" *ngFor="let note of notePossibles" [value]="note">
               {{note}}
             </mat-option>
           </mat-select>
@@ -127,8 +130,8 @@
       <!-- Affiche -->
       <div>
         <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Url de l'affiche</mat-label>
-          <input formControlName="urlAffiche" matInput>
+          <mat-label class = "eltOrange">Url de l'affiche</mat-label>
+          <input class = "eltBlanc" formControlName="urlAffiche" matInput>
         </mat-form-field>
       </div>
 
@@ -141,8 +144,8 @@
       <!-- Video youtube -->
       <div>
         <mat-form-field appearance="outline" class="champ-video-youtube">
-          <mat-label>Clé video youtube</mat-label>
-          <input formControlName="urlBandeAnnonce" matInput placeholder="Clé Youtube remplacant ????">
+          <mat-label class = "eltOrange">Clé video youtube</mat-label>
+          <input  class = "eltBlanc" formControlName="urlBandeAnnonce" matInput placeholder="Clé Youtube remplacant ????">
           <mat-hint>https://www.youtube.com/watch?v=????</mat-hint>
         </mat-form-field>
       </div>
