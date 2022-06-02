@@ -88,7 +88,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
 
       //on sauvegarde une url youtube
       let key:String  = this.oeuvreForm.controls["urlBandeAnnonce"].value;
-      if (key.trim()!='') {
+      if (key!=null && key.trim()!='') {
         this.oeuvreForm.controls["urlBandeAnnonce"].setValue(this._URL_YOUTUBE+key);
       } else {
         this.oeuvreForm.controls["urlBandeAnnonce"].setValue('');
