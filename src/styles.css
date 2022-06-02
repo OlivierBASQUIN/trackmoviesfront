@@ -1,11 +1,27 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
-
 body {
-    background: rgb(48, 44, 44);
     color: #fff;
 }
 html, body { 
     height: 100%; 
 }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.eltOrange {
+    color: rgb(255, 208, 1);
+}
+
+.eltBlanc {
+  color: blanc;
+}
+
+.box-shadow-white {
+    box-shadow: 1px 1px 15px white;
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+.background-darkgrey {
+    background: rgb(48, 44, 44);
+}

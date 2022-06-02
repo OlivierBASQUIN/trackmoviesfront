@@ -5,12 +5,18 @@
     <h1 class="me-2">Track</h1>
     <img src="assets\movies_logo.jpeg" alt="">
   </div>
+
+  <div>
   <div class="block-login">
     <button *ngIf="!connexionUtilisateur" routerLink="/login" type="buttonSignIn" class="btn btn-success btn-xs m-3">Se connecter</button>
     <div *ngIf="connexionUtilisateur">Bienvenue, {{ identifiantUtilisateur }}</div>
   </div>
+
+  <div>
     <button *ngIf="!connexionUtilisateur" type="buttonSignUp" class="btn btn-success btn-xs m-3">S'inscrire</button>
     <button *ngIf="connexionUtilisateur" routerLink="" (click)="logout()" type="buttonSignOut" class="btn btn-success btn-xs m-3">Se déconnecter</button>
+  </div>
+</div>
 </header>
 
 <main class="pb-5">
