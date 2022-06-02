@@ -24,10 +24,14 @@
     <mat-form-field appearance="fill">
       <mat-label class = "eltOrange">Statut</mat-label>
       <mat-select [(value)]="selectionStatut" (selectionChange)="searchOeuvresFilter()">
-        <mat-option class = "eltBlanc" [value]="-1">
+<<<<<<< HEAD
+        <mat-option [value]="-1">
           {{"Tous" | titlecase }}
         </mat-option>
+        <mat-option *ngFor="let statut of statutService.statuts$ | async" [value]="statut.id">
+=======
         <mat-option class = "eltBlanc" *ngFor="let statut of statutService.statuts$ | async" [value]="statut.id">
+>>>>>>> develop
           {{statut.libelle | titlecase }}
         </mat-option>
       </mat-select>
@@ -39,10 +43,14 @@
       <mat-form-field appearance="fill">
         <mat-label class = "eltOrange">Genre</mat-label>
         <mat-select [(value)]="selectionGenre" (selectionChange)="searchOeuvresFilter()">
-          <mat-option class = "eltBlanc" [value]="-1">
+<<<<<<< HEAD
+          <mat-option [value]="-1">
             {{"Tous" | titlecase }}
           </mat-option>
+          <mat-option *ngFor="let genre of genreService.genres$ | async" [value]="genre.id">
+=======
           <mat-option class = "eltBlanc" *ngFor="let genre of genreService.genres$ | async" [value]="genre.id">
+>>>>>>> develop
             {{genre.libelle | titlecase }}
           </mat-option>
         </mat-select>
