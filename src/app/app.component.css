@@ -9,7 +9,6 @@ header  {
    display: flex;
    flex-wrap: wrap;
    justify-content: space-around;
-   background-color: grey;
 }
 
 header div {
@@ -19,7 +18,6 @@ header div {
 }
 
 footer {
-    background-color: grey;
     width: 100%;
     padding-top: 5px;
     padding-bottom: 5px;
@@ -30,6 +28,7 @@ display: flex;
 flex-wrap: wrap;
 justify-content: space-around;
 list-style-type: none;
+color: white;
 }
 
 footer li a {
@@ -55,7 +54,6 @@ width: 150px;
 }
 
 .blockLogo h1 {
-   color: rgb(255, 208, 1);
    font-size: 3.2rem;
    font-style: italic;
    font-family:'Times New Roman', Times, serif
