@@ -15,6 +15,7 @@
 
 
             <H2><span class="eltOrange">{{oeuvreDetail.typeOeuvre | titlecase}}</span></H2>
+            <p><strong>Description  : </strong>{{oeuvreDetail.description}}</p>
             <p><strong>Genre  : </strong><span *ngFor="let genre of oeuvreDetail.genres">{{ genre.libelle | titlecase }}. </span></p>
             <p><strong>Statut  : </strong><span *ngIf="oeuvreDetail.statutVisionnage">{{oeuvreDetail.statutVisionnage.libelle | titlecase}}</span></p>
             <p><strong>Note  : </strong>{{oeuvreDetail.note }} <span class="eltOrange">/ 5</span> <br> <span class="eltOrange" [innerHTML]="oeuvreDetail.note | stars"></span> </p>
