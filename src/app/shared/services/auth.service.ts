@@ -17,11 +17,18 @@ export class AuthService {
   login(loginInput: LoginModel): Observable<any> {
 
     let endPoint = '/login';
-   
-    return this.httpClient.post(this._API_URL + endPoint, loginInput)
-   
+
+    return this.httpClient.post(this._API_URL + endPoint, loginInput);
+
   }
 
+  logout():Observable<any> {
+
+    let endPoint = '/logout'
+
+    return this.httpClient.get(this._API_URL + endPoint, {responseType : 'text'});
+
+  }
   /*
   enregistrer(identifiant: string, motDePasse: string): Observable<any> {
     let endPoint = '/enregistrer';

@@ -18,6 +18,7 @@ import { MatIconModule} from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { StarsPipe } from './stars.pipe';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { StarsPipe } from './stars.pipe';
     LoginComponent,
 	  DetailOeuvreComponent,
 	  FormulaireEditionOeuvreComponent,
-   StarsPipe,
+    StarsPipe,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,7 +6,7 @@
         <div class="m-5" >
 
             <div class="titlebar d-flex mb-5">
-                <button routerLink="/" class="btn btn-warning">
+                <button routerLink="/mes-oeuvres" class="btn btn-warning">
                     <i class="fa-solid fa-arrow-left"></i>
                 </button>
                 <h1>{{oeuvreDetail.titre | titlecase}}</h1>
@@ -21,10 +21,10 @@
             <p><strong>Créateurs  : </strong>{{oeuvreDetail.createurs}}</p>
             <p><strong>Acteurs  : </strong>{{oeuvreDetail.acteurs}}</p>
             <p *ngIf="oeuvreDetail.duree"><strong>Durée  : </strong>{{oeuvreDetail.duree}} minutes</p>
-            <div class="card card-body box-shadow-white background-darkgrey my-5" *ngIf="oeuvreDetail.saisons"> 
+            <div class="card card-body box-shadow-white background-darkgrey my-5" *ngIf="oeuvreDetail.saisons">
                 <h3><strong>Saisons</strong></h3>
                 <p class="ms-3"*ngFor="let saison of oeuvreDetail.saisons">{{saison.numero}} <span class="eltOrange"><span class="espaceSaison">---</span>nbr d'épisode : </span>{{saison.nbEpisodes}} <span class="espaceSaison">---</span><span class="eltOrange">statut :</span> {{saison.statutVisionnage.libelle}}</p>
-        
+
             </div>
         </div>
     </div>
@@ -40,12 +40,12 @@
     <H2  class="m-5" *ngIf="oeuvreDetail.urlBandeAnnonce">Bande-Annonce</H2>
     <div class="col-12">
         <div class="video-container">
-            <iframe *ngIf="oeuvreDetail.urlBandeAnnonce"  
-                    [src]="getUrlBandeAnnonce(oeuvreDetail.urlBandeAnnonce)" 
+            <iframe *ngIf="oeuvreDetail.urlBandeAnnonce"
+                    [src]="getUrlBandeAnnonce(oeuvreDetail.urlBandeAnnonce)"
                     width="95%"
                     height="600px"
                     frameborder="0"
                     allowfullscreen></iframe>
-        </div>    
+        </div>
     </div>
 </div>

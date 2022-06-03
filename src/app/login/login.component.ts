@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.tokenService.signOut();
+    //this.tokenService.signOut();
 
   }
 
@@ -62,6 +62,6 @@ export class LoginComponent implements OnInit {
   }
 
   afficherPageUtilisateur(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/mes-oeuvres']);
   }
 }
