@@ -9,7 +9,7 @@
   <div>
   <div class="block-login">
     <button *ngIf="!connexionUtilisateur" routerLink="/login" type="buttonSignIn" class="btn btn-success btn-xs m-3">Se connecter</button>
-    <div *ngIf="connexionUtilisateur">Bienvenue, {{ identifiantUtilisateur }}</div>
+    <div class="nom-utilisateur" *ngIf="connexionUtilisateur">Bienvenue, {{ identifiantUtilisateur }}</div>
   </div>
 
   <div>

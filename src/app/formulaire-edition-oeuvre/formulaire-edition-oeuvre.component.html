@@ -37,7 +37,7 @@
     <div class="col-12 col-md-6"><!--debut 1ere colonne-->
       <!-- Type Oeuvre-->
       <div>
-        <mat-form-field   appearance="outline">
+        <mat-form-field   appearance="fill">
           <mat-label class = "eltOrange">Type d'oeuvre</mat-label>
           <mat-select formControlName="typeOeuvre" [(value)]="selectionType">
             <mat-option class = "eltBlanc" *ngFor="let type of types" [value]="type.libelle">
@@ -49,7 +49,7 @@
 
       <!-- Titre -->
       <div>
-        <mat-form-field appearance="outline" class="w-100">
+        <mat-form-field appearance="fill" class="w-100">
           <mat-label class = "eltOrange">Titre</mat-label>
           <input formControlName="titre" matInput>
         </mat-form-field>
@@ -57,7 +57,7 @@
 
       <!--genres-->
       <div>
-        <mat-form-field>
+        <mat-form-field appearance="fill">
           <mat-label class = "eltOrange">Genres</mat-label>
           <mat-select formControlName="genreIds" name="values" multiple>
             <mat-option class = "eltBlanc" *ngFor="let g of genres" [value]="g.id">
@@ -69,7 +69,7 @@
 
       <!--statut visionnage-->
       <div>
-        <mat-form-field>
+        <mat-form-field appearance="fill">
           <mat-label class = "eltOrange">Statut visionnage</mat-label>
           <mat-select formControlName="statutVisionnageId" >
             <mat-option class = "eltBlanc" *ngFor="let s of statutVisionnages" [value]="s.id">
@@ -84,7 +84,7 @@
       <!-- duree d'un film -->
       <!-- on affiche que s'il s'agit d'un film -->
       <div *ngIf="oeuvreForm.value.typeOeuvre =='film'" >
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="fill">
           <mat-label class = "eltOrange">Durée (en minutes)</mat-label>
           <input matInput formControlName="duree" type="number">
         </mat-form-field>
@@ -92,7 +92,7 @@
 
       <!-- description -->
       <div>
-        <mat-form-field appearance="outline" class="w-100">
+        <mat-form-field appearance="fill" class="w-100">
           <mat-label class = "eltOrange">Description</mat-label>
           <textarea class = "eltBlanc" matInput formControlName="description" cdkTextareaAutosize ></textarea>
         </mat-form-field>
@@ -103,21 +103,21 @@
     <div class="col-12 col-md-6"><!--debut premiere colonne-->
       <!-- Créateur -->
       <div>
-        <mat-form-field appearance="outline" class="w-100">
+        <mat-form-field appearance="fill" class="w-100">
           <mat-label class = "eltOrange">Créateur</mat-label>
           <input formControlName="createurs" matInput>
         </mat-form-field>
       </div>
       <!-- Acteurs -->
       <div>
-        <mat-form-field appearance="outline" class="w-100">
+        <mat-form-field appearance="fill" class="w-100">
           <mat-label class = "eltOrange">Acteurs</mat-label>
           <input class = "eltBlanc" formControlName="acteurs" matInput>
         </mat-form-field>
       </div>
       <!-- note de l'oeuvre-->
       <div>
-        <mat-form-field>
+        <mat-form-field appearance="fill">
           <mat-label class = "eltOrange">Note</mat-label>
           <mat-select formControlName="note">
             <mat-option class = "eltBlanc" *ngFor="let note of notePossibles" [value]="note">
@@ -129,7 +129,7 @@
 
       <!-- Affiche -->
       <div>
-        <mat-form-field appearance="outline" class="w-100">
+        <mat-form-field appearance="fill" class="w-100">
           <mat-label class = "eltOrange">Url de l'affiche</mat-label>
           <input class = "eltBlanc" formControlName="urlAffiche" matInput>
         </mat-form-field>
@@ -143,7 +143,7 @@
 
       <!-- Video youtube -->
       <div>
-        <mat-form-field appearance="outline" class="champ-video-youtube">
+        <mat-form-field appearance="fill" class="champ-video-youtube">
           <mat-label class = "eltOrange">Clé video youtube</mat-label>
           <input  class = "eltBlanc" formControlName="urlBandeAnnonce" matInput placeholder="Clé Youtube remplacant ????">
           <mat-hint>https://www.youtube.com/watch?v=????</mat-hint>
