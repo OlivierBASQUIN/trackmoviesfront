@@ -1,11 +1,13 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import {
+  FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
   FormGroupDirective,
   Validators,
 } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { GenreModel } from '../shared/models/genre.model';
 import { StatutModel } from '../shared/models/statut.model';
@@ -29,7 +31,6 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
   subscriptions:Subscription[] =[];
 
   oeuvreForm: FormGroup;
-  isOeuvreSauvee :boolean = false ;
 
   types!: TypeModel[];
   selectionType: string = '';
@@ -41,18 +42,21 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
 
   notePossibles : Number[] = [0,1,2,3,4,5];
 
-  //gestion des messages d'erreur
-  isSauvegardeOk:boolean = true;
+  //gestion des messages (on met 2 booleen car on peut ne pas afficherde message du tout egalement)
+  displayMsgOeuvreSauvee :boolean = false ;
+  displayMsgErreurSauvegarde:boolean = false;
+
   msgErreur:String='';
 
   constructor(private fb: FormBuilder, public typeService: TypeService, public oeuvreService: OeuvreService,
-            public genreService : GenreService, public statutService : StatutService,private el: ElementRef)
+            public genreService : GenreService, public statutService : StatutService,private el: ElementRef
+            ,private _snackBar: MatSnackBar)
   {
       this.oeuvreForm = this.fb.group({
       typeOeuvre: ['', [Validators.required, Validators.minLength(1)]],
       titre: ['', [Validators.required, Validators.minLength(1)]],
       genreIds: [''],
-      statutVisionnageId: [''],
+      statutVisionnageId: [1],//statut par défaut le 1er, normalement ='A Voir'
       note: [''],
       createurs: [''],
       acteurs: [''],
@@ -99,46 +103,99 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
         {
           next  : response => {
             console.log(response)//si tout s'est bien passé
-            this.isOeuvreSauvee=true;
+            this.displayMsgOeuvreSauvee=true;
+            this.displayMsgErreurSauvegarde=false;//on desactive le message d'erreur au cas où
+
             formDirective.resetForm() //to reset les controles de validité
             this.oeuvreForm.reset();//to reset les valeurs du formulaire
+            this.saisons.clear();//on clear les saisons
+
+            //on remet statut visionnage à sa valeur par defaut
+            this.oeuvreForm.controls["statutVisionnageId"].setValue(1);
+            this._snackBar.open('Sauvegarde OK', 'Fermer', {
+              duration: 3000
+            });
+
+            //const messageSuccessDiv = this.el.nativeElement.querySelector('#SuccessMsg');
+            //messageSuccessDiv.focus();
+            //window.location.hash ='#SuccessMsg';
           },
           error : response =>  {
             console.log("response=",response);
-            this.isSauvegardeOk=false;
+            this.displayMsgErreurSauvegarde=true;
+            this.displayMsgOeuvreSauvee=false;
             this.msgErreur=response.error;
+
+            this._snackBar.open('Echec de la Sauvegarde', 'Fermer', {
+              duration: 3000
+            });
+            //const messageErrorDiv = this.el.nativeElement.querySelector('#ErrorMsg');
+            //messageErrorDiv.focus();
+           //window.location.hash ='#ErrorMsg';
           }
         }
       )
     } else {
       console.log('formulaire invalide')
+      console.log(this.oeuvreForm);
       //on met le focus sur le 1er control invalide
       for (const key of Object.keys(this.oeuvreForm.controls)) {
         if (this.oeuvreForm.controls[key].invalid) {
-          const invalidControl = this.el.nativeElement.querySelector('[formcontrolname="' + key + '"]');
-          invalidControl.focus();
+          console.log('control invalide key :',key);
+          console.log('control invalide :',this.oeuvreForm.controls[key]);
+          //const invalidControl = this.el.nativeElement.querySelector('[formcontrolname="' + key + '"]');
+          //invalidControl.focus();
+
+          if (key!='saisons') {
+            console.log('control invalide :',this.oeuvreForm.controls[key]);
+            const invalidControl = this.el.nativeElement.querySelector('[formcontrolname="' + key + '"]');
+            invalidControl.focus();
+          } else {
+            //a voir plus tard si ca a un interet d'essaye de mettre le focus sur cette partie
+            /*let saisonFormArray =this.oeuvreForm.controls["saisons"];
+            console.log('saisonFormArray=',saisonFormArray);
+            for (const saison of Object.keys(saisonFormArray.value)) {
+              console.log('saison=',saison);
+              console.log('control invalide :',this.saisonForm.controls[key]);
+            }*/
+          }
           break;
        }
-  }
+      }
     }
+  }
 
+  get saisons()  {
+    return this.oeuvreForm.controls["saisons"] as FormArray;
+  }
 
+  addSaison(){
+    const saisonForm = this.fb.group({
+      id: new FormControl('', [Validators.pattern("^[0-9]*$")]),
+      numero: new FormControl('', [Validators.required, Validators.minLength(1)]),
+      statutVisionnageId: [1],//statut par défaut le 1er, normalement ='A Voir'
+      nbEpisodes: new FormControl('', [Validators.pattern("^[0-9]*$")]),
+    })
+    this.saisons.push(saisonForm);
+  }
+
+  deleteSaison(saisonIndex: number) {
+    this.saisons.removeAt(saisonIndex);
   }
 
   removeMessage() {
-    this.isOeuvreSauvee=false;
+    this.displayMsgErreurSauvegarde=false;
     this.msgErreur='';
-    this.isSauvegardeOk=true;
+    this.displayMsgOeuvreSauvee=false;
   }
 
   resetForm() {
-    this.oeuvreForm.reset();
+    this.oeuvreForm.reset();//to reset les valeurs du formulaire
+    this.saisons.clear();//on clear les saisons
+
+    //on remet statut visionnage à sa valeur par defaut
+    this.oeuvreForm.controls["statutVisionnageId"].setValue(1);
   }
-
-  convertOeuvreFormToModel(formValues:any) {
-
-  }
-
 
   ngOnDestroy() {
     //on detruit les subscriptions en place
