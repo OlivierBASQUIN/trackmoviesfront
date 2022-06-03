@@ -14,12 +14,14 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.oeuvreService.getOeuvresInitiales();
+/*
     this.oeuvreService.oeuvres$.subscribe( (data:Array<OeuvreModel>) => {
       if((data.length==0) && (!this.oeuvreService.getParametreRechercheExiste())) {
         this.oeuvreService.getOeuvresInitiales()
       }
-    });
+    });*/
+
   }
 
   getUrlAffiche(urlAffiche:string | null ):string {

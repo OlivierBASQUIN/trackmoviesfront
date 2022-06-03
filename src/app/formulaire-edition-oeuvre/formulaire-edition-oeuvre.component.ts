@@ -59,7 +59,8 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
       duree: ['', [Validators.pattern("^[0-9]*$")]],
       description: [''],
       urlAffiche: [''],
-      urlBandeAnnonce: ['']
+      urlBandeAnnonce: [''],
+      saisons: this.fb.array([])
     });
   }
 
