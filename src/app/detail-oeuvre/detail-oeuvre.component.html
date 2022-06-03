@@ -24,7 +24,7 @@
             <p *ngIf="oeuvreDetail.duree"><strong>Durée  : </strong>{{oeuvreDetail.duree}} minutes</p>
             <div class="card card-body box-shadow-white background-primaire my-5" *ngIf="oeuvreDetail.saisons"> 
                 <h3><strong>Saisons</strong></h3>
-                <p class="ms-3"*ngFor="let saison of oeuvreDetail.saisons"><strong>{{saison.numero}}</strong> <span class="eltOrange"><span class="espaceSaison">---</span>nbr d'épisode : </span>{{saison.nbEpisodes}} <span class="espaceSaison">---</span><span class="eltOrange">statut :</span> {{saison.statutVisionnage.libelle}}</p>
+                <p class="ms-3"*ngFor="let saison of oeuvreDetail.saisons"><strong>{{saison.numero}}</strong> <span class="eltOrange"><span class="espaceSaison"> --- </span>nbr d'épisode : </span>{{saison.nbEpisodes}} <span class="espaceSaison"> --- </span><span class="eltOrange">statut :</span> {{saison.statutVisionnage.libelle}}</p>
         
             </div>
         </div>
