@@ -12,7 +12,7 @@ export class GenreService {
   private _API_URL = "http://localhost:8080/trackmovies/v1";
 
   private _genres$ = new BehaviorSubject<GenreModel[]>([]);
-  private _genreParDefaut:Array<GenreModel>= [new GenreModel(-1,'Tous')];
+  //private _genreParDefaut:Array<GenreModel>= [new GenreModel(-1,'Tous')];
 
 
   constructor(private httpClient:HttpClient) { }
@@ -29,8 +29,9 @@ export class GenreService {
        // souscrition à la réponse HTTP (observable) et push dans le subject _genre$
         .subscribe(
          (reponse:Array<GenreModel>) => {
-          let genres =  [...this._genreParDefaut, ...reponse];
-          this._genres$.next(genres);
+          //let genres =  [...this._genreParDefaut, ...reponse];
+          //this._genres$.next(genres);
+          this._genres$.next(reponse);
          }
        )
      }

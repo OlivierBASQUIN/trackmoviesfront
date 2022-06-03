@@ -12,7 +12,7 @@ export class StatutService {
   private _API_URL = 'http://localhost:8080/trackmovies/v1';
 
   private _statuts$ = new BehaviorSubject<StatutModel[]>([]);
-  private _statutParDefaut:Array<StatutModel>= [new StatutModel(-1,'Tous')];
+  //private _statutParDefaut:Array<StatutModel>= [new StatutModel(-1,'Tous')];
 
   constructor(private httpClient:HttpClient) { }
 
@@ -27,8 +27,9 @@ export class StatutService {
         ) // fin pipe
        .subscribe(
           (response:Array<StatutModel>) => {
-            let statuts = [...this._statutParDefaut, ...response];
-            this._statuts$.next(statuts);
+            //let statuts = [...this._statutParDefaut, ...response];
+            //this._statuts$.next(statuts);
+            this._statuts$.next(response);
           }
        )
      }

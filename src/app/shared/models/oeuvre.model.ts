@@ -12,6 +12,7 @@ export class OeuvreModel {
   acteurs: string;
   urlAffiche: string;
   urlBandeAnnonce: string;
+  description: string;
 
   constructor(oeuvre: OeuvreModel) {
     this.id = oeuvre.id;
@@ -24,5 +25,6 @@ export class OeuvreModel {
     this.acteurs = oeuvre.acteurs
     this.urlAffiche = oeuvre.urlAffiche;
     this.urlBandeAnnonce = oeuvre.urlBandeAnnonce;
+    this.description=oeuvre.description;
   }
 }

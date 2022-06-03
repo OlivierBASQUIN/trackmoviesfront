@@ -1,5 +1,7 @@
-<h1>Edition d'une oeuvre</h1>
+<!--titre a dynamiser fonction qu'on ajoute ou edite une oeuvre-->
+<h1>Ajout d'une oeuvre (film/serie)</h1>
 
+<!-- toolbar bouton du haut-->
 <mat-toolbar >
   <mat-toolbar-row class="boite-outil background-darkgrey">
     <button routerLink="/"  type="button" class="btn btn-warning">
@@ -11,130 +13,166 @@
     <span></span><!--pour que bouton reinitialiser apparaisse au milieu-->
   </mat-toolbar-row>
 </mat-toolbar>
+<!-- fin toolbar bouton du haut-->
 
 <!-- bandeau message statut sauvegarde-->
-<div *ngIf="msgOeuvreSauvee" class="alert alert-success alert-dismissible fade show" role="alert">
+<div *ngIf="isOeuvreSauvee" class="alert alert-success alert-dismissible fade show" role="alert">
   <strong>Success!</strong> Oeuvre sauvegardée
   <button (click)="removeMessage()" type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
-
+</div>
+<div *ngIf="!isSauvegardeOk" class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Erreur</strong> de la sauvegarde
+  <p>{{msgErreur}}</p>
+  <button (click)="removeMessage()" type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
 
 
+<!-- debut formulaire-->
+<form [formGroup]="oeuvreForm" #formDirective="ngForm" (submit)="onSubmitForm($event,formDirective)" class="my-2">
+  <div class="row border border-warning m-3 p-3">
+    <div class="col-12 col-md-6"><!--debut 1ere colonne-->
+      <!-- Type Oeuvre-->
+      <div>
+        <mat-form-field   appearance="outline">
+          <mat-label class = "eltOrange">Type d'oeuvre</mat-label>
+          <mat-select formControlName="typeOeuvre" [(value)]="selectionType">
+            <mat-option class = "eltBlanc" *ngFor="let type of types" [value]="type.libelle">
+              {{type.libelle | titlecase }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-<form (submit)="onSubmitForm($event)" [formGroup]="oeuvreForm" class="card-form my-2">
+      <!-- Titre -->
+      <div>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label class = "eltOrange">Titre</mat-label>
+          <input formControlName="titre" matInput>
+        </mat-form-field>
+      </div>
 
-  <!-- Select Type -->
-<!--
-  <div class="mb-3">
-    <select class="form-select form-select-lg" aria-label=".form-select-lg example">
-      <option selected>Open this select menu</option>
-      <option value="1">One</option>
-      <option value="2">Two</option>
-      <option value="3">Three</option>
-    </select>
-  </div>-->
+      <!--genres-->
+      <div>
+        <mat-form-field>
+          <mat-label class = "eltOrange">Genres</mat-label>
+          <mat-select formControlName="genreIds" name="values" multiple>
+            <mat-option class = "eltBlanc" *ngFor="let g of genres" [value]="g.id">
+              {{g.libelle}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-  <div >
-    <mat-form-field   appearance="outline">
-      <mat-label>Select Type d'oeuvre</mat-label>
-      <mat-select formControlName="typeOeuvre" [(value)]="selectionType">
-        <mat-option *ngFor="let type of types" [value]="type.libelle">
-          {{type.libelle | titlecase }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+      <!--statut visionnage-->
+      <div>
+        <mat-form-field>
+          <mat-label class = "eltOrange">Statut visionnage</mat-label>
+          <mat-select formControlName="statutVisionnageId" >
+            <mat-option class = "eltBlanc" *ngFor="let s of statutVisionnages" [value]="s.id">
+              {{s.libelle}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+
+
+      <!-- duree d'un film -->
+      <!-- on affiche que s'il s'agit d'un film -->
+      <div *ngIf="oeuvreForm.value.typeOeuvre =='film'" >
+        <mat-form-field appearance="outline">
+          <mat-label class = "eltOrange">Durée (en minutes)</mat-label>
+          <input matInput formControlName="duree" type="number">
+        </mat-form-field>
+      </div>
+
+      <!-- description -->
+      <div>
+        <mat-form-field appearance="fill" class="w-100">
+          <mat-label class = "eltOrange">Description</mat-label>
+          <textarea class = "eltBlanc" matInput formControlName="description" cdkTextareaAutosize ></textarea>
+        </mat-form-field>
+      </div>
+    </div> <!--fin 1ere colonne-->
+
+
+    <div class="col-12 col-md-6"><!--debut premiere colonne-->
+      <!-- Créateur -->
+      <div>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label class = "eltOrange">Créateur</mat-label>
+          <input formControlName="createurs" matInput>
+        </mat-form-field>
+      </div>
+      <!-- Acteurs -->
+      <div>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label class = "eltOrange">Acteurs</mat-label>
+          <input class = "eltBlanc" formControlName="acteurs" matInput>
+        </mat-form-field>
+      </div>
+      <!-- note de l'oeuvre-->
+      <div>
+        <mat-form-field>
+          <mat-label class = "eltOrange">Note</mat-label>
+          <mat-select formControlName="note">
+            <mat-option class = "eltBlanc" *ngFor="let note of notePossibles" [value]="note">
+              {{note}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Affiche -->
+      <div>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label class = "eltOrange">Url de l'affiche</mat-label>
+          <input class = "eltBlanc" formControlName="urlAffiche" matInput>
+        </mat-form-field>
+      </div>
+
+      <div *ngIf="oeuvreForm.value.urlAffiche !=''" >
+        <div class="blockImg mb-3">
+            <img [src]="oeuvreForm.value.urlAffiche" alt="" class="w-100" >
+        </div>
+      </div>
+
+      <!-- Video youtube -->
+      <div>
+        <mat-form-field appearance="outline" class="champ-video-youtube">
+          <mat-label class = "eltOrange">Clé video youtube</mat-label>
+          <input  class = "eltBlanc" formControlName="urlBandeAnnonce" matInput placeholder="Clé Youtube remplacant ????">
+          <mat-hint>https://www.youtube.com/watch?v=????</mat-hint>
+        </mat-form-field>
+      </div>
+
+
+    </div><!-- Fin 2eme colonne-->
+  </div><!--Fin row-->
+
+  <!-- toolbar bouton du bas-->
+  <div class="row">
+    <mat-toolbar >
+      <mat-toolbar-row class="boite-outil">
+        <button type="submit" class="btn btn-warning">Sauver</button>
+
+        <!-- en fonction de si on vient de la liste ou de detail, le routage devrait etre dynamique, retour vers la bonne page-->
+        <button routerLink="/"  type="button" class="btn btn-warning">
+          Annuler
+        </button>
+
+        <!-- action a coder-->
+        <button type="button" class="btn btn-warning">
+          Supprimer
+        </button>
+      </mat-toolbar-row>
+    </mat-toolbar>
   </div>
-
-  <!--
-  <div class="mb-3">
-    <label class="form-label">Titre</label>
-    <input class="form-control" formControlName="titre" type="text">
-  </div>
-
-  -->
-<!--genres-->
-<!--statut visionnage-->
-
-  <!-- note de l'oeuvre-->
-  <!--
-  <div class="mb-3">
-    <label class="form-label">Note</label>
-    <select class="form-select form-select-lg" formControlName="note" aria-label=".form-select-lg">
-      <option selected>Open this select menu</option>
-      <option value="0">0</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-    </select>
-  </div>
-
--->
-
-  <!--
-  <div class="mb-3">
-    <label class="form-label">Duree</label>
-    <input class="form-control" formControlName="duree" type="number">
-    <mat-error *ngIf="oeuvreForm.controls['duree'].hasError('pattern')">ce champs doit etre un nombre</mat-error>
-
-  </div>
-  -->
-
-  <!--
-  <div class="mb-3">
-    <mat-form-field >
-      <mat-label>Durée</mat-label>
-      <input formControlName="duree" matInput>
-      <mat-error *ngIf="oeuvreForm.controls['duree'].hasError('pattern')">ce champs doit etre un nombre</mat-error>
-    </mat-form-field>
-  </div>
--->
-
-  <div>
-    <mat-form-field appearance="outline">
-      <mat-label>Titre</mat-label>
-      <input formControlName="titre" matInput>
-    </mat-form-field>
-  </div>
-
-  <div>
-    <mat-form-field appearance="outline">
-      <mat-label>Url de l'affiche</mat-label>
-      <input formControlName="urlAffiche" matInput>
-    </mat-form-field>
-  </div>
-
-
-  <div>
-    <mat-form-field appearance="outline" class="champ-video-youtube">
-      <mat-label>Clé video youtube</mat-label>
-      <input formControlName="urlBandeAnnonce" matInput placeholder="Clé Youtube remplacant ????">
-      <mat-hint>https://www.youtube.com/watch?v=????</mat-hint>
-    </mat-form-field>
-  </div>
-
-  <!--
-  <div class="mb-3">
-    <mat-form-field appearance="outline">
-      <mat-label>Durée</mat-label>
-      <input formControlName="duree" matInput>
-      <mat-error *ngIf="oeuvreForm.controls['duree'].hasError('pattern')">ce champs doit etre un nombre</mat-error>
-    </mat-form-field>
-
-
-    <label class="form-label">Durée</label>
-    <input class="form-control" formControlName="titre" type="number">
-    <div *ngIf="f.number.touched && f.number.invalid" class="alert alert-danger">
-      <div *ngIf="f.number.errors.required">Number is required.</div>
-      <div *ngIf="f.number.errors.pattern">Enter only number.</div>
-  </div>
-  -->
-
-  <div>
-    <button type="submit" class="btn btn-warning">Sauver</button>
-  </div>
-
+  <!-- fin toolbar bouton du bas-->
 </form>
+
+<pre style="background-color: white;">{{oeuvreASauverJson|json}}</pre>
