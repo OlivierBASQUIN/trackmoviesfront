@@ -5,20 +5,23 @@ import { AppComponent } from './app.component';
 import { DetailOeuvreComponent } from './detail-oeuvre/detail-oeuvre.component';
 import { ListComponent } from './list/list.component';
 import { SearchbarComponent } from './searchbar/searchbar.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HomeComponent } from './home/home.component';
 import { FormulaireEditionOeuvreComponent } from './formulaire-edition-oeuvre/formulaire-edition-oeuvre.component';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatSelectModule } from '@angular/material/select';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
+import { StarsPipe } from './stars.pipe';
+
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
+
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule} from '@angular/material/toolbar';
 import { MatIconModule} from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { StarsPipe } from './stars.pipe';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -27,9 +30,10 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     ListComponent,
     SearchbarComponent,
     LoginComponent,
-	  DetailOeuvreComponent,
-	  FormulaireEditionOeuvreComponent,
-   StarsPipe,
+	DetailOeuvreComponent,
+	FormulaireEditionOeuvreComponent,
+   	StarsPipe,
+	HomeComponent,
   ],
   imports: [
     BrowserModule,
