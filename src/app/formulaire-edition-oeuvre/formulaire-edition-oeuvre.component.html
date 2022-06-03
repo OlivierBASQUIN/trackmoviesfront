@@ -3,7 +3,7 @@
 
 <!-- toolbar bouton du haut-->
 <mat-toolbar >
-  <mat-toolbar-row class="boite-outil background-darkgrey">
+  <mat-toolbar-row class="boite-outil background-primaire">
     <button routerLink="/"  type="button" class="btn btn-warning">
       <i class="fa-solid fa-arrow-left"></i>
     </button>
@@ -92,7 +92,7 @@
 
       <!-- description -->
       <div>
-        <mat-form-field appearance="fill" class="w-100">
+        <mat-form-field appearance="outline" class="w-100">
           <mat-label class = "eltOrange">Description</mat-label>
           <textarea class = "eltBlanc" matInput formControlName="description" cdkTextareaAutosize ></textarea>
         </mat-form-field>
@@ -156,7 +156,7 @@
 
   <!-- toolbar bouton du bas-->
   <div class="row">
-    <mat-toolbar >
+    <mat-toolbar class="background-primaire">
       <mat-toolbar-row class="boite-outil">
         <button type="submit" class="btn btn-warning">Sauver</button>
 

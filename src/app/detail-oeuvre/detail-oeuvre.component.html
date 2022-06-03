@@ -9,7 +9,7 @@
                 <button routerLink="/" class="btn btn-warning">
                     <i class="fa-solid fa-arrow-left"></i>
                 </button>
-                <h1>{{oeuvreDetail.titre | titlecase}}</h1>
+                <h2>{{oeuvreDetail.titre | titlecase}}</h2>
                 <button type="buttonSignIn" class="btn btn-warning">Modifier</button>
             </div>
 
@@ -17,13 +17,13 @@
             <H2><span class="eltOrange">{{oeuvreDetail.typeOeuvre | titlecase}}</span></H2>
             <p><strong>Genre  : </strong><span *ngFor="let genre of oeuvreDetail.genres">{{ genre.libelle | titlecase }}. </span></p>
             <p><strong>Statut  : </strong><span *ngIf="oeuvreDetail.statutVisionnage">{{oeuvreDetail.statutVisionnage.libelle | titlecase}}</span></p>
-            <p><strong>Note  : </strong>{{oeuvreDetail.note }} <span class="eltOrange">/ 5</span> <br> <span [innerHTML]="oeuvreDetail.note | stars"></span> </p>
+            <p><strong>Note  : </strong>{{oeuvreDetail.note }} <span class="eltOrange">/ 5</span> <br> <span class="eltOrange" [innerHTML]="oeuvreDetail.note | stars"></span> </p>
             <p><strong>Créateurs  : </strong>{{oeuvreDetail.createurs}}</p>
             <p><strong>Acteurs  : </strong>{{oeuvreDetail.acteurs}}</p>
             <p *ngIf="oeuvreDetail.duree"><strong>Durée  : </strong>{{oeuvreDetail.duree}} minutes</p>
-            <div class="card card-body box-shadow-white background-darkgrey my-5" *ngIf="oeuvreDetail.saisons"> 
+            <div class="card card-body box-shadow-white background-primaire my-5" *ngIf="oeuvreDetail.saisons"> 
                 <h3><strong>Saisons</strong></h3>
-                <p class="ms-3"*ngFor="let saison of oeuvreDetail.saisons">{{saison.numero}} <span class="eltOrange"><span class="espaceSaison">---</span>nbr d'épisode : </span>{{saison.nbEpisodes}} <span class="espaceSaison">---</span><span class="eltOrange">statut :</span> {{saison.statutVisionnage.libelle}}</p>
+                <p class="ms-3"*ngFor="let saison of oeuvreDetail.saisons"><strong>{{saison.numero}}</strong> <span class="eltOrange"><span class="espaceSaison">---</span>nbr d'épisode : </span>{{saison.nbEpisodes}} <span class="espaceSaison">---</span><span class="eltOrange">statut :</span> {{saison.statutVisionnage.libelle}}</p>
         
             </div>
         </div>

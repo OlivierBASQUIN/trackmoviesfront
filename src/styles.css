@@ -1,12 +1,19 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
 body {
-    color: #fff;
+    color: black;
 }
 html, body { 
     height: 100%; 
 }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+    margin: 0;
+    font-family: Roboto,"Helvetica Neue",sans-serif; 
+}
+
+h1 {
+    margin: 30px;
+}
 
 .eltOrange {
     color: rgb(255, 208, 1);
@@ -20,8 +27,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     box-shadow: 1px 1px 15px white;
     border-radius: 30px;
     overflow: hidden;
+    margin: auto;
 }
 
-.background-darkgrey {
-    background: rgb(48, 44, 44);
+.background-primaire {
+    background: rgb(78, 96, 121);
 }
+
+.background-secondaire {
+    background-color: rgb(41, 44, 61)
+}
+
