@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'mes-oeuvres', component: ListComponent,canActivate: [AuthGuard] },
   { path: 'mes-oeuvres/:id', component: DetailOeuvreComponent,canActivate: [AuthGuard] },
   { path: 'edition-oeuvre', component: FormulaireEditionOeuvreComponent,canActivate: [AuthGuard] },
-
+  { path: 'edition-oeuvre/:id', component: FormulaireEditionOeuvreComponent,canActivate: [AuthGuard] },
 ];
 
 @NgModule({

@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Subscription } from 'rxjs';
+import { findIndex, Subscription } from 'rxjs';
 import { GenreModel } from '../shared/models/genre.model';
 import { StatutModel } from '../shared/models/statut.model';
 import { TypeModel } from '../shared/models/type.model';
@@ -16,6 +16,8 @@ import { GenreService } from '../shared/services/genre.service';
 import { OeuvreService } from '../shared/services/oeuvre.service';
 import { StatutService } from '../shared/services/statut.service';
 import { TypeService } from '../shared/services/type.service';
+import { OeuvreDetailModel } from '../shared/models/oeuvre-detail.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-formulaire-edition-oeuvre',
@@ -29,6 +31,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
   oeuvreASauverJson : any;
 
   subscriptions:Subscription[] =[];
+  subscriptionsOeuvreDetail:Subscription[] =[];
 
   oeuvreForm: FormGroup;
 
@@ -40,9 +43,12 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
 
   statutVisionnages!: StatutModel[];
 
+  //données de l'oeuvre sélectionnée
+  oeuvreAModifier!: OeuvreDetailModel;
+
   notePossibles : Number[] = [0,1,2,3,4,5];
 
-  //gestion des messages (on met 2 booleen car on peut ne pas afficherde message du tout egalement)
+  //gestion des messages (on met 2 booleen car on peut ne pas afficher de message du tout egalement)
   displayMsgOeuvreSauvee :boolean = false ;
   displayMsgErreurSauvegarde:boolean = false;
 
@@ -50,9 +56,10 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
 
   constructor(private fb: FormBuilder, public typeService: TypeService, public oeuvreService: OeuvreService,
             public genreService : GenreService, public statutService : StatutService,private el: ElementRef
-            ,private _snackBar: MatSnackBar)
+            ,private _snackBar: MatSnackBar, private activatedRoute:ActivatedRoute)
   {
       this.oeuvreForm = this.fb.group({
+      oeuvreId: [''],
       typeOeuvre: ['', [Validators.required, Validators.minLength(1)]],
       titre: ['', [Validators.required, Validators.minLength(1)]],
       genreIds: [''],
@@ -78,6 +85,63 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
     this.subscriptions.push(
       this.statutService.statuts$.subscribe(data => this.statutVisionnages=data)
     );
+
+if (this.activatedRoute.snapshot.params['id']) {
+    //Souscription à l'oeuvreDetail et injection des données dans la variable oeuvreAModifier
+    this.subscriptionsOeuvreDetail.push(
+      this.oeuvreService.oeuvreDetail$.subscribe(data => this.oeuvreAModifier=data)
+    );
+    console.log(this.oeuvreAModifier);
+
+    //preremplissage des champs du formulaire pour la modification
+    this.oeuvreAModifier.id? this.oeuvreForm.controls["oeuvreId"].setValue(this.oeuvreAModifier.id) : [''];
+    this.oeuvreAModifier.typeOeuvre? this.oeuvreForm.controls["typeOeuvre"].setValue(this.oeuvreAModifier.typeOeuvre) : ['', [Validators.required, Validators.minLength(1)]];
+    this.oeuvreAModifier.titre? this.oeuvreForm.controls["titre"].setValue(this.oeuvreAModifier.titre) : ['', [Validators.required, Validators.minLength(1)]];
+    let genreArray : any = [];
+    this.oeuvreAModifier.genres? this.oeuvreForm.controls["genreIds"].setValue(this.oeuvreAModifier.genres.forEach(genre => {
+         genreArray.push(genre.id);
+         return genreArray;
+         }),) 
+         : ['']
+         console.log(genreArray);
+    this.oeuvreAModifier.statutVisionnage? this.oeuvreForm.controls["statutVisionnageId"].setValue(this.oeuvreAModifier.statutVisionnage.id) : [1];
+    this.oeuvreAModifier.note? this.oeuvreForm.controls["note"].setValue(this.oeuvreAModifier.note) : [''];
+    this.oeuvreAModifier.createurs? this.oeuvreForm.controls["createurs"].setValue(this.oeuvreAModifier.createurs) : [''];
+    this.oeuvreAModifier.acteurs? this.oeuvreForm.controls["acteurs"].setValue(this.oeuvreAModifier.acteurs) : [''];
+    this.oeuvreAModifier.duree? this.oeuvreForm.controls["duree"].setValue(this.oeuvreAModifier.duree) : [''];
+    this.oeuvreAModifier.description? this.oeuvreForm.controls["description"].setValue(this.oeuvreAModifier.description) : [''];
+    this.oeuvreAModifier.urlAffiche? this.oeuvreForm.controls["urlAffiche"].setValue(this.oeuvreAModifier.urlAffiche) : [''];
+    this.oeuvreAModifier.urlBandeAnnonce? this.oeuvreForm.controls["urlBandeAnnonce"].setValue(this.oeuvreAModifier.urlBandeAnnonce) : [''];
+    this.oeuvreAModifier.saisons? this.oeuvreAModifier.saisons.forEach(saison => {
+      const saisonForm = this.fb.group({
+        id: new FormControl(saison.id? saison.id : '', [Validators.pattern("^[0-9]*$")]),
+        numero: new FormControl(saison.numero? saison.numero : '', [Validators.required, Validators.minLength(1)]),
+        statutVisionnageId: saison.statutVisionnage? saison.statutVisionnage.id : [1],//statut par défaut le 1er, normalement ='A Voir'
+        nbEpisodes: new FormControl(saison.nbEpisodes? saison.nbEpisodes : '', [Validators.pattern("^[0-9]*$")]),
+      })
+      this.saisons.push(saisonForm);
+    })
+         : ['']
+  
+    console.log(this.oeuvreForm);
+  };
+    //this.oeuvreForm = this.fb.group({
+    // oeuvreId: this.oeuvreAmodifier.id? this.oeuvreAmodifier.id : [''],
+    // typeOeuvre: this.oeuvreAmodifier.typeOeuvre? this.oeuvreAmodifier.typeOeuvre :['', [Validators.required, Validators.minLength(1)]],
+    // titre: this.oeuvreAmodifier.titre? this.oeuvreAmodifier.titre :['', [Validators.required, Validators.minLength(1)]],
+    // genreIds: this.oeuvreAmodifier.genres? this.oeuvreAmodifier.genres.forEach(genre => {
+    //   let genreArray = new Array;
+    //   return genreArray.push(genre.id)}) : [''],
+    // statutVisionnageId: this.oeuvreAmodifier.statutVisionnage? this.oeuvreAmodifier.statutVisionnage : [1],//statut par défaut le 1er, normalement ='A Voir'
+    // note: [''],
+    // createurs: [''],
+    // acteurs: [''],
+    // duree: ['', [Validators.pattern("^[0-9]*$")]],
+    // description: [''],
+    // urlAffiche: [''],
+    // urlBandeAnnonce: [''],
+    // saisons: this.fb.array([])
+   // });
 
   }
 
