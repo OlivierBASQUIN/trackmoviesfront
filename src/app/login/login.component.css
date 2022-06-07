@@ -42,7 +42,3 @@ button {
 .flex-center {
   justify-content: center !important;
 }
-
-.border-radius-login {
-  border-radius: 20px;
-}
