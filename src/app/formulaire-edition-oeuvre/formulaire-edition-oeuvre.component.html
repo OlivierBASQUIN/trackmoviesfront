@@ -174,7 +174,7 @@
             </mat-form-field>
           </div>
           <div class="col-12 col-md-3">
-            <mat-form-field class="w-100">
+            <mat-form-field appearance="fill" class="w-100">
               <mat-label class = "eltOrange">Statut visionnage</mat-label>
               <mat-select formControlName="statutVisionnageId" >
                 <mat-option class = "eltBlanc" *ngFor="let s of statutVisionnages" [value]="s.id">
