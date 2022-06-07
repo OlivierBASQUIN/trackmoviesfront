@@ -6,7 +6,7 @@
         <div class="m-5" >
 
             <div class="titlebar d-flex mb-5">
-                <button routerLink="/" class="btn btn-warning">
+                <button routerLink="/mes-oeuvres" class="btn btn-warning">
                     <i class="fa-solid fa-arrow-left"></i>
                 </button>
                 <h2>{{oeuvreDetail.titre | titlecase}}</h2>
@@ -41,8 +41,8 @@
     <H2  class="m-5" *ngIf="oeuvreDetail.urlBandeAnnonce">Bande-Annonce</H2>
     <div class="col-12">
         <div class="video-container">
-            <iframe *ngIf="oeuvreDetail.urlBandeAnnonce"  
-                    [src]="getUrlBandeAnnonce(oeuvreDetail.urlBandeAnnonce)" 
+            <iframe *ngIf="oeuvreDetail.urlBandeAnnonce"
+                    [src]="getUrlBandeAnnonce(oeuvreDetail.urlBandeAnnonce)"
                     width="95%"
                     height="600px"
                     frameborder="0"

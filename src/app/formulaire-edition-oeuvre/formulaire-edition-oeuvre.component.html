@@ -4,7 +4,7 @@
 <!-- toolbar bouton du haut-->
 <mat-toolbar >
   <mat-toolbar-row class="boite-outil background-primaire">
-    <button routerLink="/"  type="button" class="btn btn-warning">
+    <button routerLink="/mes-oeuvres"  type="button" class="btn btn-warning">
       <i class="fa-solid fa-arrow-left"></i>
     </button>
     <button (click)="resetForm()" type="button" class="btn btn-warning">
@@ -16,13 +16,13 @@
 <!-- fin toolbar bouton du haut-->
 
 <!-- bandeau message statut sauvegarde-->
-<div *ngIf="isOeuvreSauvee" class="alert alert-success alert-dismissible fade show" role="alert">
+<div id="SuccessMsg" *ngIf="displayMsgOeuvreSauvee" class="alert alert-success alert-dismissible fade show" role="alert">
   <strong>Success!</strong> Oeuvre sauvegardée
   <button (click)="removeMessage()" type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-<div *ngIf="!isSauvegardeOk" class="alert alert-danger alert-dismissible fade show" role="alert">
+<div id="ErrorMsg" *ngIf="displayMsgErreurSauvegarde" class="alert alert-danger alert-dismissible fade show" role="alert">
   <strong>Erreur</strong> de la sauvegarde
   <p>{{msgErreur}}</p>
   <button (click)="removeMessage()" type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -94,13 +94,13 @@
       <div>
         <mat-form-field appearance="fill" class="w-100">
           <mat-label class = "eltOrange">Description</mat-label>
-          <textarea class = "eltBlanc" matInput formControlName="description" cdkTextareaAutosize ></textarea>
+          <textarea class = "eltBlanc" matInput formControlName="description" cdkTextareaAutosize autofocus ></textarea>
         </mat-form-field>
       </div>
     </div> <!--fin 1ere colonne-->
 
 
-    <div class="col-12 col-md-6"><!--debut premiere colonne-->
+    <div class="col-12 col-md-6"><!--debut deuxieme colonne-->
       <!-- Créateur -->
       <div>
         <mat-form-field appearance="fill" class="w-100">
@@ -153,6 +153,50 @@
 
     </div><!-- Fin 2eme colonne-->
   </div><!--Fin row-->
+
+  <!-- gestion des saisons -->
+  <div *ngIf="oeuvreForm.value.typeOeuvre =='serie'" class="border border-warning m-3 p-3">
+    <h2>Saisons:</h2>
+    <!--<button type="button" class="btn btn-warning" (click)="addNewSaison()">Nouvelle Saison</button>-->
+    <ng-container formArrayName="saisons">
+      <ng-container *ngFor="let saisonForm of saisons.controls; let i = index">
+        <div  [formGroupName]="i" class="row mb-3 p-1 border border-warning">
+          <div class="col-12 col-md-3">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label class = "eltOrange">Numéro de la saison</mat-label>
+              <input matInput class = "eltBlanc" formControlName="numero" >
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-3">
+            <mat-form-field appearance="fill" class="w-100">
+              <mat-label class = "eltOrange">Nombre d'épisodes</mat-label>
+              <input class = "eltBlanc" formControlName="nbEpisodes" matInput type="number">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-3">
+            <mat-form-field class="w-100">
+              <mat-label class = "eltOrange">Statut visionnage</mat-label>
+              <mat-select formControlName="statutVisionnageId" >
+                <mat-option class = "eltBlanc" *ngFor="let s of statutVisionnages" [value]="s.id">
+                  {{s.libelle}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-3 text-center">
+            <mat-icon type="button" (click)="deleteSaison(i)">
+              delete_forever</mat-icon>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <div class="d-flex justify-content-center">
+      <button type="button" (click)="addSaison()" class="btn btn-warning addSaisonBtn">
+        <i class="fa-solid fa-plus"></i>
+      </button>
+    </div>
+  </div>
 
   <!-- toolbar bouton du bas-->
   <div class="row">
