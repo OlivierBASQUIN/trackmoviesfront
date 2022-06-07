@@ -35,7 +35,7 @@ export class DetailOeuvreComponent implements OnInit {
       } 
     )
   )
-  console.log(this.oeuvreService.oeuvreDetail$.subscribe())
+  console.log(this.oeuvreService.oeuvreDetail$)
   
 } // Fin ngOnInit
 

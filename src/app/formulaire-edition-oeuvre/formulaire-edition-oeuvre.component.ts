@@ -86,8 +86,10 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
       this.statutService.statuts$.subscribe(data => this.statutVisionnages=data)
     );
 
+
+//Autoremplissage des champs lors de la demande de modification d'une oeuvre
+//Souscription à l'oeuvreDetail et injection des données dans la variable oeuvreAModifier si un id est présent dans l'URL
 if (this.activatedRoute.snapshot.params['id']) {
-    //Souscription à l'oeuvreDetail et injection des données dans la variable oeuvreAModifier
     this.subscriptionsOeuvreDetail.push(
       this.oeuvreService.oeuvreDetail$.subscribe(data => this.oeuvreAModifier=data)
     );
@@ -97,13 +99,13 @@ if (this.activatedRoute.snapshot.params['id']) {
     this.oeuvreAModifier.id? this.oeuvreForm.controls["oeuvreId"].setValue(this.oeuvreAModifier.id) : [''];
     this.oeuvreAModifier.typeOeuvre? this.oeuvreForm.controls["typeOeuvre"].setValue(this.oeuvreAModifier.typeOeuvre) : ['', [Validators.required, Validators.minLength(1)]];
     this.oeuvreAModifier.titre? this.oeuvreForm.controls["titre"].setValue(this.oeuvreAModifier.titre) : ['', [Validators.required, Validators.minLength(1)]];
+    //création d'un tableau pour héberger les id des genres de l'oeuvre
     let genreArray : any = [];
-    this.oeuvreAModifier.genres? this.oeuvreForm.controls["genreIds"].setValue(this.oeuvreAModifier.genres.forEach(genre => {
-         genreArray.push(genre.id);
-         return genreArray;
-         }),) 
-         : ['']
+    this.oeuvreAModifier.genres.forEach(genre => {
+         genreArray.push(genre.id);}), 
          console.log(genreArray);
+    //On affecte ensuite ce tableau d'Id en valeur des genres
+    this.oeuvreAModifier.genres? this.oeuvreForm.controls["genreIds"].setValue(genreArray) : [''];
     this.oeuvreAModifier.statutVisionnage? this.oeuvreForm.controls["statutVisionnageId"].setValue(this.oeuvreAModifier.statutVisionnage.id) : [1];
     this.oeuvreAModifier.note? this.oeuvreForm.controls["note"].setValue(this.oeuvreAModifier.note) : [''];
     this.oeuvreAModifier.createurs? this.oeuvreForm.controls["createurs"].setValue(this.oeuvreAModifier.createurs) : [''];
@@ -112,6 +114,7 @@ if (this.activatedRoute.snapshot.params['id']) {
     this.oeuvreAModifier.description? this.oeuvreForm.controls["description"].setValue(this.oeuvreAModifier.description) : [''];
     this.oeuvreAModifier.urlAffiche? this.oeuvreForm.controls["urlAffiche"].setValue(this.oeuvreAModifier.urlAffiche) : [''];
     this.oeuvreAModifier.urlBandeAnnonce? this.oeuvreForm.controls["urlBandeAnnonce"].setValue(this.oeuvreAModifier.urlBandeAnnonce) : [''];
+    //traitement des saisons avec affectation des valeurs si existante
     this.oeuvreAModifier.saisons? this.oeuvreAModifier.saisons.forEach(saison => {
       const saisonForm = this.fb.group({
         id: new FormControl(saison.id? saison.id : '', [Validators.pattern("^[0-9]*$")]),
