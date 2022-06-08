@@ -2,6 +2,8 @@
 <h1 *ngIf="!oeuvreAModifier">Ajout d'une oeuvre (film/serie)</h1>
 <h1 *ngIf="oeuvreAModifier">Modification d'une oeuvre (film/serie)</h1>
 
+<app-searchapi></app-searchapi>
+
 <!-- toolbar bouton du haut-->
 <mat-toolbar >
   <mat-toolbar-row class="boite-outil background-primaire">
@@ -12,6 +14,9 @@
     <!--si modification on retourne sur la page mes-oeuvres-detail-->
     <button *ngIf="oeuvreAModifier" [routerLink]="['/mes-oeuvres', oeuvreAModifier.id]" type="button" class="btn btn-warning">
       <i class="fa-solid fa-arrow-left"></i>
+    </button>
+    <button (click)="chargeForm()" type="button" class="btn btn-warning">
+      Charger depuis API
     </button>
     <button (click)="resetForm()" type="button" class="btn btn-warning">
       Réinitialiser
