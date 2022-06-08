@@ -43,7 +43,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
 
   statutVisionnages!: StatutModel[];
 
-  //données de l'oeuvre sélectionnée
+  //données de l'oeuvre sélectionnée pour modification
   oeuvreAModifier!: OeuvreDetailModel;
 
   notePossibles : Number[] = [0,1,2,3,4,5];
@@ -87,6 +87,8 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
     );
 
 
+ 
+
 //Autoremplissage des champs lors de la demande de modification d'une oeuvre
 //Souscription à l'oeuvreDetail et injection des données dans la variable oeuvreAModifier si un id est présent dans l'URL
 if (this.activatedRoute.snapshot.params['id']) {
@@ -113,8 +115,8 @@ if (this.activatedRoute.snapshot.params['id']) {
     this.oeuvreAModifier.duree? this.oeuvreForm.controls["duree"].setValue(this.oeuvreAModifier.duree) : [''];
     this.oeuvreAModifier.description? this.oeuvreForm.controls["description"].setValue(this.oeuvreAModifier.description) : [''];
     this.oeuvreAModifier.urlAffiche? this.oeuvreForm.controls["urlAffiche"].setValue(this.oeuvreAModifier.urlAffiche) : [''];
-    this.oeuvreAModifier.urlBandeAnnonce? this.oeuvreForm.controls["urlBandeAnnonce"].setValue(this.oeuvreAModifier.urlBandeAnnonce) : [''];
-    //traitement des saisons avec affectation des valeurs si existante
+    this.oeuvreAModifier.urlBandeAnnonce? this.oeuvreForm.controls["urlBandeAnnonce"].setValue(this.parserCleYoutube(this.oeuvreAModifier.urlBandeAnnonce)) : [''];
+    //traitement des saisons avec affectation des valeurs si existante 
     this.oeuvreAModifier.saisons? this.oeuvreAModifier.saisons.forEach(saison => {
       const saisonForm = this.fb.group({
         id: new FormControl(saison.id? saison.id : '', [Validators.pattern("^[0-9]*$")]),
@@ -125,27 +127,10 @@ if (this.activatedRoute.snapshot.params['id']) {
       this.saisons.push(saisonForm);
     })
          : ['']
-  
     console.log(this.oeuvreForm);
   };
-    //this.oeuvreForm = this.fb.group({
-    // oeuvreId: this.oeuvreAmodifier.id? this.oeuvreAmodifier.id : [''],
-    // typeOeuvre: this.oeuvreAmodifier.typeOeuvre? this.oeuvreAmodifier.typeOeuvre :['', [Validators.required, Validators.minLength(1)]],
-    // titre: this.oeuvreAmodifier.titre? this.oeuvreAmodifier.titre :['', [Validators.required, Validators.minLength(1)]],
-    // genreIds: this.oeuvreAmodifier.genres? this.oeuvreAmodifier.genres.forEach(genre => {
-    //   let genreArray = new Array;
-    //   return genreArray.push(genre.id)}) : [''],
-    // statutVisionnageId: this.oeuvreAmodifier.statutVisionnage? this.oeuvreAmodifier.statutVisionnage : [1],//statut par défaut le 1er, normalement ='A Voir'
-    // note: [''],
-    // createurs: [''],
-    // acteurs: [''],
-    // duree: ['', [Validators.pattern("^[0-9]*$")]],
-    // description: [''],
-    // urlAffiche: [''],
-    // urlBandeAnnonce: [''],
-    // saisons: this.fb.array([])
-   // });
-
+    
+  
   }
 
   onSubmitForm(event:Event, formDirective: FormGroupDirective) {
@@ -267,5 +252,11 @@ if (this.activatedRoute.snapshot.params['id']) {
   ngOnDestroy() {
     //on detruit les subscriptions en place
     this.subscriptions.forEach(sub => sub.unsubscribe())
+  }
+
+ //méthode qui permet d'extraire la clé youtube de l'Url, afin de l'injecter ensuite dans le formulaire à l'étape modification
+  parserCleYoutube(urlBandeAnnonce:string) {
+    let cle = urlBandeAnnonce.slice(30)
+    return cle;
   }
 }
