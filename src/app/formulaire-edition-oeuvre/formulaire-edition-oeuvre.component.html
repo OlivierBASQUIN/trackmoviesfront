@@ -2,7 +2,7 @@
 <h1 *ngIf="!oeuvreAModifier">Ajout d'une oeuvre (film/serie)</h1>
 <h1 *ngIf="oeuvreAModifier">Modification d'une oeuvre (film/serie)</h1>
 
-<app-searchapi></app-searchapi>
+<app-searchapi *ngIf="!oeuvreAModifier"></app-searchapi>
 
 <!-- toolbar bouton du haut-->
 <mat-toolbar >
