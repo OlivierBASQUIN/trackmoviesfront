@@ -56,6 +56,7 @@ http {
         location = /50x.html {
             root   html;
         }
+    }
 
        
     # another virtual host using mix of IP-, name-, and port-based configuration
