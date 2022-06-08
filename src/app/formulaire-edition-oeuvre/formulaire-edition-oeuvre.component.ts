@@ -49,7 +49,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
 
   notePossibles : Number[] = [0,1,2,3,4,5];
 
- oeuvresApiTrouvees: Array<RechercheModel> = [];
+  oeuvresApiTrouvees: Array<RechercheModel> = [];
   selectionOeuvreApi: RechercheModel = {id: 0, type: '', titre: '', urlAffiche: '', urlBandeAnnonce: '', description: ''};
   oeuvreApiChoisie: boolean = false;
   saisieRecherche: string = '';
@@ -66,6 +66,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
             ,private _snackBar: MatSnackBar, private activatedRoute:ActivatedRoute, public apiService: ApiService)
   {
       this.oeuvreForm = this.fb.group({
+      id: [''],
       typeOeuvre: ['', [Validators.required, Validators.minLength(1)]],
       titre: ['', [Validators.required, Validators.minLength(1)]],
       genreIds: [''],
@@ -91,7 +92,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
     this.subscriptions.push(
       this.statutService.statuts$.subscribe( data => { if (data.length == 0) { this.statutService.getStatuts(); } this.statutVisionnages = data } )
     );
-  }
+  
 //Autoremplissage des champs lors de la demande de modification d'une oeuvre
     //Souscription à l'oeuvreDetail et injection des données dans la variable oeuvreAModifier si un id est présent dans l'URL
     if (this.activatedRoute.snapshot.params['id']) {
