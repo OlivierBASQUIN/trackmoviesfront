@@ -20,6 +20,7 @@ import { StatutService } from '../shared/services/statut.service';
 import { TypeService } from '../shared/services/type.service';
 import { OeuvreDetailModel } from '../shared/models/oeuvre-detail.model';
 import { ActivatedRoute } from '@angular/router';
+import { SaisonModel } from '../shared/models/saison.model';
 
 @Component({
   selector: 'app-formulaire-edition-oeuvre',
@@ -121,17 +122,8 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
         this.oeuvreAModifier.urlAffiche? this.oeuvreForm.controls["urlAffiche"].setValue(this.oeuvreAModifier.urlAffiche) : [''];
         this.oeuvreAModifier.urlBandeAnnonce? this.oeuvreForm.controls["urlBandeAnnonce"].setValue(this.parserCleYoutube(this.oeuvreAModifier.urlBandeAnnonce)) : [''];
         //traitement des saisons avec affectation des valeurs si existante 
-        this.oeuvreAModifier.saisons? this.oeuvreAModifier.saisons.forEach(saison => {
-          const saisonForm = this.fb.group({
-            id: new FormControl(saison.id? saison.id : '', [Validators.pattern("^[0-9]*$")]),
-            numero: new FormControl(saison.numero? saison.numero : '', [Validators.required, Validators.minLength(1)]),
-            statutVisionnageId: saison.statutVisionnage? saison.statutVisionnage.id : [1],//statut par défaut le 1er, normalement ='A Voir'
-            nbEpisodes: new FormControl(saison.nbEpisodes? saison.nbEpisodes : '', [Validators.pattern("^[0-9]*$")]),
-          })
-          this.saisons.push(saisonForm);
-        })
-            : ['']
-        console.log(this.oeuvreForm);
+        this.oeuvreAModifier.saisons? this.oeuvreAModifier.saisons.forEach(saison => this.addSaison(saison)): [''];
+        console.log(this.oeuvreAModifier.saisons)
       };
     }
 
@@ -224,15 +216,16 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
     return this.oeuvreForm.controls["saisons"] as FormArray;
   }
 
-  addSaison(){
+  addSaison(saison:SaisonModel| null):void {
     const saisonForm = this.fb.group({
-      id: new FormControl('', [Validators.pattern("^[0-9]*$")]),
-      numero: new FormControl('', [Validators.required, Validators.minLength(1)]),
-      statutVisionnageId: [1],//statut par défaut le 1er, normalement ='A Voir'
-      nbEpisodes: new FormControl('', [Validators.pattern("^[0-9]*$")]),
+      id: saison? saison.id : new FormControl('', [Validators.pattern("^[0-9]*$")]),
+      numero: saison? saison.numero : new FormControl('', [Validators.required, Validators.minLength(1)]),
+      statutVisionnageId: saison? saison.statutVisionnage.id : [1],//statut par défaut le 1er, normalement ='A Voir'
+      nbEpisodes: saison? saison.nbEpisodes : new FormControl('', [Validators.pattern("^[0-9]*$")]),
     })
-    this.saisons.push(saisonForm);
-  }
+    this.saisons.push(saisonForm)
+   }
+  
 
   deleteSaison(saisonIndex: number) {
     this.saisons.removeAt(saisonIndex);
