@@ -15,7 +15,7 @@
     <button *ngIf="oeuvreAModifier" [routerLink]="['/mes-oeuvres', oeuvreAModifier.id]" type="button" class="btn btn-warning">
       <i class="fa-solid fa-arrow-left"></i>
     </button>
-    <button (click)="chargeForm()" type="button" class="btn btn-warning">
+    <button *ngIf="!oeuvreAModifier" (click)="chargeForm()" type="button" class="btn btn-warning">
       Charger depuis API
     </button>
     <button (click)="resetForm()" type="button" class="btn btn-warning">
@@ -215,8 +215,11 @@
       <mat-toolbar-row class="boite-outil">
         <button type="submit" class="btn btn-warning">Sauver</button>
 
-        <!-- en fonction de si on vient de la liste ou de detail, le routage devrait etre dynamique, retour vers la bonne page-->
-        <button routerLink="/mes-oeuvres"  type="button" class="btn btn-warning">
+        <!-- en fonction de si on vient de la liste ou de detail, le routage est dynamique-->
+        <button *ngIf="!oeuvreAModifier" routerLink="/mes-oeuvres"  type="button" class="btn btn-warning">
+          Annuler
+        </button>
+        <button *ngIf="oeuvreAModifier" [routerLink]="['/mes-oeuvres', oeuvreAModifier.id]"  type="button" class="btn btn-warning">
           Annuler
         </button>
 
