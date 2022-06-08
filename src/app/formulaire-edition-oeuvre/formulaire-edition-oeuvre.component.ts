@@ -31,7 +31,6 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
   oeuvreASauverJson : any;
 
   subscriptions:Subscription[] =[];
-  subscriptionsOeuvreDetail:Subscription[] =[];
 
   oeuvreForm: FormGroup;
 
@@ -59,7 +58,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
             ,private _snackBar: MatSnackBar, private activatedRoute:ActivatedRoute)
   {
       this.oeuvreForm = this.fb.group({
-      oeuvreId: [''],
+      id: [''],
       typeOeuvre: ['', [Validators.required, Validators.minLength(1)]],
       titre: ['', [Validators.required, Validators.minLength(1)]],
       genreIds: [''],
@@ -86,52 +85,47 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
       this.statutService.statuts$.subscribe(data => this.statutVisionnages=data)
     );
 
+    //Autoremplissage des champs lors de la demande de modification d'une oeuvre
+    //Souscription à l'oeuvreDetail et injection des données dans la variable oeuvreAModifier si un id est présent dans l'URL
+    if (this.activatedRoute.snapshot.params['id']) {
+        this.subscriptions.push(
+          this.oeuvreService.oeuvreDetail$.subscribe(data => this.oeuvreAModifier=data)
+        );
+        console.log(this.oeuvreAModifier);
 
- 
-
-//Autoremplissage des champs lors de la demande de modification d'une oeuvre
-//Souscription à l'oeuvreDetail et injection des données dans la variable oeuvreAModifier si un id est présent dans l'URL
-if (this.activatedRoute.snapshot.params['id']) {
-    this.subscriptionsOeuvreDetail.push(
-      this.oeuvreService.oeuvreDetail$.subscribe(data => this.oeuvreAModifier=data)
-    );
-    console.log(this.oeuvreAModifier);
-
-    //preremplissage des champs du formulaire pour la modification
-    this.oeuvreAModifier.id? this.oeuvreForm.controls["oeuvreId"].setValue(this.oeuvreAModifier.id) : [''];
-    this.oeuvreAModifier.typeOeuvre? this.oeuvreForm.controls["typeOeuvre"].setValue(this.oeuvreAModifier.typeOeuvre) : ['', [Validators.required, Validators.minLength(1)]];
-    this.oeuvreAModifier.titre? this.oeuvreForm.controls["titre"].setValue(this.oeuvreAModifier.titre) : ['', [Validators.required, Validators.minLength(1)]];
-    //création d'un tableau pour héberger les id des genres de l'oeuvre
-    let genreArray : any = [];
-    this.oeuvreAModifier.genres.forEach(genre => {
-         genreArray.push(genre.id);}), 
-         console.log(genreArray);
-    //On affecte ensuite ce tableau d'Id en valeur des genres
-    this.oeuvreAModifier.genres? this.oeuvreForm.controls["genreIds"].setValue(genreArray) : [''];
-    this.oeuvreAModifier.statutVisionnage? this.oeuvreForm.controls["statutVisionnageId"].setValue(this.oeuvreAModifier.statutVisionnage.id) : [1];
-    this.oeuvreAModifier.note? this.oeuvreForm.controls["note"].setValue(this.oeuvreAModifier.note) : [''];
-    this.oeuvreAModifier.createurs? this.oeuvreForm.controls["createurs"].setValue(this.oeuvreAModifier.createurs) : [''];
-    this.oeuvreAModifier.acteurs? this.oeuvreForm.controls["acteurs"].setValue(this.oeuvreAModifier.acteurs) : [''];
-    this.oeuvreAModifier.duree? this.oeuvreForm.controls["duree"].setValue(this.oeuvreAModifier.duree) : [''];
-    this.oeuvreAModifier.description? this.oeuvreForm.controls["description"].setValue(this.oeuvreAModifier.description) : [''];
-    this.oeuvreAModifier.urlAffiche? this.oeuvreForm.controls["urlAffiche"].setValue(this.oeuvreAModifier.urlAffiche) : [''];
-    this.oeuvreAModifier.urlBandeAnnonce? this.oeuvreForm.controls["urlBandeAnnonce"].setValue(this.parserCleYoutube(this.oeuvreAModifier.urlBandeAnnonce)) : [''];
-    //traitement des saisons avec affectation des valeurs si existante 
-    this.oeuvreAModifier.saisons? this.oeuvreAModifier.saisons.forEach(saison => {
-      const saisonForm = this.fb.group({
-        id: new FormControl(saison.id? saison.id : '', [Validators.pattern("^[0-9]*$")]),
-        numero: new FormControl(saison.numero? saison.numero : '', [Validators.required, Validators.minLength(1)]),
-        statutVisionnageId: saison.statutVisionnage? saison.statutVisionnage.id : [1],//statut par défaut le 1er, normalement ='A Voir'
-        nbEpisodes: new FormControl(saison.nbEpisodes? saison.nbEpisodes : '', [Validators.pattern("^[0-9]*$")]),
-      })
-      this.saisons.push(saisonForm);
-    })
-         : ['']
-    console.log(this.oeuvreForm);
-  };
-    
-  
-  }
+        //preremplissage des champs du formulaire pour la modification
+        this.oeuvreAModifier.id? this.oeuvreForm.controls["id"].setValue(this.oeuvreAModifier.id) : [''];
+        this.oeuvreAModifier.typeOeuvre? this.oeuvreForm.controls["typeOeuvre"].setValue(this.oeuvreAModifier.typeOeuvre) : [''];
+        this.oeuvreAModifier.titre? this.oeuvreForm.controls["titre"].setValue(this.oeuvreAModifier.titre) : [''];
+        //création d'un tableau pour héberger les id des genres de l'oeuvre
+        let genreArray : any = [];
+        this.oeuvreAModifier.genres.forEach(genre => {
+            genreArray.push(genre.id);}), 
+            console.log(genreArray);
+        //On affecte ensuite ce tableau d'Id en valeur des genres
+        this.oeuvreAModifier.genres? this.oeuvreForm.controls["genreIds"].setValue(genreArray) : [''];
+        this.oeuvreAModifier.statutVisionnage? this.oeuvreForm.controls["statutVisionnageId"].setValue(this.oeuvreAModifier.statutVisionnage.id) : [1];
+        this.oeuvreAModifier.note? this.oeuvreForm.controls["note"].setValue(this.oeuvreAModifier.note) : [''];
+        this.oeuvreAModifier.createurs? this.oeuvreForm.controls["createurs"].setValue(this.oeuvreAModifier.createurs) : [''];
+        this.oeuvreAModifier.acteurs? this.oeuvreForm.controls["acteurs"].setValue(this.oeuvreAModifier.acteurs) : [''];
+        this.oeuvreAModifier.duree? this.oeuvreForm.controls["duree"].setValue(this.oeuvreAModifier.duree) : [''];
+        this.oeuvreAModifier.description? this.oeuvreForm.controls["description"].setValue(this.oeuvreAModifier.description) : [''];
+        this.oeuvreAModifier.urlAffiche? this.oeuvreForm.controls["urlAffiche"].setValue(this.oeuvreAModifier.urlAffiche) : [''];
+        this.oeuvreAModifier.urlBandeAnnonce? this.oeuvreForm.controls["urlBandeAnnonce"].setValue(this.parserCleYoutube(this.oeuvreAModifier.urlBandeAnnonce)) : [''];
+        //traitement des saisons avec affectation des valeurs si existante 
+        this.oeuvreAModifier.saisons? this.oeuvreAModifier.saisons.forEach(saison => {
+          const saisonForm = this.fb.group({
+            id: new FormControl(saison.id? saison.id : '', [Validators.pattern("^[0-9]*$")]),
+            numero: new FormControl(saison.numero? saison.numero : '', [Validators.required, Validators.minLength(1)]),
+            statutVisionnageId: saison.statutVisionnage? saison.statutVisionnage.id : [1],//statut par défaut le 1er, normalement ='A Voir'
+            nbEpisodes: new FormControl(saison.nbEpisodes? saison.nbEpisodes : '', [Validators.pattern("^[0-9]*$")]),
+          })
+          this.saisons.push(saisonForm);
+        })
+            : ['']
+        console.log(this.oeuvreForm);
+      };
+    }
 
   onSubmitForm(event:Event, formDirective: FormGroupDirective) {
     //évite de recharger la parge au moment de la soumission
@@ -155,6 +149,7 @@ if (this.activatedRoute.snapshot.params['id']) {
         {
           next  : response => {
             console.log(response)//si tout s'est bien passé
+            this.oeuvreService.setOeuvreDetail(response);
             this.displayMsgOeuvreSauvee=true;
             this.displayMsgErreurSauvegarde=false;//on desactive le message d'erreur au cas où
 

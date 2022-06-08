@@ -126,7 +126,7 @@ export class OeuvreService {
     Return      : OeuvreDetailModel
   */
 
-     setOeuvreDetail(oeuvreDetail:OeuvreDetailModel){
+     public setOeuvreDetail(oeuvreDetail:OeuvreDetailModel){
        return this._oeuvreDetail$.next(oeuvreDetail);
      }
 
