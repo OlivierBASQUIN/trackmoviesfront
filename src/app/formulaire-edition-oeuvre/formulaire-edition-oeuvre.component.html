@@ -1,16 +1,23 @@
 <!--titre a dynamiser fonction qu'on ajoute ou edite une oeuvre-->
 <h1>Ajout d'une oeuvre (film/serie)</h1>
 
+<app-searchapi></app-searchapi>
 <!-- toolbar bouton du haut-->
 <mat-toolbar >
   <mat-toolbar-row class="boite-outil background-primaire">
+
     <button routerLink="/mes-oeuvres"  type="button" class="btn btn-warning">
       <i class="fa-solid fa-arrow-left"></i>
     </button>
+
+    <button (click)="chargeForm()" type="button" class="btn btn-warning">
+      Charger depuis API
+    </button>
     <button (click)="resetForm()" type="button" class="btn btn-warning">
-      réinitialiser
+      Réinitialiser
     </button>
     <span></span><!--pour que bouton reinitialiser apparaisse au milieu-->
+
   </mat-toolbar-row>
 </mat-toolbar>
 <!-- fin toolbar bouton du haut-->

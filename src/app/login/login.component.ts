@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
           this.succesConnexion = true;
           this.roles = this.tokenService.getUser().roles;
           this.utilisateurService.setStatutUtilisateur(new UtilisateurModel(this.loginForm.value.identifiant, this.succesConnexion));
+
           this.afficherPageUtilisateur();
       },
       error : () => {
@@ -63,5 +64,7 @@ export class LoginComponent implements OnInit {
 
   afficherPageUtilisateur(): void {
     this.router.navigate(['/mes-oeuvres']);
+
   }
+
 }

@@ -22,6 +22,7 @@ import { MatIconModule} from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SearchapiComponent } from './searchapi/searchapi.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 	FormulaireEditionOeuvreComponent,
    	StarsPipe,
 	HomeComponent,
+ SearchapiComponent,
   ],
   imports: [
     BrowserModule,

@@ -12,19 +12,26 @@ import { UtilisateurService } from './shared/services/utilisateur.service';
 export class AppComponent {
   title = 'trackMovies';
 
-  connexionUtilisateur = false;
-  identifiantUtilisateur !: string;
+  connexionUtilisateur: boolean = false;
+  identifiantUtilisateur: string = '';
 
   constructor(private tokenService: TokenStorageService, private utilisateurService: UtilisateurService, private authService: AuthService){ }
 
   ngOnInit(): void {
-
-    this.utilisateurService.statutUtilisateur$.subscribe( data => {
-      this.connexionUtilisateur = data.statutConnexion;
-      this.identifiantUtilisateur = data.identifiant;
-      console.log('identifiant : ' + data.identifiant + ', statut : ' + data.statutConnexion);
+    /*
+    let statutUtilisateur = this.utilisateurService.recupererStatutUtilisateur();
+    this.identifiantUtilisateur = statutUtilisateur.identifiant;
+    this.connexionUtilisateur = statutUtilisateur.statutConnexion;
+    console.log('identifiant : ' + this.identifiantUtilisateur);
+    console.log('statutConnexion : ' + this.connexionUtilisateur);
+*/
+    this.utilisateurService.statutUtilisateur$.subscribe( statutUtilisateur => {
+      this.connexionUtilisateur = statutUtilisateur.statutConnexion;
+      this.identifiantUtilisateur = statutUtilisateur.identifiant;
+      console.log('identifiant : ' + statutUtilisateur.identifiant + ', statut : ' + statutUtilisateur.statutConnexion);
       console.log('token : ' + this.tokenService.getToken() + ', user : ' + this.tokenService.getUser().identifiant   )
     })
+
   }
 
   logout(): void {

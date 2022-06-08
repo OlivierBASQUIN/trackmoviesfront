@@ -10,8 +10,10 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { GenreModel } from '../shared/models/genre.model';
+import { RechercheModel } from '../shared/models/recherche.model';
 import { StatutModel } from '../shared/models/statut.model';
 import { TypeModel } from '../shared/models/type.model';
+import { ApiService } from '../shared/services/api.service';
 import { GenreService } from '../shared/services/genre.service';
 import { OeuvreService } from '../shared/services/oeuvre.service';
 import { StatutService } from '../shared/services/statut.service';
@@ -42,6 +44,12 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
 
   notePossibles : Number[] = [0,1,2,3,4,5];
 
+  oeuvresApiTrouvees: Array<RechercheModel> = [];
+  selectionOeuvreApi: RechercheModel = {id: 0, type: '', titre: '', urlAffiche: '', urlBandeAnnonce: '', description: ''};
+  oeuvreApiChoisie: boolean = false;
+  saisieRecherche: string = '';
+
+
   //gestion des messages (on met 2 booleen car on peut ne pas afficherde message du tout egalement)
   displayMsgOeuvreSauvee :boolean = false ;
   displayMsgErreurSauvegarde:boolean = false;
@@ -50,7 +58,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
 
   constructor(private fb: FormBuilder, public typeService: TypeService, public oeuvreService: OeuvreService,
             public genreService : GenreService, public statutService : StatutService,private el: ElementRef
-            ,private _snackBar: MatSnackBar)
+            ,private _snackBar: MatSnackBar, public apiService: ApiService)
   {
       this.oeuvreForm = this.fb.group({
       typeOeuvre: ['', [Validators.required, Validators.minLength(1)]],
@@ -72,13 +80,12 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
     this.types = this.typeService.getTypesPourEditionOeuvre();
 
     this.subscriptions.push(
-      this.genreService.genres$.subscribe(data => this.genres=data)
+      this.genreService.genres$.subscribe( data => { if (data.length == 0) { this.genreService.getGenres(); }; this.genres = data; } )
     );
 
     this.subscriptions.push(
-      this.statutService.statuts$.subscribe(data => this.statutVisionnages=data)
+      this.statutService.statuts$.subscribe( data => { if (data.length == 0) { this.statutService.getStatuts(); } this.statutVisionnages = data } )
     );
-
   }
 
   onSubmitForm(event:Event, formDirective: FormGroupDirective) {
@@ -195,6 +202,37 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
 
     //on remet statut visionnage à sa valeur par defaut
     this.oeuvreForm.controls["statutVisionnageId"].setValue(1);
+    this.apiService.initialiserRechercheOeuvreApi();
+
+
+    this.oeuvreApiChoisie = false;
+    this.saisieRecherche ='';
+    this.oeuvresApiTrouvees = [];
+  }
+
+    chargeForm() {
+
+    this.selectionOeuvreApi = this.apiService.recupererOeuvreApi();
+
+    if (this.selectionOeuvreApi) {
+      if (this.selectionOeuvreApi.titre !== '') {
+
+        console.log('Oeuvre sélectionnée pour le chargement : ' + this.selectionOeuvreApi.titre);
+
+        this.oeuvreForm.patchValue({
+          typeOeuvre: this.selectionOeuvreApi.type,
+          titre: this.selectionOeuvreApi.titre,
+          urlAffiche: this.selectionOeuvreApi.urlAffiche,
+          description: this.selectionOeuvreApi.description
+        });
+      }
+      else {
+        console.log('Aucune oeuvre sélectionnée pour le chargement');
+      }
+    }
+    else {
+      console.log('Aucune oeuvre sélectionnée pour le chargement');
+    }
   }
 
   ngOnDestroy() {
