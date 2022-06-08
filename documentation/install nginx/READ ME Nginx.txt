@@ -28,42 +28,10 @@ Procédure pour le lancement de l'application "trackmovies" avec Nginx sur Windo
 
 - se rendre dans le dossier "nginx-1.22.0" précedemment téléchargé. Puis dans le dossier "conf".
 
-- modifier le fichier "nginx.conf" avec les éléments de configuration ci dessous :
+- modifier le fichier "nginx.conf" avec les éléments de configuration ci-dessous (dans la première partie "server"):
 
 
------------------------------------------------------------------------------------------------------------------------------------------------------
-#user  nobody;
-worker_processes  1;
 
-#error_log  logs/error.log;
-#error_log  logs/error.log  notice;
-#error_log  logs/error.log  info;
-
-#pid        logs/nginx.pid;
-
-
-events {
-    worker_connections  1024;
-}
-
-
-http {
-    include       mime.types;
-    default_type  application/octet-stream;
-
-    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-    #                  '$status $body_bytes_sent "$http_referer" '
-    #                  '"$http_user_agent" "$http_x_forwarded_for"';
-
-    #access_log  logs/access.log  main;
-
-    sendfile        on;
-    #tcp_nopush     on;
-
-    #keepalive_timeout  0;
-    keepalive_timeout  65;
-
-    #gzip  on;
 
     server {
         listen       4200;
@@ -74,7 +42,7 @@ http {
         #access_log  logs/host.access.log  main;
 
         location / {
-            root html/trackmoviesfront;
+            root html/track-movies;
             index index.html index.htm;
 			try_files $uri $uri/ /index.html;
         }
@@ -89,50 +57,17 @@ http {
         location = /50x.html {
             root   html;
         }
-
+    }
        
-    # another virtual host using mix of IP-, name-, and port-based configuration
-    #
-    #server {
-    #    listen       8000;
-    #    listen       somename:8080;
-    #    server_name  somename  alias  another.alias;
-
-    #    location / {
-    #        root   html;
-    #        index  index.html index.htm;
-    #    }
-    #}
-
-
-    # HTTPS server
-    #
-    #server {
-    #    listen       443 ssl;
-    #    server_name  localhost;
-
-    #    ssl_certificate      cert.pem;
-    #    ssl_certificate_key  cert.key;
-
-    #    ssl_session_cache    shared:SSL:1m;
-    #    ssl_session_timeout  5m;
-
-    #    ssl_ciphers  HIGH:!aNULL:!MD5;
-    #    ssl_prefer_server_ciphers  on;
-
-    #    location / {
-    #        root   html;
-    #        index  index.html index.htm;
-    #    }
-    #}
-
-}
---------------------------------------------------------------------------------------------------------------------------------------------
+    
 		
 
 4/ Lancement de l'application "trackmovies" avec Nginx
 
-- déplacer l'ensemble des fichiers du dossier "trackmoviesfront/dist" dans le repertoire "nginx-1.22.0/html" et relancer le serveur Nginx
+- ouvrir l'application dans votre IDE (VSCode...) puis taper la commande "ng build" dans le terminal. Cela créera un dossier "dist" dans le répertoire "trackmoviesfront"
+
+- déplacer le dossier "track-movies" présent dans le repertoire "trackmoviesfront/dist" pour le mettre dans le repertoire "nginx-1.22.0/html"
+
+- relancer le serveur Nginx en stoppant dans un premier temps le processus en cours dans le gestionnaire de tâche de windows (accessible via : ctrl + alt + supp, puis click droit sur "nginx.exe" et choisir "fin de tâche").
  
-- Après avoir lancé au préalable l'application "trackmoviesback", vous pouvez accéder à votre navigateur et taper « http://localhost:4200/ ». 
- vous devriez voir sur votre navigateur l'application "trackmovies" se lancer.
+- Après avoir lancé au préalable l'application "trackmoviesback" (afin d'accéder au back-end), se rendre sur votre navigateur et taper « http://localhost:4200/ ». L'application "trackmovies" se lance alors.

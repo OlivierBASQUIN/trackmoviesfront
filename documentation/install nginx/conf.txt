@@ -41,9 +41,9 @@ http {
         #access_log  logs/host.access.log  main;
 
         location / {
-            root html/trackmoviesfront;
+            root html/track-movies;
             index index.html index.htm;
-			try_files $uri $uri/ /index.html;
+	    try_files $uri $uri/ /index.html;
         }
 		
 		
