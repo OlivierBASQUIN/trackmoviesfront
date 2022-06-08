@@ -9,11 +9,14 @@ import { OeuvreService } from '../shared/services/oeuvre.service';
 })
 export class ListComponent implements OnInit {
 
-  constructor(public oeuvreService:OeuvreService) {
-    //console.log(this);
-  }
+  constructor(public oeuvreService:OeuvreService) {}
 
   ngOnInit(): void {
+
+    if (this.oeuvreService.rechercherPremierAffichage()){
+      //this.refreshPage();
+    }
+
     this.oeuvreService.getOeuvresInitiales();
 /*
     this.oeuvreService.oeuvres$.subscribe( (data:Array<OeuvreModel>) => {
@@ -32,5 +35,9 @@ export class ListComponent implements OnInit {
 
   oeuvresSuivantesActionBouton(){
     this.oeuvreService.getOeuvresSuivantes();
+  }
+
+  refreshPage(){
+    window.location.reload();
   }
 }

@@ -8,10 +8,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { findIndex, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { GenreModel } from '../shared/models/genre.model';
+import { RechercheModel } from '../shared/models/recherche.model';
 import { StatutModel } from '../shared/models/statut.model';
 import { TypeModel } from '../shared/models/type.model';
+import { ApiService } from '../shared/services/api.service';
 import { GenreService } from '../shared/services/genre.service';
 import { OeuvreService } from '../shared/services/oeuvre.service';
 import { StatutService } from '../shared/services/statut.service';
@@ -47,7 +49,13 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
 
   notePossibles : Number[] = [0,1,2,3,4,5];
 
-  //gestion des messages (on met 2 booleen car on peut ne pas afficher de message du tout egalement)
+ oeuvresApiTrouvees: Array<RechercheModel> = [];
+  selectionOeuvreApi: RechercheModel = {id: 0, type: '', titre: '', urlAffiche: '', urlBandeAnnonce: '', description: ''};
+  oeuvreApiChoisie: boolean = false;
+  saisieRecherche: string = '';
+
+
+  //gestion des messages (on met 2 booleen car on peut ne pas afficherde message du tout egalement)
   displayMsgOeuvreSauvee :boolean = false ;
   displayMsgErreurSauvegarde:boolean = false;
 
@@ -55,10 +63,9 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
 
   constructor(private fb: FormBuilder, public typeService: TypeService, public oeuvreService: OeuvreService,
             public genreService : GenreService, public statutService : StatutService,private el: ElementRef
-            ,private _snackBar: MatSnackBar, private activatedRoute:ActivatedRoute)
+            ,private _snackBar: MatSnackBar, private activatedRoute:ActivatedRoute, public apiService: ApiService)
   {
       this.oeuvreForm = this.fb.group({
-      id: [''],
       typeOeuvre: ['', [Validators.required, Validators.minLength(1)]],
       titre: ['', [Validators.required, Validators.minLength(1)]],
       genreIds: [''],
@@ -78,14 +85,14 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
     this.types = this.typeService.getTypesPourEditionOeuvre();
 
     this.subscriptions.push(
-      this.genreService.genres$.subscribe(data => this.genres=data)
+      this.genreService.genres$.subscribe( data => { if (data.length == 0) { this.genreService.getGenres(); }; this.genres = data; } )
     );
 
     this.subscriptions.push(
-      this.statutService.statuts$.subscribe(data => this.statutVisionnages=data)
+      this.statutService.statuts$.subscribe( data => { if (data.length == 0) { this.statutService.getStatuts(); } this.statutVisionnages = data } )
     );
-
-    //Autoremplissage des champs lors de la demande de modification d'une oeuvre
+  }
+//Autoremplissage des champs lors de la demande de modification d'une oeuvre
     //Souscription à l'oeuvreDetail et injection des données dans la variable oeuvreAModifier si un id est présent dans l'URL
     if (this.activatedRoute.snapshot.params['id']) {
         this.subscriptions.push(
@@ -242,12 +249,43 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
 
     //on remet statut visionnage à sa valeur par defaut
     this.oeuvreForm.controls["statutVisionnageId"].setValue(1);
+    this.apiService.initialiserRechercheOeuvreApi();
+
+
+    this.oeuvreApiChoisie = false;
+    this.saisieRecherche ='';
+    this.oeuvresApiTrouvees = [];
+  }
+
+    chargeForm() {
+
+    this.selectionOeuvreApi = this.apiService.recupererOeuvreApi();
+
+    if (this.selectionOeuvreApi) {
+      if (this.selectionOeuvreApi.titre !== '') {
+
+        console.log('Oeuvre sélectionnée pour le chargement : ' + this.selectionOeuvreApi.titre);
+
+        this.oeuvreForm.patchValue({
+          typeOeuvre: this.selectionOeuvreApi.type,
+          titre: this.selectionOeuvreApi.titre,
+          urlAffiche: this.selectionOeuvreApi.urlAffiche,
+          description: this.selectionOeuvreApi.description
+        });
+      }
+      else {
+        console.log('Aucune oeuvre sélectionnée pour le chargement');
+      }
+    }
+    else {
+      console.log('Aucune oeuvre sélectionnée pour le chargement');
+    }
   }
 
   ngOnDestroy() {
     //on detruit les subscriptions en place
     this.subscriptions.forEach(sub => sub.unsubscribe())
-  }
+   }
 
  //méthode qui permet d'extraire la clé youtube de l'Url, afin de l'injecter ensuite dans le formulaire à l'étape modification
   parserCleYoutube(urlBandeAnnonce:string) {

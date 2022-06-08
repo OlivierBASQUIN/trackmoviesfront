@@ -1,0 +1,9 @@
+<input *ngIf="oeuvreApiChoisie == false" #saisieRecherche (keyup)="rechercherOeuvreApi(saisieRecherche.value)" placeholder="Rechercher ..." class="form-control" type="text">
+<div class="selection-api" *ngIf="oeuvreApiChoisie == true">
+<button (click)="initialiserRechercheOeuvreApi()">Initialiser</button>
+<p>{{selectionOeuvreApi.titre}}</p>
+</div>
+<ul *ngIf="oeuvresApiTrouvees.length > 0 && oeuvreApiChoisie == false">
+  <li (click)="selectionnerOeuvreApi(oeuvre)" *ngFor="let oeuvre of oeuvresApiTrouvees">{{oeuvre.titre}}</li>
+</ul>
+

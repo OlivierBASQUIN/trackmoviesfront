@@ -14,6 +14,7 @@ export class OeuvreService {
   private _oeuvresTrouvees$ = new BehaviorSubject<OeuvreModel[]>([]);
   private _oeuvreDetail$ = new BehaviorSubject<OeuvreDetailModel>(null!);
   private _parametreRechercheExiste = false;
+  private _premierAffichage = true;
 
   constructor(private httpClient:HttpClient) { }
 
@@ -86,7 +87,7 @@ export class OeuvreService {
       public getOeuvreById(oeuvreId:number) {
         // récupération d'une oeuvre via le endpoint /mes_oeuvres/{id} de l'API backend
         this.httpClient.get(this._API_URL+'/mes_oeuvres/'+oeuvreId)
-        .pipe( 
+        .pipe(
            // mapping de la réponse en objet Oeuvre de type OeuvreDetailModel
            map(
              (reponseApi:any) =>
@@ -147,5 +148,17 @@ export class OeuvreService {
   saveOeuvre(oeuvreASauver:any):Observable<any> {
     console.log("oeuvreASauver=",oeuvreASauver);
     return this.httpClient.post(this._API_URL+'/oeuvre', oeuvreASauver);
+  }
+
+  rechercherPremierAffichage(): boolean{
+    console.log('premierAffichage : ' + this._premierAffichage)
+    if(this._premierAffichage){
+      this._premierAffichage = false;
+      console.log('premierAffichage : ' + this._premierAffichage)
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 }
