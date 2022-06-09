@@ -9,7 +9,7 @@
                 <button routerLink="/mes-oeuvres" class="btn btn-warning">
                     <i class="fa-solid fa-arrow-left"></i>
                 </button>
-                <h2>{{oeuvreDetail.titre | titlecase}}</h2>
+                <h2 class="mx-2">{{oeuvreDetail.titre | titlecase}}</h2>
                 <button [routerLink]="['/edition-oeuvre', oeuvreDetail.id]" type="buttonSignIn" class="btn btn-warning">Modifier</button>
             </div>
 

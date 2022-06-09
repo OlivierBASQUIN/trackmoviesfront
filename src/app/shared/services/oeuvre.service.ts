@@ -150,6 +150,16 @@ export class OeuvreService {
     return this.httpClient.post(this._API_URL+'/oeuvre', oeuvreASauver);
   }
 
+  /*
+    Supprimer une oeuvre
+    method : DELETE
+    endpoint : '/oeuvre/{id}'
+  */
+  deleteOeuvre(oeuvreId:number) {
+      console.log("oeuvreASupprimer=",oeuvreId);
+      return this.httpClient.get(this._API_URL+'/oeuvre/'+oeuvreId);
+    }
+
   rechercherPremierAffichage(): boolean{
     console.log('premierAffichage : ' + this._premierAffichage)
     if(this._premierAffichage){

@@ -4,26 +4,28 @@
 
 <app-searchapi *ngIf="!oeuvreAModifier"></app-searchapi>
 
+
 <!-- toolbar bouton du haut-->
-<mat-toolbar >
-  <mat-toolbar-row class="boite-outil background-primaire">
-    <!--si edition on retourne sur la page mes-oeuvres-->
-    <button *ngIf="!oeuvreAModifier" routerLink="/mes-oeuvres"  type="button" class="btn btn-warning">
-      <i class="fa-solid fa-arrow-left"></i>
-    </button>
-    <!--si modification on retourne sur la page mes-oeuvres-detail-->
-    <button *ngIf="oeuvreAModifier" [routerLink]="['/mes-oeuvres', oeuvreAModifier.id]" type="button" class="btn btn-warning">
-      <i class="fa-solid fa-arrow-left"></i>
-    </button>
-    <button *ngIf="!oeuvreAModifier" (click)="chargeForm()" type="button" class="btn btn-warning">
-      Charger depuis API
-    </button>
-    <button (click)="resetForm()" type="button" class="btn btn-warning">
-      Réinitialiser
-    </button>
-    <span></span><!--pour que bouton reinitialiser apparaisse au milieu-->
-  </mat-toolbar-row>
-</mat-toolbar>
+<div class="row">
+  <mat-toolbar class="background-primaire">
+    <mat-toolbar-row class="boite-outil">
+      <!--si edition on retourne sur la page mes-oeuvres-->
+      <button *ngIf="!oeuvreAModifier" routerLink="/mes-oeuvres"  type="button" class="btn btn-warning">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+      <!--si modification on retourne sur la page mes-oeuvres-detail-->
+      <button *ngIf="oeuvreAModifier" [routerLink]="['/mes-oeuvres', oeuvreAModifier.id]" type="button" class="btn btn-warning">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+      <button *ngIf="!oeuvreAModifier" (click)="chargeForm()" type="button" class="btn btn-warning">
+        Charger depuis l'API
+      </button>
+      <button (click)="resetForm()" type="button" class="btn btn-warning">
+        Réinitialiser
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>
 <!-- fin toolbar bouton du haut-->
 
 <!-- bandeau message statut sauvegarde-->
@@ -224,7 +226,7 @@
         </button>
 
         <!-- action a coder-->
-        <button type="button" class="btn btn-warning">
+        <button (click)="deleteOeuvre(oeuvreAModifier.id)" type="button" class="btn btn-warning">
           Supprimer
         </button>
       </mat-toolbar-row>

@@ -234,6 +234,10 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
     this.saisons.removeAt(saisonIndex);
   }
 
+  deleteOeuvre(oeuvreId: number) {
+    this.oeuvreService.deleteOeuvre(oeuvreId);
+  }
+
   removeMessage() {
     this.displayMsgErreurSauvegarde=false;
     this.msgErreur='';

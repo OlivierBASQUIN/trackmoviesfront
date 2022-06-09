@@ -23,6 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SearchapiComponent } from './searchapi/searchapi.component';
+import {MatListModule} from '@angular/material/list';
 
 
 @NgModule({
@@ -53,7 +54,7 @@ import { SearchapiComponent } from './searchapi/searchapi.component';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSnackBarModule,
+    MatSnackBarModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS,
