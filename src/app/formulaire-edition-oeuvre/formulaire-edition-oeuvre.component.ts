@@ -168,8 +168,9 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
 
             //on remet statut visionnage à sa valeur par defaut
             this.oeuvreForm.controls["statutVisionnageId"].setValue(1);
-            this._snackBar.open('Sauvegarde OK', 'Fermer', {
-              duration: 3000
+            this._snackBar.open('Sauvegarde OK', '', {
+              duration: 3000,
+              panelClass: ['green-snackbar']
             });
 
             //const messageSuccessDiv = this.el.nativeElement.querySelector('#SuccessMsg');
@@ -180,10 +181,12 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
             console.log("response=",response);
             this.displayMsgErreurSauvegarde=true;
             this.displayMsgOeuvreSauvee=false;
+            //console.log("response error=",response.error);
             this.msgErreur=response.error;
 
-            this._snackBar.open('Echec de la Sauvegarde', 'Fermer', {
-              duration: 3000
+            this._snackBar.open('Echec de la Sauvegarde', '', {
+              duration: 3000,
+              panelClass: ['red-snackbar']
             });
             //const messageErrorDiv = this.el.nativeElement.querySelector('#ErrorMsg');
             //messageErrorDiv.focus();
