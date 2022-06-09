@@ -6,6 +6,10 @@
   width: 50px;
 }
 
+input {
+  caret-color:white;
+}
+
 textarea {
   caret-color:white;
 }
