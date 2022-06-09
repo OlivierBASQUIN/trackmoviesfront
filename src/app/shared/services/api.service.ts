@@ -13,7 +13,7 @@ export class ApiService {
   private _API_KEY = environment.apiKeyTheMovieDB;
   private _API_URL = environment.apiUrlTheMovieDB;
   private _oeuvreApi !: RechercheModel;
-  private _rechercheOeuvreApiInitialisee = false;
+  //private _rechercheOeuvreApiInitialisee = false;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -23,7 +23,7 @@ export class ApiService {
    * queryString : api_key, language, query (3 caractères minimum)
    */
 
-  public rechercheOeuvresViaApi(saisieRecherche: string): void {
+  public rechercheOeuvreApi(saisieRecherche: string): void {
 
     if (saisieRecherche.trim().length > 2) {
       console.log('saisieRecherche > 2');
@@ -60,13 +60,14 @@ export class ApiService {
   }
 
   public initialiserRechercheOeuvreApi(): void {
-    console.log('oeuvre avant init : ' + this._oeuvreApi.id)
-    this._rechercheOeuvreApiInitialisee = true;
-    this._oeuvreApi = { id: 0, type: '', titre: '', urlAffiche: '', urlBandeAnnonce: '', description: ''};
-    console.log('oeuvre après init : ' + this._oeuvreApi.id)
+    //console.log('oeuvre avant init : ' + this._oeuvreApi.id)
+    //this._rechercheOeuvreApiInitialisee = true;
+    //this._oeuvreApi = { id: 0, type: '', titre: '', urlAffiche: '', urlBandeAnnonce: '', description: ''};
+    this._oeuvresApiTrouvees$.next([]);
+    //console.log('oeuvre après init : ' + this._oeuvreApi.id)
   }
 
-  public rechercheOeuvreApiAInitialiser(): boolean {
-    return this._rechercheOeuvreApiInitialisee;
-  }
+  //public rechercheOeuvreApiAInitialiser(): boolean {
+  //  return this._rechercheOeuvreApiInitialisee;
+  //}
 }

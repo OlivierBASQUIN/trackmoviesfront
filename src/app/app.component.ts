@@ -18,23 +18,17 @@ export class AppComponent {
   constructor(private tokenService: TokenStorageService, private utilisateurService: UtilisateurService, private authService: AuthService){ }
 
   ngOnInit(): void {
-    /*
-    let statutUtilisateur = this.utilisateurService.recupererStatutUtilisateur();
-    this.identifiantUtilisateur = statutUtilisateur.identifiant;
-    this.connexionUtilisateur = statutUtilisateur.statutConnexion;
-    console.log('identifiant : ' + this.identifiantUtilisateur);
-    console.log('statutConnexion : ' + this.connexionUtilisateur);
-*/
+
     this.utilisateurService.statutUtilisateur$.subscribe( statutUtilisateur => {
       this.connexionUtilisateur = statutUtilisateur.statutConnexion;
       this.identifiantUtilisateur = statutUtilisateur.identifiant;
-      console.log('identifiant : ' + statutUtilisateur.identifiant + ', statut : ' + statutUtilisateur.statutConnexion);
-      console.log('token : ' + this.tokenService.getToken() + ', user : ' + this.tokenService.getUser().identifiant   )
+      //console.log('identifiant : ' + statutUtilisateur.identifiant + ', statut : ' + statutUtilisateur.statutConnexion);
+      //console.log('token : ' + this.tokenService.getToken() + ', user : ' + this.tokenService.getUser().identifiant   )
     })
-
   }
 
   logout(): void {
+
     this.connexionUtilisateur = false;
 
     this.authService.logout().subscribe({
@@ -44,7 +38,10 @@ export class AppComponent {
     }
   });
 
-
     this.tokenService.signOut();
   }
+
+  //enregistrerTypeAction(action: string){
+  //  this.authService.enregistrerTypeAction(action);
+  //}
 }

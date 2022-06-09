@@ -10,7 +10,6 @@ export class RechercheModel {
   constructor(oeuvreApi: any) {
     if (oeuvreApi.media_type === 'tv'){
       this.id = oeuvreApi.id;
-      this.type = oeuvreApi.media_type;
       this.type = 'serie';
       this.titre = oeuvreApi.name;
       this.urlAffiche = oeuvreApi.poster_path;

@@ -23,6 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SearchapiComponent } from './searchapi/searchapi.component';
+import { InscriptionComponent } from './inscription/inscription.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { SearchapiComponent } from './searchapi/searchapi.component';
    	StarsPipe,
 	  HomeComponent,
     SearchapiComponent,
+    InscriptionComponent,
   ],
   imports: [
     BrowserModule,
