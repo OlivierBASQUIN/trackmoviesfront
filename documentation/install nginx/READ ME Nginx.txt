@@ -28,9 +28,7 @@ Procédure pour le lancement de l'application "trackmovies" avec Nginx sur Windo
 
 - se rendre dans le dossier "nginx-1.22.0" précedemment téléchargé. Puis dans le dossier "conf".
 
-- modifier le fichier "nginx.conf" avec les éléments de configuration ci-dessous (dans la première partie "server"):
-
-
+- Ajouter le server suivant dans la partie http{} du fichier "nginx.conf":
 
 
     server {
@@ -58,16 +56,21 @@ Procédure pour le lancement de l'application "trackmovies" avec Nginx sur Windo
             root   html;
         }
     }
+	
        
-    
+4/packaging de l'application
+
+- dans un terminal windows, faire un clone du repository GitHub avec la commande suivante : git clone https://github.com/OlivierBASQUIN/trackmoviesfront.git
+
+- toujours dans le terminal windows, se placer sur le répertoire "trackmoviesfront" et taper la commande "npm install" puis "ng build". Cela créera un dossier "dist" dans le répertoire "trackmoviesfront"
 		
 
-4/ Lancement de l'application "trackmovies" avec Nginx
-
-- ouvrir l'application dans votre IDE (VSCode...) puis taper la commande "ng build" dans le terminal. Cela créera un dossier "dist" dans le répertoire "trackmoviesfront"
+5/ Lancement de l'application "trackmovies" avec Nginx
 
 - déplacer le dossier "track-movies" présent dans le repertoire "trackmoviesfront/dist" pour le mettre dans le repertoire "nginx-1.22.0/html"
 
-- relancer le serveur Nginx en stoppant dans un premier temps le processus en cours dans le gestionnaire de tâche de windows (accessible via : ctrl + alt + supp, puis click droit sur "nginx.exe" et choisir "fin de tâche").
+- stopper le processus nginx en cours avec la commande "nginx -s stop" (en étant placé sur le dossier "nginx-1.22.0" dans le terminal) et relancer le serveur Nginx en double-cliquant sur le fichier "nginx.exe"  
  
-- Après avoir lancé au préalable l'application "trackmoviesback" (afin d'accéder au back-end), se rendre sur votre navigateur et taper « http://localhost:4200/ ». L'application "trackmovies" se lance alors.
+- penser à lancer l'application "trackmoviesback" (afin d'accéder au back-end), se rendre sur votre navigateur et taper « http://localhost:4200/ ». L'application "trackmovies" se lance alors.
+
+
