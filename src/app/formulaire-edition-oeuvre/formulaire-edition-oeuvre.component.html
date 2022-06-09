@@ -48,7 +48,7 @@
     <div class="col-12 col-md-6"><!--debut 1ere colonne-->
       <!-- Type Oeuvre-->
       <div>
-        <mat-form-field   appearance="fill">
+        <mat-form-field appearance="fill">
           <mat-label class = "eltOrange">Type d'oeuvre</mat-label>
           <mat-select formControlName="typeOeuvre" [(value)]="selectionType">
             <mat-option class = "eltBlanc" *ngFor="let type of types" [value]="type.libelle">

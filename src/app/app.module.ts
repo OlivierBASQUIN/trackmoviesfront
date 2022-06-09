@@ -31,11 +31,11 @@ import { SearchapiComponent } from './searchapi/searchapi.component';
     ListComponent,
     SearchbarComponent,
     LoginComponent,
-	DetailOeuvreComponent,
-	FormulaireEditionOeuvreComponent,
+	  DetailOeuvreComponent,
+	  FormulaireEditionOeuvreComponent,
    	StarsPipe,
-	HomeComponent,
- SearchapiComponent,
+	  HomeComponent,
+    SearchapiComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,7 +53,7 @@ import { SearchapiComponent } from './searchapi/searchapi.component';
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS,

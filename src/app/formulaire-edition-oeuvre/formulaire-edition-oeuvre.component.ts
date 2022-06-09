@@ -107,12 +107,15 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
         this.oeuvreAModifier.typeOeuvre? this.oeuvreForm.controls["typeOeuvre"].setValue(this.oeuvreAModifier.typeOeuvre) : [''];
         this.oeuvreAModifier.titre? this.oeuvreForm.controls["titre"].setValue(this.oeuvreAModifier.titre) : [''];
         //création d'un tableau pour héberger les id des genres de l'oeuvre
+        if (this.oeuvreAModifier.genres) {
         let genreArray : any = [];
         this.oeuvreAModifier.genres.forEach(genre => {
             genreArray.push(genre.id);}), 
             console.log(genreArray);
+          ;
         //On affecte ensuite ce tableau d'Id en valeur des genres
         this.oeuvreAModifier.genres? this.oeuvreForm.controls["genreIds"].setValue(genreArray) : [''];
+      }
         this.oeuvreAModifier.statutVisionnage? this.oeuvreForm.controls["statutVisionnageId"].setValue(this.oeuvreAModifier.statutVisionnage.id) : [1];
         this.oeuvreAModifier.note? this.oeuvreForm.controls["note"].setValue(this.oeuvreAModifier.note) : [''];
         this.oeuvreAModifier.createurs? this.oeuvreForm.controls["createurs"].setValue(this.oeuvreAModifier.createurs) : [''];

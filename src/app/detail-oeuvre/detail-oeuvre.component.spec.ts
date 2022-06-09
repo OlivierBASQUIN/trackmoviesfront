@@ -37,6 +37,7 @@ describe('DetailOeuvreComponent', () => {
       { id: 1,
       typeOeuvre: 'film',
       titre: 'filmTest',
+      description: '',
       genres: [{id: 1, libelle: 'Action'}], 
       statutVisionnage: {id: 1, libelle: 'Vu'}, 
       note: 3, 
