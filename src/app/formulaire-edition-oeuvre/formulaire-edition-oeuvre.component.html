@@ -35,7 +35,7 @@
 </div>
 <div id="ErrorMsg" *ngIf="displayMsgErreurSauvegarde" class="alert alert-danger alert-dismissible fade show" role="alert">
   <strong>Erreur</strong> de la sauvegarde
-  <p>{{msgErreur}}</p>
+  <p>{{msgErreur|json}}</p>
   <button (click)="removeMessage()" type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -233,4 +233,4 @@
   <!-- fin toolbar bouton du bas-->
 </form>
 
-<pre style="background-color: white;">{{oeuvreASauverJson|json}}</pre>
+<!--<pre style="background-color: white;">{{oeuvreASauverJson|json}}</pre>-->

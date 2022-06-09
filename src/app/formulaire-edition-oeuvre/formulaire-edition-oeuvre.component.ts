@@ -93,7 +93,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
     this.subscriptions.push(
       this.statutService.statuts$.subscribe( data => { if (data.length == 0) { this.statutService.getStatuts(); } this.statutVisionnages = data } )
     );
-  
+
 //Autoremplissage des champs lors de la demande de modification d'une oeuvre
     //Souscription à l'oeuvreDetail et injection des données dans la variable oeuvreAModifier si un id est présent dans l'URL
     if (this.activatedRoute.snapshot.params['id']) {
@@ -110,7 +110,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
         if (this.oeuvreAModifier.genres) {
         let genreArray : any = [];
         this.oeuvreAModifier.genres.forEach(genre => {
-            genreArray.push(genre.id);}), 
+            genreArray.push(genre.id);}),
             console.log(genreArray);
           ;
         //On affecte ensuite ce tableau d'Id en valeur des genres
@@ -124,7 +124,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
         this.oeuvreAModifier.description? this.oeuvreForm.controls["description"].setValue(this.oeuvreAModifier.description) : [''];
         this.oeuvreAModifier.urlAffiche? this.oeuvreForm.controls["urlAffiche"].setValue(this.oeuvreAModifier.urlAffiche) : [''];
         this.oeuvreAModifier.urlBandeAnnonce? this.oeuvreForm.controls["urlBandeAnnonce"].setValue(this.parserCleYoutube(this.oeuvreAModifier.urlBandeAnnonce)) : [''];
-        //traitement des saisons avec affectation des valeurs si existante 
+        //traitement des saisons avec affectation des valeurs si existante
         this.oeuvreAModifier.saisons? this.oeuvreAModifier.saisons.forEach(saison => this.addSaison(saison)): [''];
         console.log(this.oeuvreAModifier.saisons)
       };
@@ -174,6 +174,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
             console.log("response=",response);
             this.displayMsgErreurSauvegarde=true;
             this.displayMsgOeuvreSauvee=false;
+            //console.log("response error=",response.error);
             this.msgErreur=response.error;
 
             this._snackBar.open('Echec de la Sauvegarde', 'Fermer', {
@@ -228,7 +229,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
     })
     this.saisons.push(saisonForm)
    }
-  
+
 
   deleteSaison(saisonIndex: number) {
     this.saisons.removeAt(saisonIndex);
