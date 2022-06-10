@@ -2,8 +2,19 @@
   justify-content: space-between;
 }
 
-.champ-video-youtube {
-  width: 270px;
+.addSaisonBtn {
+  width: 50px;
 }
+
+input {
+  caret-color:white;
+}
+
+textarea {
+  caret-color:white;
+}
+
+
+
 
 

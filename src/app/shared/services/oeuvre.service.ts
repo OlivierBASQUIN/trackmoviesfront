@@ -14,6 +14,7 @@ export class OeuvreService {
   private _oeuvresTrouvees$ = new BehaviorSubject<OeuvreModel[]>([]);
   private _oeuvreDetail$ = new BehaviorSubject<OeuvreDetailModel>(null!);
   private _parametreRechercheExiste = false;
+  private _premierAffichage = true;
 
   constructor(private httpClient:HttpClient) { }
 
@@ -34,21 +35,6 @@ export class OeuvreService {
         ) // fin pipe
        .subscribe(
          (reponse:Array<OeuvreModel>) => this._oeuvres$.next(reponse)
-       )
-     }
-
-     getOeuvresSuivantes():void {
-      // récupération des oeuvres via le endpoint /mes_oeuvres de l'API backend
-      this.httpClient.get(this._API_URL+'/mes_oeuvres')
-        .pipe (
-          // mapping de la réponse en tableau d'objets de type OeuvreModel
-          map(
-            (reponseApi:any) => reponseApi.oeuvres.map( (oeuvre:any) => new OeuvreModel(oeuvre) )
-          ) // fin map
-        ) // fin pipe
-       .subscribe(
-         (reponse:Array<OeuvreModel>) => { let oeuvres = [...this._oeuvres$.getValue(), ... reponse];
-          this._oeuvres$.next(oeuvres);}
        )
      }
 
@@ -86,7 +72,7 @@ export class OeuvreService {
       public getOeuvreById(oeuvreId:number) {
         // récupération d'une oeuvre via le endpoint /mes_oeuvres/{id} de l'API backend
         this.httpClient.get(this._API_URL+'/mes_oeuvres/'+oeuvreId)
-        .pipe( 
+        .pipe(
            // mapping de la réponse en objet Oeuvre de type OeuvreDetailModel
            map(
              (reponseApi:any) =>
@@ -126,7 +112,7 @@ export class OeuvreService {
     Return      : OeuvreDetailModel
   */
 
-     setOeuvreDetail(oeuvreDetail:OeuvreDetailModel){
+     public setOeuvreDetail(oeuvreDetail:OeuvreDetailModel){
        return this._oeuvreDetail$.next(oeuvreDetail);
      }
 
@@ -147,5 +133,27 @@ export class OeuvreService {
   saveOeuvre(oeuvreASauver:any):Observable<any> {
     console.log("oeuvreASauver=",oeuvreASauver);
     return this.httpClient.post(this._API_URL+'/oeuvre', oeuvreASauver);
+  }
+
+  /*
+    Supprimer une oeuvre
+    method : DELETE
+    endpoint : '/oeuvre/{id}'
+  */
+  deleteOeuvre(oeuvreId:number) {
+      console.log("oeuvreASupprimer=",oeuvreId);
+      return this.httpClient.delete(this._API_URL+'/oeuvre/'+oeuvreId , {responseType : 'text'});
+    }
+
+  rechercherPremierAffichage(): boolean{
+    console.log('premierAffichage : ' + this._premierAffichage)
+    if(this._premierAffichage){
+      this._premierAffichage = false;
+      console.log('premierAffichage : ' + this._premierAffichage)
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 }

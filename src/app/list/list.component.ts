@@ -9,17 +9,22 @@ import { OeuvreService } from '../shared/services/oeuvre.service';
 })
 export class ListComponent implements OnInit {
 
-  constructor(public oeuvreService:OeuvreService) {
-    //console.log(this);
-  }
+  constructor(public oeuvreService:OeuvreService) {}
 
   ngOnInit(): void {
 
+    if (this.oeuvreService.rechercherPremierAffichage()){
+      //this.refreshPage();
+    }
+
+    this.oeuvreService.getOeuvresInitiales();
+/*
     this.oeuvreService.oeuvres$.subscribe( (data:Array<OeuvreModel>) => {
       if((data.length==0) && (!this.oeuvreService.getParametreRechercheExiste())) {
         this.oeuvreService.getOeuvresInitiales()
       }
-    });
+    });*/
+
   }
 
   getUrlAffiche(urlAffiche:string | null ):string {
@@ -28,7 +33,7 @@ export class ListComponent implements OnInit {
             : 'https://via.placeholder.com/300x450.png?text=no+images'
   }
 
-  oeuvresSuivantesActionBouton(){
-    this.oeuvreService.getOeuvresSuivantes();
+  refreshPage(){
+    window.location.reload();
   }
 }

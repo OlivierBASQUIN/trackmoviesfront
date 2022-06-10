@@ -36,7 +36,7 @@ export class DetailOeuvreComponent implements OnInit {
     )
   )
   console.log(this.oeuvreService.oeuvreDetail$)
-
+  
 } // Fin ngOnInit
 
   getUrlAffiche(urlAffiche:string | null ):string {

@@ -3,12 +3,11 @@
     <button routerLink="/" class="btn btn-warning">
       <i class="fa-solid fa-arrow-left"></i>
     </button>
-      <h1 class="">Formulaire d'authentification</h1>
-      <!--<h1 *ngIf="typeAction == 'login'" class="">Formulaire d'authentification</h1>-->
-      <!--<h1 *ngIf="typeAction === 'inscription'" class="">Formulaire d'inscription</h1>-->
+
+      <h1 class="">Formulaire d'inscription</h1>
   </div>
 
-  <form class="block-form box-shadow-white my-5" (submit)="onSubmit()" [formGroup]="loginForm">
+  <form class="block-form box-shadow-white my-5" (submit)="onSubmit()" [formGroup]="inscriptionForm">
     <div class="form-group d-block text-start mt-5">
       <label class="eltOrange" for="identifiant">Identifiant</label><br>
       <input class="w-100" required type="text" formControlName="identifiant">
@@ -25,7 +24,7 @@
 
     <div class="form-group">
       <div class="alert alert-danger" role="alert" *ngIf="tentativeConnexion && echecConnexion">
-        Echec d'authentification : {{ messageErreur }}
+        Echec d'inscription : {{ messageErreur }}
       </div>
     </div>
  </form>
