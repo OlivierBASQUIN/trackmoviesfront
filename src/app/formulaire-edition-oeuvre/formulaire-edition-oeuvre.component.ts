@@ -19,7 +19,7 @@ import { OeuvreService } from '../shared/services/oeuvre.service';
 import { StatutService } from '../shared/services/statut.service';
 import { TypeService } from '../shared/services/type.service';
 import { OeuvreDetailModel } from '../shared/models/oeuvre-detail.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SaisonModel } from '../shared/models/saison.model';
 
 @Component({
@@ -64,7 +64,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
 
   constructor(private fb: FormBuilder, public typeService: TypeService, public oeuvreService: OeuvreService,
             public genreService : GenreService, public statutService : StatutService,private el: ElementRef
-            ,private _snackBar: MatSnackBar, private activatedRoute:ActivatedRoute, public apiService: ApiService)
+            ,private _snackBar: MatSnackBar, private activatedRoute:ActivatedRoute, public apiService: ApiService, private router: Router)
   {
       this.oeuvreForm = this.fb.group({
       id: [''],
@@ -235,7 +235,32 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
   }
 
   deleteOeuvre(oeuvreId: number) {
-    this.oeuvreService.deleteOeuvre(oeuvreId);
+    this.oeuvreService.deleteOeuvre(oeuvreId).subscribe(
+      {
+        next  : response => {
+          console.log('success', response)//si tout s'est bien passé
+          this.displayMsgOeuvreSauvee=true;
+          this.displayMsgErreurSauvegarde=false;//on desactive le message d'erreur au cas où
+          this._snackBar.open('Suppression OK', '', {
+            duration: 3000,
+            panelClass: ['green-snackbar']
+          });
+          this.router.navigate(['/mes-oeuvres']);
+         }
+        // ,
+        // error : response =>  {
+        //   console.log('error', response);
+        //   this.displayMsgErreurSauvegarde=true;
+        //   this.displayMsgOeuvreSauvee=false;
+        //   this.msgErreur=response.error;
+
+        //   this._snackBar.open('Echec de la Suppression', '', {
+        //     duration: 3000,
+        //     panelClass: ['red-snackbar']
+        //   });
+        // }
+      }
+    )
   }
 
   removeMessage() {

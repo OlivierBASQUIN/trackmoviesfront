@@ -157,7 +157,7 @@ export class OeuvreService {
   */
   deleteOeuvre(oeuvreId:number) {
       console.log("oeuvreASupprimer=",oeuvreId);
-      return this.httpClient.get(this._API_URL+'/oeuvre/'+oeuvreId);
+      return this.httpClient.delete(this._API_URL+'/oeuvre/'+oeuvreId , {responseType : 'text'});
     }
 
   rechercherPremierAffichage(): boolean{
