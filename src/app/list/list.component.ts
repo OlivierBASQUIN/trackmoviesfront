@@ -33,10 +33,6 @@ export class ListComponent implements OnInit {
             : 'https://via.placeholder.com/300x450.png?text=no+images'
   }
 
-  oeuvresSuivantesActionBouton(){
-    this.oeuvreService.getOeuvresSuivantes();
-  }
-
   refreshPage(){
     window.location.reload();
   }

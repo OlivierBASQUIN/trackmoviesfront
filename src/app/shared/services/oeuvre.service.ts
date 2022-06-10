@@ -38,21 +38,6 @@ export class OeuvreService {
        )
      }
 
-     getOeuvresSuivantes():void {
-      // récupération des oeuvres via le endpoint /mes_oeuvres de l'API backend
-      this.httpClient.get(this._API_URL+'/mes_oeuvres')
-        .pipe (
-          // mapping de la réponse en tableau d'objets de type OeuvreModel
-          map(
-            (reponseApi:any) => reponseApi.oeuvres.map( (oeuvre:any) => new OeuvreModel(oeuvre) )
-          ) // fin map
-        ) // fin pipe
-       .subscribe(
-         (reponse:Array<OeuvreModel>) => { let oeuvres = [...this._oeuvres$.getValue(), ... reponse];
-          this._oeuvres$.next(oeuvres);}
-       )
-     }
-
      searchOeuvres(texteRecherche:string, selectionType:string, selectionStatut: string, selectionGenre: string):void {
 
       this._parametreRechercheExiste = false;

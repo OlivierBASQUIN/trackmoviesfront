@@ -1,6 +1,6 @@
 <!-- Champs de saisie recherche films -->
 <div class="blockSearch">
-  <input #userInput (change)="searchOeuvresInput(userInput.value)" (blur)="searchOeuvresInput(userInput.value)"  placeholder="Rechercher ..." class="form-control" type="text">
+  <input #userInput (keyup)="searchOeuvresInput(userInput.value)" placeholder="Rechercher ..." class="form-control" type="text">
   <!--<input #texteOeuvreRecherche placeholder="Rechercher une oeuvre ..." class="form-control" type="text"> -->
 </div>
 <!-- Barre de filtres -->
