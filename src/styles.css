@@ -4,12 +4,12 @@ body {
     color: black;
     font-weight: 500;
 }
-html, body { 
-    height: 100%; 
+html, body {
+    height: 100%;
 }
-body { 
+body {
     margin: 0;
-    font-family: Roboto,"Helvetica Neue",sans-serif; 
+    font-family: Roboto,"Helvetica Neue",sans-serif;
 }
 
 h1 {
@@ -37,5 +37,14 @@ h1 {
 
 .background-secondaire {
     background-color: rgb(41, 44, 61)
+}
+
+.green-snackbar {
+    background: #d1e7dd;
+    color: black;
+}
+
+.red-snackbar {
+  background: rgb(250, 108, 108);
 }
 

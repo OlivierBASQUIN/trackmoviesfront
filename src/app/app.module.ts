@@ -23,7 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SearchapiComponent } from './searchapi/searchapi.component';
-import {MatListModule} from '@angular/material/list';
+import { InscriptionComponent } from './inscription/inscription.component';
 
 
 @NgModule({
@@ -32,11 +32,12 @@ import {MatListModule} from '@angular/material/list';
     ListComponent,
     SearchbarComponent,
     LoginComponent,
-	  DetailOeuvreComponent,
-	  FormulaireEditionOeuvreComponent,
+	DetailOeuvreComponent,
+	FormulaireEditionOeuvreComponent,
    	StarsPipe,
-	  HomeComponent,
+	HomeComponent,
     SearchapiComponent,
+    InscriptionComponent,
   ],
   imports: [
     BrowserModule,

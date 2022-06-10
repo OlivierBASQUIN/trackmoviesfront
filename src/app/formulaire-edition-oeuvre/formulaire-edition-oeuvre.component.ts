@@ -21,6 +21,7 @@ import { TypeService } from '../shared/services/type.service';
 import { OeuvreDetailModel } from '../shared/models/oeuvre-detail.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SaisonModel } from '../shared/models/saison.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-formulaire-edition-oeuvre',
@@ -28,7 +29,8 @@ import { SaisonModel } from '../shared/models/saison.model';
   styleUrls: ['./formulaire-edition-oeuvre.component.css'],
 })
 export class FormulaireEditionOeuvreComponent implements OnInit {
-  private _URL_YOUTUBE="https://www.youtube.com/embed/";
+  private _URL_YOUTUBE='https://www.youtube.com/embed/';
+  private _URL_IMG_TMDB='https://image.tmdb.org/t/p/original';
 
   //a supprimer: sert  pour debug en json
   oeuvreASauverJson : any;
@@ -84,6 +86,10 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('test ajouter une aouvre -> retour -> ajouter une oeuvre')
+
+    this.initialiserRechercheOeuvreApi();
+
     this.types = this.typeService.getTypesPourEditionOeuvre();
 
     this.subscriptions.push(
@@ -93,7 +99,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
     this.subscriptions.push(
       this.statutService.statuts$.subscribe( data => { if (data.length == 0) { this.statutService.getStatuts(); } this.statutVisionnages = data } )
     );
-  
+
 //Autoremplissage des champs lors de la demande de modification d'une oeuvre
     //Souscription à l'oeuvreDetail et injection des données dans la variable oeuvreAModifier si un id est présent dans l'URL
     if (this.activatedRoute.snapshot.params['id']) {
@@ -110,7 +116,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
         if (this.oeuvreAModifier.genres) {
         let genreArray : any = [];
         this.oeuvreAModifier.genres.forEach(genre => {
-            genreArray.push(genre.id);}), 
+            genreArray.push(genre.id);}),
             console.log(genreArray);
           ;
         //On affecte ensuite ce tableau d'Id en valeur des genres
@@ -124,7 +130,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
         this.oeuvreAModifier.description? this.oeuvreForm.controls["description"].setValue(this.oeuvreAModifier.description) : [''];
         this.oeuvreAModifier.urlAffiche? this.oeuvreForm.controls["urlAffiche"].setValue(this.oeuvreAModifier.urlAffiche) : [''];
         this.oeuvreAModifier.urlBandeAnnonce? this.oeuvreForm.controls["urlBandeAnnonce"].setValue(this.parserCleYoutube(this.oeuvreAModifier.urlBandeAnnonce)) : [''];
-        //traitement des saisons avec affectation des valeurs si existante 
+        //traitement des saisons avec affectation des valeurs si existante
         this.oeuvreAModifier.saisons? this.oeuvreAModifier.saisons.forEach(saison => this.addSaison(saison)): [''];
         console.log(this.oeuvreAModifier.saisons)
       };
@@ -162,8 +168,9 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
 
             //on remet statut visionnage à sa valeur par defaut
             this.oeuvreForm.controls["statutVisionnageId"].setValue(1);
-            this._snackBar.open('Sauvegarde OK', 'Fermer', {
-              duration: 3000
+            this._snackBar.open('Sauvegarde OK', '', {
+              duration: 3000,
+              panelClass: ['green-snackbar']
             });
 
             //const messageSuccessDiv = this.el.nativeElement.querySelector('#SuccessMsg');
@@ -174,10 +181,12 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
             console.log("response=",response);
             this.displayMsgErreurSauvegarde=true;
             this.displayMsgOeuvreSauvee=false;
+            //console.log("response error=",response.error);
             this.msgErreur=response.error;
 
-            this._snackBar.open('Echec de la Sauvegarde', 'Fermer', {
-              duration: 3000
+            this._snackBar.open('Echec de la Sauvegarde', '', {
+              duration: 3000,
+              panelClass: ['red-snackbar']
             });
             //const messageErrorDiv = this.el.nativeElement.querySelector('#ErrorMsg');
             //messageErrorDiv.focus();
@@ -228,7 +237,7 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
     })
     this.saisons.push(saisonForm)
    }
-  
+
 
   deleteSaison(saisonIndex: number) {
     this.saisons.removeAt(saisonIndex);
@@ -276,11 +285,8 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
     //on remet statut visionnage à sa valeur par defaut
     this.oeuvreForm.controls["statutVisionnageId"].setValue(1);
     this.apiService.initialiserRechercheOeuvreApi();
+    this.initialiserRechercheOeuvreApi();
 
-
-    this.oeuvreApiChoisie = false;
-    this.saisieRecherche ='';
-    this.oeuvresApiTrouvees = [];
   }
 
     chargeForm() {
@@ -295,8 +301,8 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
         this.oeuvreForm.patchValue({
           typeOeuvre: this.selectionOeuvreApi.type,
           titre: this.selectionOeuvreApi.titre,
-          urlAffiche: this.selectionOeuvreApi.urlAffiche,
-          description: this.selectionOeuvreApi.description
+          urlAffiche: (this._URL_IMG_TMDB + this.selectionOeuvreApi.urlAffiche).slice(0,149),
+          description: (this.selectionOeuvreApi.description.slice(0,247) + '...'),
         });
       }
       else {
@@ -306,6 +312,12 @@ export class FormulaireEditionOeuvreComponent implements OnInit {
     else {
       console.log('Aucune oeuvre sélectionnée pour le chargement');
     }
+  }
+
+  initialiserRechercheOeuvreApi() {
+    this.oeuvreApiChoisie = false;
+    this.saisieRecherche ='';
+    this.oeuvresApiTrouvees = [];
   }
 
   ngOnDestroy() {

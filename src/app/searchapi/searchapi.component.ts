@@ -20,6 +20,8 @@ export class SearchapiComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.initialiserRechercheOeuvreApi();
+
     this.subscriptions.push(
       this.apiService.oeuvresApiTrouvees$.subscribe(data => this.oeuvresApiTrouvees=data)
     );
@@ -35,7 +37,7 @@ export class SearchapiComponent implements OnInit {
     }
     else {
 
-      this.apiService.rechercheOeuvresViaApi(saisieRecherche);
+      this.apiService.rechercheOeuvreApi(saisieRecherche);
 
       console.log('oeuvresTrouvees[] : ' + this.oeuvresApiTrouvees);
     }

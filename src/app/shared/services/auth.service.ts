@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { InscriptionModel } from '../models/inscription.model';
 import { LoginModel } from '../models/login.model';
 
 @Injectable({
@@ -9,6 +10,7 @@ import { LoginModel } from '../models/login.model';
 
 export class AuthService {
 
+  //private _typeAction: string = '';
   private _API_URL = 'http://localhost:8080/trackmovies/v1';
   //private _HTTP_OPTIONS = { headers: ({ 'Content-Type': 'application/json' })};
 
@@ -29,9 +31,19 @@ export class AuthService {
     return this.httpClient.get(this._API_URL + endPoint, {responseType : 'text'});
 
   }
-  /*
-  enregistrer(identifiant: string, motDePasse: string): Observable<any> {
-    let endPoint = '/enregistrer';
-    return this.httpClient.post(this._API_URL + endPoint, { identifiant, motDePasse }, this._HTTP_OPTIONS)
-  }*/
+
+  inscription(inscriptionInput: InscriptionModel): Observable<any> {
+
+    let endPoint = '/utilisateur';
+
+    return this.httpClient.post(this._API_URL + endPoint, inscriptionInput);
+  }
+
+  //enregistrerTypeAction(action: string) {
+  //  this._typeAction = action;
+  //}
+
+  //rechercherTypeAction(): string{
+  //  return this._typeAction;
+  //}
 }

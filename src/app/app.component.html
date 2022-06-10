@@ -8,12 +8,14 @@
 
   <div>
   <div class="block-login">
+    <!-- <button *ngIf="!connexionUtilisateur" routerLink="/login" (click)="enregistrerTypeAction('login')" type="buttonSignIn" class="btn btn-success btn-xs m-3">Se connecter</button> -->
     <button *ngIf="!connexionUtilisateur" routerLink="/login" type="buttonSignIn" class="btn btn-success btn-xs m-3">Se connecter</button>
     <div class="nom-utilisateur" *ngIf="connexionUtilisateur">Bienvenue, {{ identifiantUtilisateur }}</div>
   </div>
 
   <div>
-    <button *ngIf="!connexionUtilisateur" type="buttonSignUp" class="btn btn-success btn-xs m-3">S'inscrire</button>
+    <!--<button *ngIf="!connexionUtilisateur" routerLink="/login" (click)="enregistrerTypeAction('inscription')" type="buttonSignUp" class="btn btn-success btn-xs m-3">S'inscrire</button>-->
+    <button *ngIf="!connexionUtilisateur" routerLink="/inscription" type="buttonSignUp" class="btn btn-success btn-xs m-3">S'inscrire</button>
     <button *ngIf="connexionUtilisateur" routerLink="" (click)="logout()" type="buttonSignOut" class="btn btn-success btn-xs m-3">Se déconnecter</button>
   </div>
 </div>
